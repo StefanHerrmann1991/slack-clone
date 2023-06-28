@@ -1,1 +1,38 @@
-<p>register works!</p>
+<div class="register-main">
+    <h2><img src="assets/img/slack-icon.png">slack-clone</h2>
+    <h1>First, enter your email</h1>
+    <div>We suggest using the <b>email address you use at work.</b></div>
+    <div class="display-table">
+        <div class="display-table-cell">
+            <div class="auth-block">
+                <h3>Sign Up</h3>
+                <div class="formGroup">
+                    <input type="username" class="formControl" placeholder="User Name" #userDisplayName required />
+                </div>
+                <div class="formGroup">
+                    <input type="email" class="formControl" placeholder="Email Address" #userEmail required />
+                </div>
+                <div class="formGroup">
+                    <input type="password" class="formControl" placeholder="Password" #userPwd required />
+                </div>
+                <div class="formGroup">
+                    <input type="button" class="btn btnPrimary" value="Sign Up"
+                        (click)="authService.SignUp(userEmail.value, userPwd.value)" />
+                </div>
+                <div class="formGroup">
+                    <h4 class="or"><span class="orInner">OR</span></h4>
+                </div>
+                <!-- Continue with Google -->
+                <div class="formGroup">
+                    <button type="button" class="btn googleBtn" (click)="authService.GoogleAuth()">
+                        <i class="fab fa-google-plus-g"></i>
+                        Continue with Google
+                    </button>
+                </div>
+            </div>
+            <div class="redirectToLogin">
+                <a class="redirect" routerLink="/sign-in">Already using Slack?</a>
+            </div>
+        </div>
+    </div>
+</div>

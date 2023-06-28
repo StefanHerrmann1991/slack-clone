@@ -1,1 +1,32 @@
 /* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+*
+    padding: 0px
+    margin: 0px
+    margin-block-end: 0px
+    margin-block-start: 0px
+
+$dark: rgb(26, 29, 33)
+$darker: rgb(25, 23, 29)
+$darkest: rgb(18, 16, 22)
+$violet: #611f69
+$hover: rgba(209,210,211,0.2)
+$blue: #4285f4
+$focus: rgb( 29, 155, 209)
+$focus2: rgb(26, 67, 86)
+$border: rgb(45, 48, 52)
+$text: rgb(206, 207, 208)
+
+/* Importing Bootstrap SCSS file. */
+@import "../node_modules/bootstrap/scss/bootstrap"
+
+.mat-mdc-dialog-container
+    border-radius: 8px !important
+
+.mdc-dialog__surface
+    border-radius: 8px !important
+
+.mat-mdc-card
+    border-radius: none
+    border: none
+    box-shadow: 0 1px 0 0 $border

@@ -7,4 +7,5 @@ export const environment = {
     authDomain: 'slack-clone-f581f.firebaseapp.com',
     messagingSenderId: '545470931164',
   },
+  production: false
 };
