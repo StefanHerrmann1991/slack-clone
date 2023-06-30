@@ -1,1 +1,17 @@
-<p>channel works!</p>
+<div class="main-dashbaord">
+    <mat-card>
+        <div class="channel">
+            <mat-card-title>
+                <button class="channel-btn">
+                    <mat-icon [ngStyle]="{'font-style': channel.isClosedArea ? 'normal' : 'italic' }">{{
+                        channel.isClosedArea ? 'lock' : 'tag' }}</mat-icon>
+                    <div>{{channel.channelName}}</div>
+                    <mat-icon>expand_more</mat-icon>
+                </button>
+            </mat-card-title>
+        </div>
+    </mat-card>
+    <div class="add-message-dialog">
+        <app-new-channel-dialog></app-new-channel-dialog>      
+    </div>
+</div>

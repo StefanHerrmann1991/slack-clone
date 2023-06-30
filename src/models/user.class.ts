@@ -7,7 +7,7 @@ export class User {
     username: string;
 
     constructor(obj?: any) {
-        this.uid = obj ? obj.city : '';
+        this.uid = obj ? obj.uid : '';
         this.email = obj ? obj.email : '';
         this.channels = obj ? obj.channels : '';
         this.directMessages = obj ? obj.directMessages : '';
@@ -17,7 +17,7 @@ export class User {
 
     public toJSON() {
         return {      
-            // uid: this.uid,
+            uid: this.uid,
             email: this.email,
             channels : this.channels,
             directMessages: this.directMessages,

@@ -31,8 +31,9 @@ export class DashboardComponent {
 
 
   ngOnInit() {
+    debugger;
     this.route.paramMap.subscribe(paramMap => {
-      this.userId = paramMap.get('id');
+      this.userId = paramMap.get('id');     
       this.getUser();
     })
     this.filteredUsers = this.control.valueChanges.pipe(

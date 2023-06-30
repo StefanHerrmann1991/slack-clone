@@ -10,29 +10,25 @@ import { VerifyEmailComponent } from './authentication/verify-email/verify-email
 /* routes */
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ChannelComponent as DashboardChannelComponent } from './dashboard/channel/channel.component';
+import { ChannelComponent as NavbarChannelComponent } from './navbar/channel/channel.component';
+import { UserComponent as NavbarUserComponent } from './navbar/user/user.component';
+import { MessagesComponent as NavbarMessagesComponent } from './navbar/messages/messages.component'
 
-/* mainpage */
-/* import { NavbarChannelsComponent } from './navbar/navbar-channels/navbar-channels.component';
-import { NavbarMessagesComponent } from './navbar/navbar-messages/navbar-messages.component';
-import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
-import { UserDetailComponent } from './user-detail/user-detail.component';
-import { DashboardChannelComponent } from './dashboard/dashboard-channel/dashboard-channel.component'; */
 
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
     path: 'dashboard/:id', component: DashboardComponent,
-    children: [{ path: 'dashboard-channel/:channelId', component: DashboardChannelComponent }]
+    /* children: [{ path: 'channel/:channelId', component: DashboardChannelComponent }] */
   },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
-  { path: 'varify-email', component: VerifyEmailComponent },
-  /*   { path: 'channels', component: NavbarChannelsComponent },
-    { path: 'messages', component: NavbarMessagesComponent },
-    { path: 'user-detail', component: UserDetailComponent },
-   */
+  { path: 'verify-email', component: VerifyEmailComponent },
+  { path: 'channels', component: NavbarChannelComponent },
+  { path: 'messages', component: NavbarMessagesComponent },
+  { path: 'user', component: NavbarUserComponent }
 ];
 
 @NgModule({

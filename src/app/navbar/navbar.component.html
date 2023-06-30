@@ -1,1 +1,13 @@
-<p>navbar works!</p>
+<mat-drawer-container class="navbar-container" autosize>
+    <ul>
+        <li><app-channel></app-channel></li>
+        <li>
+            <button (click)="newChannel()"><mat-icon>add_box</mat-icon>Add channels</button>
+        </li>
+        <li>Messages</li>
+        <li><app-messages></app-messages></li>
+        <li>
+            <button (click)="newMessage()"><mat-icon>add_box</mat-icon>Add teamates</button>
+        </li>
+    </ul>
+</mat-drawer-container>
