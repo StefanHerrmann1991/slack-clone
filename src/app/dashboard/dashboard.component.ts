@@ -30,8 +30,7 @@ export class DashboardComponent {
   filteredUsers: Observable<string[]>;
 
 
-  ngOnInit() {
-    debugger;
+  ngOnInit() {   
     this.route.paramMap.subscribe(paramMap => {
       this.userId = paramMap.get('id');     
       this.getUser();

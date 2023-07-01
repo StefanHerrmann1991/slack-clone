@@ -16,11 +16,11 @@ import { DatePipe } from '@angular/common';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
-  selector: 'app-new-channel-dialog',
-  templateUrl: './new-channel-dialog.component.html',
-  styleUrls: ['./new-channel-dialog.component.sass']
+  selector: 'app-navbar-new-channel-dialog',
+  templateUrl: './navbar-new-channel-dialog.component.html',
+  styleUrls: ['./navbar-new-channel-dialog.component.sass']
 })
-export class NewChannelDialogComponent implements OnInit {
+export class NavbarNewChannelDialogComponent implements OnInit {
   channel: Channel = new Channel();
   channelNameInput: string;
   users: any[];
@@ -35,7 +35,7 @@ export class NewChannelDialogComponent implements OnInit {
   currentUser: any;
 
   constructor(private firestore: AngularFirestore,
-    public dialogRef: MatDialogRef<NewChannelDialogComponent>,
+    public dialogRef: MatDialogRef<NavbarNewChannelDialogComponent>,
     private afAuth: AngularFireAuth,
     private _formBuilder: FormBuilder,
     private ChannelService: ChannelsService,

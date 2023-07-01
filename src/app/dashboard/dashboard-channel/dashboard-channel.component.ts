@@ -8,11 +8,11 @@ import { onAuthStateChanged, getAuth } from 'firebase/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Component({
-  selector: 'app-channel',
-  templateUrl: './channel.component.html',
-  styleUrls: ['./channel.component.sass']
+  selector: 'app-dashboard-channel',
+  templateUrl: './dashboard-channel.component.html',
+  styleUrls: ['./dashboard-channel.component.sass']
 })
-export class ChannelComponent implements OnInit {
+export class DashboardChannelComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, public channelService: ChannelsService, private firestore: AngularFirestore,
     private afAuth: AngularFireAuth) { }

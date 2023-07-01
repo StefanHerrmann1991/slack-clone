@@ -9,10 +9,11 @@ import { VerifyEmailComponent } from './authentication/verify-email/verify-email
 
 /* routes */
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { ChannelComponent as DashboardChannelComponent } from './dashboard/channel/channel.component';
-import { ChannelComponent as NavbarChannelComponent } from './navbar/channel/channel.component';
+import { DashboardChannelComponent } from './dashboard/dashboard-channel/dashboard-channel.component';
+import { NavbarChannelComponent } from './navbar/navbar-channel/navbar-channel.component';
 import { UserComponent as NavbarUserComponent } from './navbar/user/user.component';
-import { MessagesComponent as NavbarMessagesComponent } from './navbar/messages/messages.component'
+import { NavbarMessagesComponent } from './navbar/navbar-messages/navbar-messages.component';
+import { DashboardMessagesComponent } from './dashboard/dashboard-messages/dashboard-messages.component';
 
 
 
@@ -20,7 +21,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
     path: 'dashboard/:id', component: DashboardComponent,
-    /* children: [{ path: 'channel/:channelId', component: DashboardChannelComponent }] */
+    children: [{ path: 'channel/:channelId', component: DashboardChannelComponent }] 
   },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },

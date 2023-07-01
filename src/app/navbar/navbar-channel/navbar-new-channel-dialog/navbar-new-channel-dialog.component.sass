@@ -1,0 +1,54 @@
+@import '../../../../styles.sass'
+
+.dialog-container
+    background-color: $dark
+    border-bottom: 1px solid #0000
+    border-top: 1px solid #0000
+    height: 520px
+    min-width: 520px
+    padding: 5%
+    border-radius: 8px
+
+h1
+    font-size: 28px
+
+div, h1, input, mat-label
+    color: white
+
+.costom-input
+    color: white !important
+    &::-webkit-input-placeholder
+        color: rgb(209, 210, 211) !important
+    &::-moz-placeholder
+        color: rgb(209, 210, 211) !important
+    &::-ms-input-placeholder
+        color: rgb(209, 210, 211) !important
+    &::placeholder
+        color: rgb(209, 210, 211)!important
+
+.channel-inputs
+    display: flex
+    justify-content: flex-start
+    flex-direction: column
+
+span
+    color: gray
+
+.create-channel
+    display: flex
+    align-self: flex-end
+
+.private
+    display: flex
+
+.cdk-overlay-pane
+    width: 520px
+
+mat-option, input
+    color: black
+
+.mat-mdc-dialog-container
+    border-radius: 8px !important
+
+.mdc-dialog__surface
+    border-radius: 8px !important

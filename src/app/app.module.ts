@@ -41,39 +41,40 @@ import { AuthService } from "./services/auth.service";
 /* auth */
 /* navbar */
 /* dashboard */
-import { MessagesComponent } from './navbar/messages/messages.component';
+
 import { NavbarComponent } from './navbar/navbar.component';
 import { LoginComponent } from './authentication/login/login.component';
 import { RegisterComponent } from './authentication/register/register.component';
 import { VerifyEmailComponent } from './authentication/verify-email/verify-email.component';
 import { ForgotPasswordComponent } from './authentication/forgot-password/forgot-password.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { ChannelComponent as NavbarChannelComponent } from './navbar/channel/channel.component';
-import { MessagesComponent as NavbarMessagesComponent } from './navbar/messages/messages.component'
-import { ChannelComponent as DashboardChannelComponent } from './dashboard/channel/channel.component';
+import { NavbarChannelComponent } from './navbar/navbar-channel/navbar-channel.component';
+import { DashboardChannelComponent } from './dashboard/dashboard-channel/dashboard-channel.component';
 import { UserComponent as NavbarUserComponent } from './navbar/user/user.component';
 import { EditUserComponent } from './navbar/user/edit-user/edit-user.component';
-import { NewChannelDialogComponent as DashboardNewChannelDialogComponent } from './dashboard/channel/new-channel-dialog/new-channel-dialog.component';
-import { NewChannelDialogComponent as NavbarNewChannelDialogComponent } from './navbar/channel/new-channel-dialog/new-channel-dialog.component';
-
+import { DashboardNewChannelDialogComponent } from './dashboard/dashboard-channel/dashboard-new-channel-dialog/dashboard-new-channel-dialog.component';
+import { NavbarNewChannelDialogComponent } from './navbar/navbar-channel/navbar-new-channel-dialog/navbar-new-channel-dialog.component';
+import { DashboardMessagesComponent } from './dashboard/dashboard-messages/dashboard-messages.component';
+import { NavbarMessagesComponent } from './navbar/navbar-messages/navbar-messages.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MessagesComponent,
     NavbarComponent,
     NavbarChannelComponent,
-    DashboardChannelComponent,
     LoginComponent,
     RegisterComponent,
     VerifyEmailComponent,
     ForgotPasswordComponent,
     DashboardComponent,
+    DashboardChannelComponent,
+    DashboardNewChannelDialogComponent,
     NavbarUserComponent,
     EditUserComponent,
     NavbarMessagesComponent,
-    DashboardNewChannelDialogComponent,
-    NavbarNewChannelDialogComponent
+    NavbarNewChannelDialogComponent,
+    DashboardMessagesComponent,
+
   ],
   imports: [
     MatSlideToggleModule,

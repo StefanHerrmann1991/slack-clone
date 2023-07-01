@@ -1,11 +1,7 @@
 <mat-tree [dataSource]="channelService.dataSource" [treeControl]="channelService.treeControl">
-
-
     <!-- This is the tree node template for leaf nodes -->
     <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent="0"
         [routerLink]="['dashboard-channel/' + node.channelId]">
-
-
         <!-- use a disabled button to provide padding for tree leaf -->
         <button mat-icon-button>
             <mat-icon class="closed-area" [ngStyle]="{'font-style': node.isClosedArea ? 'normal' : 'italic' }"> {{
@@ -13,12 +9,8 @@
         </button>
         {{node.name}}
     </mat-tree-node>
-
-
     <mat-tree-node *matTreeNodeDef="let node;when: channelService.hasChild" matTreeNodePadding class="hightest-node">
         <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
-
-
             <mat-icon>
                 <ng-container *ngIf="channelService.treeControl.isExpanded(node); 
           else arrow_right">
@@ -26,12 +18,8 @@
                 </ng-container>
                 <ng-template #arrow_right>arrow_right</ng-template>
             </mat-icon>
-
-
         </button>
         <span
             [ngStyle]="{'color': channelService.treeControl.isExpanded(node) ? 'gray' : 'white' }">{{node.name}}</span>
     </mat-tree-node>
-
-
 </mat-tree>

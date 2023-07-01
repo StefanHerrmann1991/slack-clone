@@ -11,20 +11,16 @@ import { ChannelsService } from 'src/app/services/channels.service';
 
 
 @Component({
-  selector: 'app-channel',
-  templateUrl: './channel.component.html',
-  styleUrls: ['./channel.component.sass']
+  selector: 'app-navbar-channel',
+  templateUrl: './navbar-channel.component.html',
+  styleUrls: ['./navbar-channel.component.sass']
 })
-export class ChannelComponent {
+export class NavbarChannelComponent {
   /* Only shows the channels names but not the corresponding data. */
   ngOnInit() {
     this.channelService.renderTree();
   }
-
-
   constructor(public dialog: MatDialog, public channelService: ChannelsService) {
   }
-
-
   openChannel() { console.log('is clicked') }
 }

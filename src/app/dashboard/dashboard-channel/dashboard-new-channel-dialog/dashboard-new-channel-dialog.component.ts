@@ -11,11 +11,11 @@ import { switchMap } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 
 @Component({
-  selector: 'app-new-channel-dialog',
-  templateUrl: './new-channel-dialog.component.html',
-  styleUrls: ['./new-channel-dialog.component.sass']
+  selector: 'app-dashboard-new-channel-dialog',
+  templateUrl: './dashboard-new-channel-dialog.component.html',
+  styleUrls: ['./dashboard-new-channel-dialog.component.sass']
 })
-export class NewChannelDialogComponent implements OnInit {
+export class DashboardNewChannelDialogComponent implements OnInit {
 
   constructor(private datePipe: DatePipe, private route: ActivatedRoute, public channelService: ChannelsService, private firestore: AngularFirestore, private afAuth: AngularFireAuth,) { }
   textareaFocused = false;

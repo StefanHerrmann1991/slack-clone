@@ -2,8 +2,8 @@ import { FlatTreeControl } from '@angular/cdk/tree';
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
-import { ChannelComponent as NavbarChannelComponent } from '../navbar/channel/channel.component';
-import { MessagesComponent as NavbarMessagesComponent } from '../navbar/messages/messages.component';
+import { NavbarChannelComponent } from './navbar-channel/navbar-channel.component';
+import { NavbarMessagesComponent } from '../navbar/navbar-messages/navbar-messages.component';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Channel } from 'src/models/channel.class';
 
