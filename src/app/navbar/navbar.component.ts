@@ -2,7 +2,7 @@ import { FlatTreeControl } from '@angular/cdk/tree';
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
-import { NavbarChannelComponent } from './navbar-channel/navbar-channel.component';
+import { NavbarNewChannelDialogComponent } from './navbar-channel/navbar-new-channel-dialog/navbar-new-channel-dialog.component';
 import { NavbarMessagesComponent } from '../navbar/navbar-messages/navbar-messages.component';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Channel } from 'src/models/channel.class';
@@ -18,16 +18,16 @@ export class NavbarComponent {
   constructor(private dialog: MatDialog, private firestore: AngularFirestore) { }
 
   newChannel() {
-    this.dialog.open(NavbarChannelComponent, {
+    this.dialog.open(NavbarNewChannelDialogComponent, {
       width: '520px',
       hasBackdrop: true
     });
   }
 
   newMessage() {
-    this.dialog.open(NavbarMessagesComponent, {
+  /*   this.dialog.open(NavbarNewMessagesDialogComponent, {
       width: '520px',
       hasBackdrop: true
-    });
+    }); */
   }
 }

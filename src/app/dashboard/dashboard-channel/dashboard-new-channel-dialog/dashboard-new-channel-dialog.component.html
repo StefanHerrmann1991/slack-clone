@@ -1,8 +1,7 @@
 <div [ngClass]="{ 'focused': textareaFocused }" class="add-message">
     <textarea placeholder="Message {{ channel.channelName }}" [(ngModel)]="messageTextInput"
         (focus)="textareaFocused = true" (blur)="textareaFocused = false"></textarea>
-    <div>
-        <div></div>
+    <div>        
         <button (click)="getCurrentUser()" class="send-btn"><mat-icon>send</mat-icon></button>
     </div>
 </div>

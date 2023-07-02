@@ -1,5 +1,10 @@
 @import '../../../styles.sass'
 
+h2
+    padding-top: 12px
+    padding-bottom: 12px
+    font-size: 18px
+
 .main-container
     color: gray
 
@@ -8,6 +13,7 @@ mat-tree
     display: flex
     flex-direction: column
     justify-content: flex-start
+    width: 100%
 mat-tree-node
     padding: 0px
     color: gray
@@ -34,3 +40,36 @@ mat-tree-node
 
 .mdc-dialog__surface
     border-radius: 8px !important
+
+.channels
+    padding: 0px 12px 0px 12px
+    border-radius: 4px
+    &:hover
+        background-color: $hover
+
+.closed-area
+    width: 16px
+    height: 16px
+    font-size: 16px
+
+.mat-button
+    position: relative
+    overflow: hidden
+
+    &::before
+        content: ""
+        display: block
+        position: absolute
+        top: 50%
+        left: 50%
+        transform: translate(-50%, -50%)
+        width: 24px
+        height: 24px
+        background-color: transparent
+        border-radius: 4px
+
+    &:hover::before
+        width: 24px
+        height: 24px
+        background-color: $hover
+        border-radius: 4px

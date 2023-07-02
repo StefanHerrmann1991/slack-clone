@@ -45,6 +45,7 @@ export class NavbarNewChannelDialogComponent implements OnInit {
 
   // diese Funktion verwenden für saveEditedUser()
   addNewChannel() {
+    debugger;
     this.afAuth.authState.subscribe(currentUser => {
       if (currentUser) {
         this.firestore
@@ -62,10 +63,11 @@ export class NavbarNewChannelDialogComponent implements OnInit {
               creatorId: currentUser.uid,
               usersData: this.users,
               channelName: this.channelNameInput,
-              discription: this.channelDiscription,
+              description: this.channelDiscription,  // Corrected from 'discription' to 'description'
               isClosedArea: this.isClosedArea,
               creationTime: this.timestamp,
-              numberOfMembers: this.users.length
+              numberOfMembers: this.users.length,
+              messages: []  // You can initialize messages as an empty array if there are no messages at the time of channel creation
             });
             console.log(this.newChannel)
             this.firestore

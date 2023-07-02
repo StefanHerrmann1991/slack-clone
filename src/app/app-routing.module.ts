@@ -21,7 +21,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
     path: 'dashboard/:id', component: DashboardComponent,
-    children: [{ path: 'channel/:channelId', component: DashboardChannelComponent }] 
+    children: [{ path: 'dashboard-channel/:channelId', component: DashboardChannelComponent }] 
   },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },

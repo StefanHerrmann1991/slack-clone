@@ -77,12 +77,8 @@ export class ChannelsService {
         const channel = new Channel(doc.data());
         this.tree.push({ name: `${channel.channelName}`, isClosedArea: channel.isClosedArea, channelId: doc.id });
       });
-      themes = [{ name: 'Channel', children: this.tree }];
+      themes = [{ name: 'Channels', children: this.tree }];
       this.dataSource.data = themes;
     });
   }
-
-  
-
-
 }

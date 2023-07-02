@@ -1,0 +1,40 @@
+
+.add-message
+    border: solid 1px #565856
+    display: flex
+    justify-content: center
+    align-items: center
+    border-radius: 12px
+    background-color: rgb(34, 37, 41)
+    width: calc(100% - 40px)
+    margin-left: 20px
+    margin-right: 20px
+    &:focus
+        outline: none
+        box-shadow: none
+
+    textarea
+        border-top-left-radius: 12px
+        border-bottom-left-radius: 12px
+        resize: none
+        border: none
+        background-color: rgb(34, 37, 41)
+        width: 100%
+        &:focus
+            border: none
+            outline: none
+            box-shadow: none
+
+    button
+        display: flex
+        justify-content: center
+        align-items: center
+        color: white
+        border: none
+        background-color: #007a5a
+        padding: 6px
+        border-radius: 6px
+        margin-right: 8px
+
+.focused
+    border: solid 1px #818385
