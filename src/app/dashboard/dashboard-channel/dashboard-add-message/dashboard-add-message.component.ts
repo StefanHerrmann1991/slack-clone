@@ -9,14 +9,14 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { DatePipe } from '@angular/common';
 import { switchMap } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
-
+import { onAuthStateChanged, getAuth } from 'firebase/auth';
 
 @Component({
-  selector: 'app-dashboard-new-channel-dialog',
-  templateUrl: './dashboard-new-channel-dialog.component.html',
-  styleUrls: ['./dashboard-new-channel-dialog.component.sass']
+  selector: 'app-dashboard-add-message',
+  templateUrl: './dashboard-add-message.component.html',
+  styleUrls: ['./dashboard-add-message.component.sass']
 })
-export class DashboardNewChannelDialogComponent implements OnInit {
+export class DashboardAddMessageComponent implements OnInit {
 
   constructor(
     private datePipe: DatePipe,
@@ -24,7 +24,8 @@ export class DashboardNewChannelDialogComponent implements OnInit {
     public channelService: ChannelsService,
     private firestore: AngularFirestore,
     private afAuth: AngularFireAuth,
-    private router: Router) { }
+    private router: Router,
+    ) { }
 
   textareaFocused = false;
   placeholderText: string;
@@ -34,16 +35,17 @@ export class DashboardNewChannelDialogComponent implements OnInit {
   channelId = '';
   userId = ''; // <-- added this
   channel: Channel = new Channel();
-
+  usersId: string;
+  usersEmail: string;
+  userDisplayName: string;
 
   ngOnInit() {
-    debugger
-    const urlSegments = this.route.snapshot.url.map(segment => segment.path);
-    this.userId = urlSegments[0]; // Gets the userId from the URL
-    this.channelId = urlSegments[3]; // Gets the channelId from the URL
-    this.getChannel();
-    this.getUserData(this.userId);
+    this.route.paramMap.subscribe(paramMap => {
+      this.channelId = paramMap.get('channelId');
+      this.getChannel();
+    })
   }
+
 
 
   getChannel() {
@@ -87,25 +89,23 @@ export class DashboardNewChannelDialogComponent implements OnInit {
     return this.myDate;
   }
 
-  getUser(currentUser) {
-    if (currentUser) {
-      this.firestore
-        .collection('users')
-        .get()
-        .subscribe(snapshot => {
-          // Get all the users data from Firestore
-          const users: any = snapshot.docs.map(doc => doc.data());
-          // Find the current user's data in the users array
-          const currentUserData = users.find(user => user.userId === currentUser.uid);
-          this.addMessage(currentUserData)
-        });
-    }
-  }
-
   getCurrentUser() {
     this.afAuth.authState.subscribe(currentUser => {
-      this.getUser(currentUser);
-    });
+      if (currentUser) {
+   
+       
+        this.firestore
+          .collection('users')
+          .get()
+          .subscribe(snapshot => {
+            onAuthStateChanged(getAuth(), (authUser) => {
+              this.usersId = authUser.uid;
+              this.usersEmail = authUser.email;
+              this.userDisplayName = authUser.displayName;             
+            });
+          });
+      } 
+    }); 
   }
 }
 

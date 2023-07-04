@@ -52,10 +52,12 @@ import { NavbarChannelComponent } from './navbar/navbar-channel/navbar-channel.c
 import { DashboardChannelComponent } from './dashboard/dashboard-channel/dashboard-channel.component';
 import { UserComponent as NavbarUserComponent } from './navbar/user/user.component';
 import { EditUserComponent } from './navbar/user/edit-user/edit-user.component';
-import { DashboardNewChannelDialogComponent } from './dashboard/dashboard-channel/dashboard-new-channel-dialog/dashboard-new-channel-dialog.component';
+import { DashboardAddMessageComponent } from './dashboard/dashboard-channel/dashboard-add-message/dashboard-add-message.component';
 import { NavbarNewChannelDialogComponent } from './navbar/navbar-channel/navbar-new-channel-dialog/navbar-new-channel-dialog.component';
 import { DashboardMessagesComponent } from './dashboard/dashboard-messages/dashboard-messages.component';
 import { NavbarMessagesComponent } from './navbar/navbar-messages/navbar-messages.component';
+
+
 
 @NgModule({
   declarations: [
@@ -68,7 +70,7 @@ import { NavbarMessagesComponent } from './navbar/navbar-messages/navbar-message
     ForgotPasswordComponent,
     DashboardComponent,
     DashboardChannelComponent,
-    DashboardNewChannelDialogComponent,
+    DashboardAddMessageComponent,
     NavbarUserComponent,
     EditUserComponent,
     NavbarMessagesComponent,

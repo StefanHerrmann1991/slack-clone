@@ -15,11 +15,5 @@ export interface UserInterface {
 
 export class UserService {
 
-  private userSubject: BehaviorSubject<User> = new BehaviorSubject<User>(new User());
-  user$ = this.userSubject.asObservable();
-
-  updateUser(user: User) {
-    this.userSubject.next(user);
-    console.log(user)
-  }
+ 
 }
