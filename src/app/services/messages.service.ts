@@ -5,7 +5,6 @@ import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree'
 
 interface MessagesNode {
   name: string;
-
   children?: MessagesNode[];
 }
 

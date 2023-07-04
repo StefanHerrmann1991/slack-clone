@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map, of, tap } from 'rxjs';
 import { ChannelsService } from 'src/app/services/channels.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
@@ -10,6 +10,7 @@ import { DatePipe } from '@angular/common';
 import { switchMap } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 
+
 @Component({
   selector: 'app-dashboard-new-channel-dialog',
   templateUrl: './dashboard-new-channel-dialog.component.html',
@@ -17,22 +18,33 @@ import { FormControl } from '@angular/forms';
 })
 export class DashboardNewChannelDialogComponent implements OnInit {
 
-  constructor(private datePipe: DatePipe, private route: ActivatedRoute, public channelService: ChannelsService, private firestore: AngularFirestore, private afAuth: AngularFireAuth,) { }
+  constructor(
+    private datePipe: DatePipe,
+    private route: ActivatedRoute,
+    public channelService: ChannelsService,
+    private firestore: AngularFirestore,
+    private afAuth: AngularFireAuth,
+    private router: Router) { }
+
   textareaFocused = false;
   placeholderText: string;
   newMessage: Message = new Message();
   messageTextInput: string;
   myDate: any = new Date();
   channelId = '';
+  userId = ''; // <-- added this
   channel: Channel = new Channel();
 
 
   ngOnInit() {
-    this.route.paramMap.subscribe(paramMap => {
-      this.channelId = paramMap.get('channelId');
-      this.getChannel();
-    })
+    debugger
+    const urlSegments = this.route.snapshot.url.map(segment => segment.path);
+    this.userId = urlSegments[0]; // Gets the userId from the URL
+    this.channelId = urlSegments[3]; // Gets the channelId from the URL
+    this.getChannel();
+    this.getUserData(this.userId);
   }
+
 
   getChannel() {
     this.firestore
@@ -44,6 +56,16 @@ export class DashboardNewChannelDialogComponent implements OnInit {
       })
   }
 
+  getUserData(userId) {
+
+    this.firestore
+      .collection('users')
+      .doc(userId)
+      .valueChanges()
+      .subscribe((user: any) => {
+        if (user.id) this.addMessage(user);
+      })
+  }
 
   addMessage(userData) {
     let date = this.getData()

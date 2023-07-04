@@ -48,6 +48,7 @@ export class DashboardComponent {
       .valueChanges()
       .subscribe((user: any) => {
         this.user = new User(user);
+        console.log(this.user);
       })
   }
 
@@ -65,5 +66,4 @@ export class DashboardComponent {
     dialog.componentInstance.user = new User(this.user.toJSON());
     dialog.componentInstance.userId = this.userId;
   }
-
 }
