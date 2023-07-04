@@ -3,7 +3,7 @@ import { User } from 'src/models/user.class';
 import { BehaviorSubject } from 'rxjs';
 
 export interface UserInterface {
-  username: string;
+  displayName: string;
   email: string;
   password: string;
   uid: string;
@@ -17,3 +17,5 @@ export class UserService {
 
  
 }
+
+export { User };

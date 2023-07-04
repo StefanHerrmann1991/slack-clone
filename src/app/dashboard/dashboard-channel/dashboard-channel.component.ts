@@ -14,7 +14,10 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 })
 export class DashboardChannelComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, public channelService: ChannelsService, private firestore: AngularFirestore,
+  constructor(
+    private route: ActivatedRoute,
+    public channelService: ChannelsService,
+    private firestore: AngularFirestore,
     private afAuth: AngularFireAuth) { }
 
   channelId = '';

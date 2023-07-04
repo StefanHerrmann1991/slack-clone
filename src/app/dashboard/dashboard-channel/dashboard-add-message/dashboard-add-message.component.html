@@ -2,6 +2,6 @@
     <textarea placeholder="Message {{ channel.channelName }}" [(ngModel)]="messageTextInput"
         (focus)="textareaFocused = true" (blur)="textareaFocused = false"></textarea>
     <div>        
-        <button (click)="getCurrentUser()" class="send-btn"><mat-icon>send</mat-icon></button>
+        <button id="sendMessageBtn" (click)="addMessage(currentUser)" class="send-btn"><mat-icon>send</mat-icon></button>
     </div>
 </div>

@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map, of, tap } from 'rxjs';
 import { ChannelsService } from 'src/app/services/channels.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Channel } from 'src/models/channel.class';
 import { Message } from 'src/models/channel.class';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { DatePipe } from '@angular/common';
-import { switchMap } from 'rxjs/operators';
-import { FormControl } from '@angular/forms';
-import { onAuthStateChanged, getAuth } from 'firebase/auth';
+import { Subscription } from 'rxjs';
+import { AuthService } from '../../../services/auth.service';
+import { UserInterface as User } from '../../../services/user.service';
+
 
 @Component({
   selector: 'app-dashboard-add-message',
@@ -24,8 +24,7 @@ export class DashboardAddMessageComponent implements OnInit {
     public channelService: ChannelsService,
     private firestore: AngularFirestore,
     private afAuth: AngularFireAuth,
-    private router: Router,
-    ) { }
+    private authService: AuthService) { }
 
   textareaFocused = false;
   placeholderText: string;
@@ -33,19 +32,19 @@ export class DashboardAddMessageComponent implements OnInit {
   messageTextInput: string;
   myDate: any = new Date();
   channelId = '';
-  userId = ''; // <-- added this
   channel: Channel = new Channel();
-  usersId: string;
-  usersEmail: string;
-  userDisplayName: string;
+  private userSubscription?: Subscription;
+  currentUser: User | null = null;
+
+
 
   ngOnInit() {
-    this.route.paramMap.subscribe(paramMap => {
-      this.channelId = paramMap.get('channelId');
-      this.getChannel();
-    })
+    this.userSubscription = this.authService.currentUser$.subscribe(user => {
+      this.currentUser = user;
+    });
+    this.channelId = this.route.snapshot.paramMap.get('channelId');
+    this.getChannel();
   }
-
 
 
   getChannel() {
@@ -58,55 +57,37 @@ export class DashboardAddMessageComponent implements OnInit {
       })
   }
 
-  getUserData(userId) {
-
-    this.firestore
-      .collection('users')
-      .doc(userId)
-      .valueChanges()
-      .subscribe((user: any) => {
-        if (user.id) this.addMessage(user);
-      })
-  }
-
   addMessage(userData) {
-    let date = this.getData()
-    let userId = userData.userId
-    let userName
-    if (userData.name) userName = userData.name;
-    else userName = userData.email;
+    let date = this.getData();
+    this.getChannel();
+  
+    // Here's where the Message object should be created.
     this.newMessage = new Message({
       text: this.messageTextInput,
       time: date,
-      userId: userId,
-      userName: userName
-    })
-    console.log(this.newMessage);
+      userName: userData.displayName,
+      userId: userData.uid,
+      userEmail: userData.email
+    });
+  
+    // push the plain JavaScript object representation to the messages array
+    this.channel.messages.push(this.newMessage);
+    this.saveChannel();
   }
+
+  saveChannel() {
+    this.firestore
+      .collection('channels')
+      .doc(this.channelId)
+      .update(this.channel.toJSON())
+  }
+
 
   getData() {
     this.myDate = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
     return this.myDate;
   }
 
-  getCurrentUser() {
-    this.afAuth.authState.subscribe(currentUser => {
-      if (currentUser) {
-   
-       
-        this.firestore
-          .collection('users')
-          .get()
-          .subscribe(snapshot => {
-            onAuthStateChanged(getAuth(), (authUser) => {
-              this.usersId = authUser.uid;
-              this.usersEmail = authUser.email;
-              this.userDisplayName = authUser.displayName;             
-            });
-          });
-      } 
-    }); 
-  }
 }
 
 

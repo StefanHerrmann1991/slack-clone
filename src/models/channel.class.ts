@@ -17,7 +17,7 @@ export class Channel {
         this.description = obj ? obj.description : '';
         this.creationTime = obj ? obj.creationTime : '';
         this.numberOfMembers = obj ? obj.numberOfMembers : '';
-        this.messages = obj ? obj.messages : [];
+        this.messages = obj && obj.messages ? obj.messages.map(msg => new Message(msg)) : [];
     }
 
     public toJSON() {
@@ -28,8 +28,8 @@ export class Channel {
             isClosedArea: this.isClosedArea,
             description: this.description,
             creationTime: this.creationTime,
-            numberOfMembers : this.numberOfMembers,
-            messages: this.messages
+            numberOfMembers: this.numberOfMembers,
+            messages: this.messages.map(message => message.toJSON())
         }
     }
 }
@@ -39,11 +39,25 @@ export class Message {
     time: any;
     userId: string;
     userName: string;
+    userEmail: string;
 
     constructor(obj?: any) {
         this.text = obj ? obj.text : '';
         this.time = obj ? obj.time : '';
         this.userId = obj ? obj.userId : '';
         this.userName = obj ? obj.userName : '';
+        this.userEmail = obj ? obj.userEmail : '';
     }
+
+    public toJSON() {
+        return {
+            text: this.text,
+            time: this.time,
+            userId: this.userId,
+            userName: this.userName,
+            userEmail: this.userEmail
+        };
+        
+    }
+    
 }

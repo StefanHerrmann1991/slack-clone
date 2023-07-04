@@ -13,7 +13,7 @@
     <mat-tree-node *matTreeNodeDef="let node;when: channelService.hasChild" matTreeNodePadding class="hightest-node">
         <div class="mat-button">
             <button  mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
-                <mat-icon id="car" (click)="toggleExpanded(node)">
+                <mat-icon  (click)="toggleExpanded(node)">
                     {{ channelService.treeControl.isExpanded(node) ? 'arrow_drop_down' : 'arrow_right' }}
                 </mat-icon>
             </button>

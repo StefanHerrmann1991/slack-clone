@@ -35,7 +35,5 @@ export class NavbarChannelComponent {
 
   changeBackground(color: string) {
       this.iconBackground = color;
-  }
-  
-
+  } 
 }

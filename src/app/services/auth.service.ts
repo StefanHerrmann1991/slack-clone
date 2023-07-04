@@ -4,13 +4,15 @@ import * as auth from 'firebase/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 
 export class AuthService {
-
+  private _currentUser = new BehaviorSubject<User | null>(null);
+  readonly currentUser$ = this._currentUser.asObservable();
   userData: any; // Save logged in user data
   currentUserId: string;
 
@@ -34,7 +36,17 @@ export class AuthService {
         // localStorage.setItem('user', 'null');
         // JSON.parse(localStorage.getItem('user')!);
       }
-    });
+      if (user) {
+        this._currentUser.next({
+          uid: user.uid,
+          email: user.email,
+          displayName: user.displayName,
+          password: ''
+        });
+      } else {
+        this._currentUser.next(null);
+      }
+    });  
   }
 
 
@@ -67,7 +79,7 @@ export class AuthService {
         const userId = result.user.uid
         const email = result.user.email
         const displayName = result.user.displayName
-      /*   if (displayName !== "") displayName = email */
+        /*   if (displayName !== "") displayName = email */
         this.saveUser(displayName, userId, email);
       })
       .catch((error) => {
@@ -143,7 +155,7 @@ export class AuthService {
     );
     const userData: User = {
       uid: user.uid,
-      username: user.username,
+      displayName: user.displayName,
       email: user.email,
       password: user.password,
     };

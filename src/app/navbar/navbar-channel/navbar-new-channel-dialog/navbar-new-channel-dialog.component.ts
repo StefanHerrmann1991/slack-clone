@@ -68,8 +68,7 @@ export class NavbarNewChannelDialogComponent implements OnInit {
               creationTime: this.timestamp,
               numberOfMembers: this.users.length,
               messages: []  // You can initialize messages as an empty array if there are no messages at the time of channel creation
-            });
-            console.log(this.newChannel)
+            });       
             this.firestore
               .collection('channels')
               .add(this.newChannel.toJSON())
