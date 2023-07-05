@@ -22,23 +22,23 @@ export class DashboardChannelComponent implements OnInit {
 
   channelId = '';
   channel: Channel = new Channel();
-
+  messages: any;
 
   ngOnInit() {
     this.route.paramMap.subscribe(paramMap => {
-      this.channelId = paramMap.get('channelId');
-      this.getChannel();
+      this.channelId = paramMap.get('channelId'); 
+      this.getChannel();   
     })
   }
 
-  getChannel() {
-
+  getChannel(): void {
     this.firestore
       .collection('channels')
       .doc(this.channelId)
       .valueChanges()
       .subscribe((channel: any) => {
-        this.channel = new Channel(channel);
+        this.channel = new Channel(channel);       
+        this.messages = this.channel.messages;
       })
   }
 }

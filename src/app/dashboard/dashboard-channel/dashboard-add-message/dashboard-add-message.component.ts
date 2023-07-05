@@ -42,7 +42,10 @@ export class DashboardAddMessageComponent implements OnInit {
     this.userSubscription = this.authService.currentUser$.subscribe(user => {
       this.currentUser = user;
     });
-    this.channelId = this.route.snapshot.paramMap.get('channelId');
+    this.route.paramMap.subscribe(paramMap => {
+      this.channelId = paramMap.get('channelId');
+      this.getChannel();
+    })
     this.getChannel();
   }
 
@@ -54,14 +57,14 @@ export class DashboardAddMessageComponent implements OnInit {
       .valueChanges()
       .subscribe((channel: any) => {
         this.channel = new Channel(channel);
+        console.log(this.channelId)
       })
   }
 
   addMessage(userData) {
     let date = this.getData();
     this.getChannel();
-  
-    // Here's where the Message object should be created.
+    // Here's where the Message is created.
     this.newMessage = new Message({
       text: this.messageTextInput,
       time: date,
@@ -69,7 +72,6 @@ export class DashboardAddMessageComponent implements OnInit {
       userId: userData.uid,
       userEmail: userData.email
     });
-  
     // push the plain JavaScript object representation to the messages array
     this.channel.messages.push(this.newMessage);
     this.saveChannel();
