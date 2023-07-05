@@ -36,7 +36,6 @@ export class AuthService {
         // localStorage.setItem('user', 'null');
         // JSON.parse(localStorage.getItem('user')!);
       }
-
       if (user) {
         this._currentUser.next({
           uid: user.uid,
@@ -47,7 +46,7 @@ export class AuthService {
       } else {
         this._currentUser.next(null);
       }
-    });
+    });  
   }
 
 
@@ -79,8 +78,8 @@ export class AuthService {
         this.SetUserData(result.user);
         const userId = result.user.uid
         const email = result.user.email
-        let displayName = result.user.displayName
-        if (displayName !== "") displayName = this.getName(email)
+        const displayName = result.user.displayName
+        /*   if (displayName !== "") displayName = email */
         this.saveUser(displayName, userId, email);
       })
       .catch((error) => {
@@ -88,11 +87,6 @@ export class AuthService {
       });
   }
 
-
-  getName(email) {
-    let name = email.split('@')[0];
-    return name;
-  }
 
   navigateToRoute(route: string) {
     this.router.navigate([route]);
@@ -163,7 +157,7 @@ export class AuthService {
       uid: user.uid,
       displayName: user.displayName,
       email: user.email,
-      password: user.password,
+      password: '',
     };
     return userRef.set(userData, {
       merge: true,

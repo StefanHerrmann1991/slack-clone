@@ -15,17 +15,10 @@ export class LoginComponent {
 
   constructor(public authService: AuthService, private route: ActivatedRoute) {}
 
-  // loginForm = new FormGroup({
-  //   username : new FormControl('', Validators.required),
-  //   password : new FormControl('', Validators.required)
-  // }
-    
+     
   ngOnInit() {
     this.route.paramMap.subscribe(paramMap => {
       const userId = paramMap.get('userId');
-      console.log(userId)
-      // Use the userId to retrieve the user's data from the Firestore database
     });
   }
-
 }

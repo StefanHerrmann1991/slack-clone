@@ -4,9 +4,9 @@ import { BehaviorSubject } from 'rxjs';
 
 export interface UserInterface {
   displayName: string;
-  email: string;
-  password: string;
+  email: string; 
   uid: string;
+  password: string;
 }
 
 @Injectable({
@@ -14,8 +14,10 @@ export interface UserInterface {
 })
 
 export class UserService {
-
- 
+  username: string;
+  email: string;
+  uid: string; 
+  password: string;
 }
 
 export { User };
