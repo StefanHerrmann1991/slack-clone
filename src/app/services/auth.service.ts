@@ -36,16 +36,12 @@ export class AuthService {
         // localStorage.setItem('user', 'null');
         // JSON.parse(localStorage.getItem('user')!);
       }
-      if (user) {
-        let displayName = user.displayName;
-        if (!displayName) {
-          displayName = this.getName(user.email);
-        }
 
+      if (user) {
         this._currentUser.next({
           uid: user.uid,
           email: user.email,
-          displayName: displayName,
+          displayName: user.displayName,
           password: ''
         });
       } else {
@@ -54,12 +50,6 @@ export class AuthService {
     });
   }
 
-
-
-  getName(email) {
-    let displayName = email.split('@')[0];
-    return displayName;
-  }
 
   // Sign in with email/password
   async SignIn(email: string, password: string) {
@@ -89,8 +79,8 @@ export class AuthService {
         this.SetUserData(result.user);
         const userId = result.user.uid
         const email = result.user.email
-        const displayName = result.user.displayName
-        /*   if (displayName !== "") displayName = email */
+        let displayName = result.user.displayName
+        if (displayName !== "") displayName = this.getName(email)
         this.saveUser(displayName, userId, email);
       })
       .catch((error) => {
@@ -98,6 +88,11 @@ export class AuthService {
       });
   }
 
+
+  getName(email) {
+    let name = email.split('@')[0];
+    return name;
+  }
 
   navigateToRoute(route: string) {
     this.router.navigate([route]);
