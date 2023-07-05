@@ -37,18 +37,29 @@ export class AuthService {
         // JSON.parse(localStorage.getItem('user')!);
       }
       if (user) {
+        let displayName = user.displayName;
+        if (!displayName) {
+          displayName = this.getName(user.email);
+        }
+
         this._currentUser.next({
           uid: user.uid,
           email: user.email,
-          displayName: user.displayName,
+          displayName: displayName,
           password: ''
         });
       } else {
         this._currentUser.next(null);
       }
-    });  
+    });
   }
 
+
+
+  getName(email) {
+    let displayName = email.split('@')[0];
+    return displayName;
+  }
 
   // Sign in with email/password
   async SignIn(email: string, password: string) {
