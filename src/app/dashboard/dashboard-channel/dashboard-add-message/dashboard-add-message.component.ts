@@ -39,9 +39,9 @@ export class DashboardAddMessageComponent implements OnInit {
 
 
   ngOnInit() {
-    /* this.userSubscription = this.authService.currentUser$.subscribe(user => {
+    this.userSubscription = this.authService.currentUser$.subscribe(user => {
       this.currentUser = user;
-    }); */
+    });
 
     this.route.paramMap.subscribe(paramMap => {
       this.channelId = paramMap.get('channelId');
