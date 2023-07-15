@@ -15,6 +15,27 @@ mat-card
 .mdc-card
     justify-content: center !important
 
+.line-with-date
+    display: flex
+    width: 100%
+    justify-content: center
+    align-items: center
+    .dividing-line
+        height: 1px
+        background-color: $border
+        width: calc( 100% - 80px - 16px)
+        z-index: 1
+    .message-date
+        white-space: nowrap
+        font-size: 14px
+        padding: 4px 16px 4px 16px
+        background-color: $dark
+        @include flex-center
+        z-index: 2
+        width: 160px
+        border-radius: 24px
+        border: 1px solid $border
+
 .channel
     background-color: $dark
     color: $text
@@ -23,7 +44,7 @@ mat-card
     width: 100%
     display: flex
     align-items: center
-    mat-icon
+    .mat-icon
         font-size: 16px
         width: 16px
         height: 16px

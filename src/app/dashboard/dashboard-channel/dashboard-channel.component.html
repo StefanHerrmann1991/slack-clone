@@ -3,17 +3,21 @@
         <div class="channel">
             <mat-card-title>
                 <button class="channel-btn">
-                    <mat-icon [ngStyle]="{'font-style': channel.isClosedArea ? 'normal' : 'italic' }">
+                    <mat-icon class="mat-icon" [ngStyle]="{'font-style': channel.isClosedArea ? 'normal' : 'italic' }">
                         {{ channel.isClosedArea ? 'lock' : 'tag' }}
                     </mat-icon>
                     <div>{{ channel.channelName }}</div>
-                    <mat-icon>expand_more</mat-icon>
+                    <mat-icon class="mat-icon" >expand_more</mat-icon>
                 </button>
             </mat-card-title>
         </div>
     </mat-card>
     <div *ngFor="let message of messages">
-        <div>{{message.time}}</div>
+        <div class="line-with-date">
+            <div class="dividing-line"></div>
+            <div class="message-date">{{message.time}}</div>
+            <div class="dividing-line"></div>
+        </div>
         <div>{{ message.text }}</div>
     </div>
     <div class="add-message-dialog">
