@@ -1,31 +1,32 @@
-<nav class="navbar navbar-header fixed-top flex-md-nowrap p-0 shadow">
-    <div>
-        <form class="header">
+<nav class="navbar navbar-header fixed-top  p-0 shadow">
+    <form class="header">
+        <div></div>
+        <div class="search-history">
             <mat-icon class="time">access_time</mat-icon>
             <input type="text" placeholder="Searchbar" [formControl]="control" [matAutocomplete]="auto"
                 class="search-input">
-            <button mat-icon-button class="pin-right-upper-corner" [matMenuTriggerFor]="headerMenu">
-                <mat-icon class="user-icon" aria-hidden="false" aria-label="Example home icon"
-                    fontIcon="person-circle"></mat-icon>
-                <span class="font-color">{{user.email}}</span>
-                <mat-menu #headerMenu="matMenu">
-                    <button mat-menu-item (click)="openProfile()">
-                        <mat-icon fontIcon="person-circle"></mat-icon>
-                        <span>Profile</span>
-                    </button>
-                    <button mat-menu-item (click)="authService.SignOut()">
-                        <mat-icon>logout</mat-icon>
-                        <span>Logout</span>
-                    </button>
-                </mat-menu>
-            </button>
-            <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let street of filteredUsers | async" [value]="user">
-                    {{user}}
-                </mat-option>
-            </mat-autocomplete>
-        </form>
-    </div>
+        </div>
+        <button mat-icon-button class="pin-right-upper-corner" [matMenuTriggerFor]="headerMenu">
+            <mat-icon class="user-icon" aria-hidden="false" aria-label="Example home icon"
+                fontIcon="person-circle"></mat-icon>
+            <span class="font-color">{{user.email}}</span>
+            <mat-menu #headerMenu="matMenu">
+                <button mat-menu-item (click)="openProfile()">
+                    <mat-icon fontIcon="person-circle"></mat-icon>
+                    <span>Profile</span>
+                </button>
+                <button mat-menu-item (click)="authService.SignOut()">
+                    <mat-icon>logout</mat-icon>
+                    <span>Logout</span>
+                </button>
+            </mat-menu>
+        </button>
+        <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let street of filteredUsers | async" [value]="user">
+                {{user}}
+            </mat-option>
+        </mat-autocomplete>
+    </form>
     <!-- <app-dashboard-profile></app-dashboard-profile> -->
 </nav>
 
