@@ -8,16 +8,16 @@
 
 
 
-$dark: rgb(26, 29, 33)
-$darker: rgb(25, 23, 29)
-$darkest: rgb(18, 16, 22)
-$violet: #611f69
-$hover: rgba(209,210,211,0.2)
-$blue: #4285f4
-$focus: rgb( 29, 155, 209)
-$focus2: rgb(26, 67, 86)
-$border: rgb(45, 48, 52)
-$text: rgb(206, 207, 208)
+$primary-bg-color: rgb(26, 29, 33)
+$secondary-bg-color: rgb(25, 23, 29)
+$tertiary-bg-color: rgb(18, 16, 22)
+$highlight-color: #611f69
+$hover-effect-color: rgba(209,210,211,0.2)
+$accent-color: #4285f4
+$primary-focus-color: rgb( 29, 155, 209)
+$secondary-focus-color: rgb(26, 67, 86)
+$border-color: rgb(45, 48, 52)
+$primary-text-color: rgb(206, 207, 208)
 
 /* Importing Bootstrap SCSS file. */
 @import "../node_modules/bootstrap/scss/bootstrap"
@@ -31,7 +31,7 @@ $text: rgb(206, 207, 208)
 .mat-mdc-card
     border-radius: none
     border: none
-    box-shadow: 0 1px 0 0 $border
+    box-shadow: 0 1px 0 0 $border-color
 
 @mixin flex-center
     display: flex

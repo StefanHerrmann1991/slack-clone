@@ -4,13 +4,13 @@
     position: block
     margin-top: 44px
     height: calc(100vh - 44px)
-    background-color: $dark
+    background-color: $primary-bg-color
     width: calc(100vw - 300px)
     color: white
 
 mat-card
-    background-color: $dark
-    border: $border
+    background-color: $primary-bg-color
+    border: $border-color
 
 .mdc-card
     justify-content: center !important
@@ -22,23 +22,23 @@ mat-card
     align-items: center
     .dividing-line
         height: 1px
-        background-color: $border
+        background-color: $border-color
         width: calc( 100% - 80px - 16px)
         z-index: 1
     .message-date
         white-space: nowrap
         font-size: 14px
         padding: 4px 16px 4px 16px
-        background-color: $dark
+        background-color: $primary-bg-color
         @include flex-center
         z-index: 2
         width: 160px
         border-radius: 24px
-        border: 1px solid $border
+        border: 1px solid $border-color
 
 .channel
-    background-color: $dark
-    color: $text
+    background-color: $primary-bg-color
+    color: $primary-text-color
     border: none
     border-radius: 0px
     width: 100%
@@ -67,12 +67,12 @@ mat-card-title
 
 button
     height: 30px
-    background-color: $dark
+    background-color: $primary-bg-color
     border: none
-    color: $text
+    color: $primary-text-color
     padding: 12px
     &:hover
-        background-color: $hover
+        background-color: $hover-effect-color
         border-radius: 4px
 
 .add-message-dialog
