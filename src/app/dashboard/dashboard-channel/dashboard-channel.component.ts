@@ -6,11 +6,13 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Channel } from 'src/models/channel.class';
 import { onAuthStateChanged, getAuth } from 'firebase/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard-channel',
   templateUrl: './dashboard-channel.component.html',
-  styleUrls: ['./dashboard-channel.component.sass']
+  styleUrls: ['./dashboard-channel.component.sass'],
+  providers: [DatePipe],
 })
 export class DashboardChannelComponent implements OnInit {
 
@@ -18,7 +20,8 @@ export class DashboardChannelComponent implements OnInit {
     private route: ActivatedRoute,
     public channelService: ChannelsService,
     private firestore: AngularFirestore,
-    private afAuth: AngularFireAuth) { }
+    private afAuth: AngularFireAuth,
+    private datePipe: DatePipe) { }
 
   channelId = '';
   channel: Channel = new Channel();
@@ -39,6 +42,12 @@ export class DashboardChannelComponent implements OnInit {
       .subscribe((channel: any) => {
         this.channel = new Channel(channel);       
         this.messages = this.channel.messages;
+        this.messages = this.messages.map(message => ({...message, time: this.transformDate(message.time)}));
+        console.log(this.channel)
       })
+  }
+
+  transformDate(date: string): string {
+    return this.datePipe.transform(date, 'EEEE, d MMMM', 'en-GB');
   }
 }
