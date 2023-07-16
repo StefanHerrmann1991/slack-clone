@@ -46,7 +46,7 @@ export class AuthService {
       } else {
         this._currentUser.next(null);
       }
-    });  
+    });
   }
 
 
@@ -94,6 +94,10 @@ export class AuthService {
 
 
   saveUser(username: string, userId: string, email: string) {
+    if (!username || username.trim() === '') {
+      username = email.substring(0, email.lastIndexOf("@"));
+    }
+
     this.afs.collection('users').doc(userId).set({
       username: username,
       email: email,
@@ -150,12 +154,16 @@ export class AuthService {
   sign up with username/password and sign in with social auth  
   provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
   SetUserData(user: any) {
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(
-      `users/${user.uid}`
-    );
+    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
+    let displayName = user.displayName;
+
+    if (!displayName || displayName.trim() === '') {
+      displayName = user.email.substring(0, user.email.lastIndexOf("@"));
+    }
+
     const userData: User = {
       uid: user.uid,
-      displayName: user.displayName,
+      displayName: displayName,
       email: user.email,
       password: '',
     };
@@ -163,7 +171,6 @@ export class AuthService {
       merge: true,
     });
   }
-
 
   // Sign out/ logout
   SignOut() {
