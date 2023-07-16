@@ -29,24 +29,45 @@ export class DashboardChannelComponent implements OnInit {
 
   ngOnInit() {
     this.route.paramMap.subscribe(paramMap => {
-      this.channelId = paramMap.get('channelId'); 
-      this.getChannel();   
+      this.channelId = paramMap.get('channelId');
+      this.getChannel();
     })
   }
-
   getChannel(): void {
     this.firestore
       .collection('channels')
       .doc(this.channelId)
       .valueChanges()
       .subscribe((channel: any) => {
-        this.channel = new Channel(channel);       
-        this.messages = this.channel.messages;
-        this.messages = this.messages.map(message => ({...message, time: this.transformDate(message.time)}));
-        console.log(this.channel)
-      })
+        this.channel = new Channel(channel);
+        this.messages = this.groupMessagesByDate(this.channel.messages);
+        console.log(this.channel);
+      });
   }
 
+  groupMessagesByDate(messages): any[] {
+    const groupedMessages = [];
+    let currentDate = '';
+    let index = -1;
+
+    for (const message of messages) {
+      const messageDate = this.datePipe.transform(message.time, 'EEEE, d MMMM', 'en-GB');
+
+      if (messageDate !== currentDate) {
+        currentDate = messageDate;
+        index++;
+        groupedMessages[index] = {
+          date: currentDate,
+          messages: []
+        };
+      }
+
+      const messageTime = this.datePipe.transform(message.time, 'HH:mm', 'en-GB');
+      groupedMessages[index].messages.push({ ...message, time: messageTime });
+    }
+
+    return groupedMessages;
+  }
   transformDate(date: string): string {
     return this.datePipe.transform(date, 'EEEE, d MMMM', 'en-GB');
   }
