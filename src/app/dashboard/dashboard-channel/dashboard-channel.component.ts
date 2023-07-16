@@ -52,7 +52,6 @@ export class DashboardChannelComponent implements OnInit {
 
     for (const message of messages) {
       const messageDate = this.datePipe.transform(message.time, 'EEEE, d MMMM', 'en-GB');
-
       if (messageDate !== currentDate) {
         currentDate = messageDate;
         index++;
@@ -65,10 +64,6 @@ export class DashboardChannelComponent implements OnInit {
       const messageTime = this.datePipe.transform(message.time, 'HH:mm', 'en-GB');
       groupedMessages[index].messages.push({ ...message, time: messageTime });
     }
-
     return groupedMessages;
-  }
-  transformDate(date: string): string {
-    return this.datePipe.transform(date, 'EEEE, d MMMM', 'en-GB');
-  }
+  } 
 }

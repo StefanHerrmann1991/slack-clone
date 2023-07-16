@@ -9,7 +9,8 @@ import { DatePipe } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../../services/auth.service';
 import { UserInterface as User } from '../../../services/user.service';
-
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/firestore';
 
 @Component({
   selector: 'app-dashboard-add-message',
@@ -31,6 +32,7 @@ export class DashboardAddMessageComponent implements OnInit {
   newMessage: Message = new Message();
   messageTextInput: string;
   myDate: any = new Date();
+  myTime: any = new Date();
   channelId = '';
   channel: Channel = new Channel();
   private userSubscription?: Subscription;
@@ -85,11 +87,9 @@ export class DashboardAddMessageComponent implements OnInit {
   }
 
 
-  getData() {
-    this.myDate = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
-    return this.myDate;
+  getData() {    
+    return new Date().toISOString();
   }
-
 }
 
 
