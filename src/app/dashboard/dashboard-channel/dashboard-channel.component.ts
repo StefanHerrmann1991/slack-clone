@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map, tap } from 'rxjs';
 import { ChannelsService } from 'src/app/services/channels.service';
@@ -21,11 +21,16 @@ export class DashboardChannelComponent implements OnInit {
     public channelService: ChannelsService,
     private firestore: AngularFirestore,
     private afAuth: AngularFireAuth,
-    private datePipe: DatePipe) { }
+    private datePipe: DatePipe,
+  ) { }
 
   channelId = '';
   channel: Channel = new Channel();
   messages: any;
+
+  stickyDate = '';
+  dateContainerPositions: { date: string; position: number }[] = [];
+
 
   ngOnInit() {
     this.route.paramMap.subscribe(paramMap => {
@@ -65,5 +70,28 @@ export class DashboardChannelComponent implements OnInit {
       groupedMessages[index].messages.push({ ...message, time: messageTime });
     }
     return groupedMessages;
-  } 
+  }
+
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll(event) {
+    for (let i = 0; i < this.messages.length; i++) {
+      const dateContainer = document.getElementById('date-' + i);
+      if (dateContainer && this.isInViewport(dateContainer)) {
+        this.stickyDate = this.messages[i].date;
+        break;
+      }
+    }
+  }
+
+  isInViewport(element) {
+    const rect = element.getBoundingClientRect();
+    return (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+  }
+
+
 }

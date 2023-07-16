@@ -1,4 +1,6 @@
 <div class="main-dashbaord">
+    <div class="sticky-date-container">{{ stickyDate }}</div>
+
     <mat-card>
         <div class="channel">
             <mat-card-title>
@@ -12,10 +14,10 @@
             </mat-card-title>
         </div>
     </mat-card>
-    <div *ngFor="let group of messages">
+    <div *ngFor="let group of messages; let i = index">
         <div class="line-with-date">
             <div class="dividing-line"></div>
-            <div class="message-date">{{ group.date }}</div>
+            <div class="message-date" id="date-{{i}}">{{ group.date }}</div>
             <div class="dividing-line"></div>
         </div>
         <div *ngFor="let message of group.messages">
