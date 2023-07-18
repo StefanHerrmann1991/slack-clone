@@ -39,7 +39,7 @@ export class DashboardChannelComponent implements OnInit {
     })
   }
 
-  
+
   getChannel(): void {
     this.firestore
       .collection('channels')
@@ -74,14 +74,12 @@ export class DashboardChannelComponent implements OnInit {
     return groupedMessages;
   }
 
-  @HostListener('window:scroll', ['$event'])
-  onWindowScroll(event) {
+
+  onWindowScroll() {
+    console.log('scrolled')
     for (let i = 0; i < this.messages.length; i++) {
       const dateContainer = document.getElementById('date-' + i);
-      if (dateContainer && this.isInViewport(dateContainer)) {
-        this.stickyDate = this.messages[i].date;
-        break;
-      }
+      if(this.isInViewport(dateContainer)) this.stickyDate = this.messages[i].date; 
     }
   }
 

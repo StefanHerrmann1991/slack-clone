@@ -77,13 +77,11 @@ export class AuthService {
       try {
         await this.SignIn(guestEmail, guestPassword);
       } catch (error) {
-        console.error(error);
-        // handle error
+        console.error(error);      
       }
     } else {
       this.saveUser(displayName, uid, guestEmail);
-      this.router.navigate([`/dashboard/${uid}`]);
-      // Setting userData here
+      this.router.navigate([`/dashboard/${uid}`]);  
       this.userData = {
         uid: uid,
         email: guestEmail,
