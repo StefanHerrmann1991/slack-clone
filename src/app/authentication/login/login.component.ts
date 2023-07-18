@@ -17,8 +17,6 @@ export class LoginComponent {
 
      
   ngOnInit() {
-    this.route.paramMap.subscribe(paramMap => {
-      const userId = paramMap.get('userId');
-    });
+   
   }
 }

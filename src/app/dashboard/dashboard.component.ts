@@ -48,8 +48,7 @@ export class DashboardComponent {
       .valueChanges()
       .subscribe((user: any) => {
         this.user = new User(user);
-        console.log(this.user);
-      })
+             })
   }
 
   private _filter(value: string, ): string[] {

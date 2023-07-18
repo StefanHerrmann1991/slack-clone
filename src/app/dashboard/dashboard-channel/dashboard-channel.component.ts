@@ -38,6 +38,8 @@ export class DashboardChannelComponent implements OnInit {
       this.getChannel();
     })
   }
+
+  
   getChannel(): void {
     this.firestore
       .collection('channels')

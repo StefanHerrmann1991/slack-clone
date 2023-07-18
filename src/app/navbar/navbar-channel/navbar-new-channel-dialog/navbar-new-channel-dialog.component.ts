@@ -44,8 +44,7 @@ export class NavbarNewChannelDialogComponent implements OnInit {
 
 
   // diese Funktion verwenden für saveEditedUser()
-  addNewChannel() {
-    debugger;
+  addNewChannel() {  
     this.afAuth.authState.subscribe(currentUser => {
       if (currentUser) {
         this.firestore

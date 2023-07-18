@@ -51,20 +51,58 @@ export class AuthService {
 
 
   // Sign in with email/password
-  async SignIn(email: string, password: string) {
+  async SignIn(email: string, password: string) {  
     return await this.afAuth
       .signInWithEmailAndPassword(email, password)
       .then((result) => {
-        console.log(result.user);
         const userId = result.user.uid
         const email = result.user.email
         this.router.navigate([`/dashboard/${userId}`]);
-        this.currentUserId = userId;
+        this.currentUserId = userId;        
       })
       .catch((error) => {
         window.alert(error.message);
       });
   }
+
+
+
+
+  // Sign in with email/password for guest
+  async GuestLogin() {
+    const guestEmail = 'guest@example.com';  // Replace with your guest account email
+    const guestPassword = 'guestpassword';  // Replace with your guest account password
+
+    if (navigator.onLine) {  // if online, use Firebase
+      try {
+        const result = await this.afAuth.signInWithEmailAndPassword(guestEmail, guestPassword);
+
+        // Store guest data locally after successful Firebase login.
+        localStorage.setItem('user', JSON.stringify({
+          uid: result.user.uid,
+          displayName: 'Guest',
+          email: result.user.email,
+          password: guestPassword,
+        }));
+
+        this.router.navigate([`/dashboard/${result.user.uid}`]);
+        this.currentUserId = result.user.uid;
+      } catch (error) {
+        console.error(error);
+        // handle error
+      }
+    } else {  // if offline, use local storage
+      const user = JSON.parse(localStorage.getItem('user'));
+
+      if (user && user.email === guestEmail) {
+        this.router.navigate([`/dashboard/${user.uid}`]);
+        this.currentUserId = user.uid;
+      } else {
+        throw new Error('Unable to login as guest while offline');
+      }
+    }
+  }
+
 
 
   // Sign up/ login with email/password
@@ -79,7 +117,6 @@ export class AuthService {
         const userId = result.user.uid
         const email = result.user.email
         const displayName = result.user.displayName
-        /*   if (displayName !== "") displayName = email */
         this.saveUser(displayName, userId, email);
       })
       .catch((error) => {
@@ -148,6 +185,9 @@ export class AuthService {
         window.alert(error);
       });
   }
+
+
+
 
 
   /* Setting up user data when sign in with username/password, 

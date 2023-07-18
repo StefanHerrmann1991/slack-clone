@@ -76,6 +76,8 @@ import { NavbarMessagesComponent } from './navbar/navbar-messages/navbar-message
     NavbarMessagesComponent,
     NavbarNewChannelDialogComponent,
     DashboardMessagesComponent,
+  
+
 
   ],
   imports: [
@@ -102,6 +104,7 @@ import { NavbarMessagesComponent } from './navbar/navbar-messages/navbar-message
     AngularFireModule,
     AngularFirestoreModule,
     AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule.enablePersistence(),
     AngularFirestoreModule,
     AngularFireAuthModule,
     AngularFireStorageModule,
