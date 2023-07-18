@@ -19,7 +19,7 @@ export class NavbarChannelComponent {
   changeText: boolean;
   /* Only shows the channels names but not the corresponding data. */
   ngOnInit() {
-    debugger
+    
     this.channelService.renderTree();
   }
   constructor(public dialog: MatDialog, public channelService: ChannelsService) {

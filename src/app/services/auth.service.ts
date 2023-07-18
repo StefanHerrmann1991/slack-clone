@@ -51,14 +51,14 @@ export class AuthService {
 
 
   // Sign in with email/password
-  async SignIn(email: string, password: string) {  
+  async SignIn(email: string, password: string) {
     return await this.afAuth
       .signInWithEmailAndPassword(email, password)
       .then((result) => {
         const userId = result.user.uid
         const email = result.user.email
         this.router.navigate([`/dashboard/${userId}`]);
-        this.currentUserId = userId;        
+        this.currentUserId = userId;
       })
       .catch((error) => {
         window.alert(error.message);
@@ -68,40 +68,32 @@ export class AuthService {
 
 
 
-  // Sign in with email/password for guest
   async GuestLogin() {
-    const guestEmail = 'guest@example.com';  // Replace with your guest account email
-    const guestPassword = 'guestpassword';  // Replace with your guest account password
-
+    const guestEmail = 'sth1812@posteo.de';  // Replace with your guest account email
+    const guestPassword = '111222';  // Replace with your guest account password
+    const uid = 'UnVuXPCxWjN0xR7e4N3BTogrbpi1Y';
+    const displayName = 'Guest';
     if (navigator.onLine) {  // if online, use Firebase
       try {
-        const result = await this.afAuth.signInWithEmailAndPassword(guestEmail, guestPassword);
-
-        // Store guest data locally after successful Firebase login.
-        localStorage.setItem('user', JSON.stringify({
-          uid: result.user.uid,
-          displayName: 'Guest',
-          email: result.user.email,
-          password: guestPassword,
-        }));
-
-        this.router.navigate([`/dashboard/${result.user.uid}`]);
-        this.currentUserId = result.user.uid;
+        await this.SignIn(guestEmail, guestPassword);
       } catch (error) {
         console.error(error);
         // handle error
       }
-    } else {  // if offline, use local storage
-      const user = JSON.parse(localStorage.getItem('user'));
-
-      if (user && user.email === guestEmail) {
-        this.router.navigate([`/dashboard/${user.uid}`]);
-        this.currentUserId = user.uid;
-      } else {
-        throw new Error('Unable to login as guest while offline');
-      }
+    } else {
+      this.saveUser(displayName, uid, guestEmail);
+      this.router.navigate([`/dashboard/${uid}`]);
+      // Setting userData here
+      this.userData = {
+        uid: uid,
+        email: guestEmail,
+        displayName: displayName,
+        password: ''
+      };
+      this._currentUser.next(this.userData);
     }
   }
+
 
 
 

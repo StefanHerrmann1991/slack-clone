@@ -71,13 +71,11 @@ export class ChannelsService {
   public dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
   renderTree() {
-
     this.tree = [];
     this.channelsRef = this.firestore.collection('channels');
     this.channelsRef.get().subscribe(snapshot => {
       snapshot.forEach(doc => {
         const channel = new Channel(doc.data());
-
         this.tree.push({ name: `${channel.channelName}`, isClosedArea: channel.isClosedArea, channelId: doc.id });
       });
       themes = [{ name: 'Channels', children: this.tree }];

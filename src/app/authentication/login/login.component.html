@@ -20,6 +20,10 @@
                 <div class="formGroup">
                     <h4 class="or"><span class="orInner">OR</span></h4>
                 </div>
+                <div class="formGroup">
+                    <input type="button" class="continue" value="Continue as Guest"
+                        (click)="authService.GuestLogin()">
+                </div>
                 <!-- Calling GoogleAuth Api from AuthService -->
                 <div class="additionals">
                     <div class="formGroup">
@@ -35,6 +39,7 @@
                         <span>Don't have an account?<span class="redirect" routerLink="/register"
                                 routerLinkActive="active"> Sign Up</span></span>
                     </div>
+
                 </div>
             </div>
         </div>
