@@ -1,6 +1,7 @@
+@import '../../../../styles.sass'
 
 .add-message
-    border: solid 1px #565856
+    border: solid 1px $border-color
     display: flex
     justify-content: center
     align-items: center
@@ -21,7 +22,10 @@
         background-color: rgb(34, 37, 41)
         width: 100%
         padding: 8px 12px
+        caret-color: $secondary-text-color
+        color: $primary-bg-color
         &:focus
+            color: $primary-text-color
             border: none
             outline: none
             box-shadow: none
@@ -38,9 +42,9 @@
         border-radius: 6px
         margin-right: 8px
         mat-icon
-            height: 16px
-            font-size: 16px
-            width: 16px
+        height: 16px
+        font-size: 16px
+        width: 16px
 
 .focused
     border: solid 1px #818385

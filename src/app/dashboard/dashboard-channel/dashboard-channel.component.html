@@ -1,31 +1,32 @@
 <div class="main-dashbaord">
     <div class="sticky-date-container">{{ stickyDate }}</div>
-
-    <mat-card>
-        <div class="channel">
-            <mat-card-title>
-                <button class="channel-btn">
-                    <mat-icon class="mat-icon" [ngStyle]="{'font-style': channel.isClosedArea ? 'normal' : 'italic' }">
-                        {{ channel.isClosedArea ? 'lock' : 'tag' }}
-                    </mat-icon>
-                    <div>{{ channel.channelName }}</div>
-                    <mat-icon class="mat-icon">expand_more</mat-icon>
-                </button>
-            </mat-card-title>
-        </div>
-    </mat-card>
-    <div *ngFor="let group of messages; let i = index">
-        <div class="line-with-date">
-            <div class="dividing-line"></div>
-            <div class="message-date" id="date-{{i}}">{{ group.date }}</div>
-            <div class="dividing-line"></div>
-        </div>
-        <div *ngFor="let message of group.messages">
-            <div class="message-time">{{ message.time }}</div>
-            <div>{{ message.text }}</div>
+    <div class="channel-chatroom">
+        <mat-card>
+            <div class="channel">
+                <mat-card-title>
+                    <button class="channel-btn">
+                        <mat-icon class="mat-icon"
+                            [ngStyle]="{'font-style': channel.isClosedArea ? 'normal' : 'italic' }">
+                            {{ channel.isClosedArea ? 'lock' : 'tag' }}
+                        </mat-icon>
+                        <div>{{ channel.channelName }}</div>
+                        <mat-icon class="mat-icon">expand_more</mat-icon>
+                    </button>
+                </mat-card-title>
+            </div>
+        </mat-card>
+        <div *ngFor="let group of messages; let i = index">
+            <div class="line-with-date">
+                <div class="dividing-line"></div>
+                <div class="message-date" id="date-{{i}}">{{ group.date }}</div>
+                <div class="dividing-line"></div>
+            </div>
+            <div *ngFor="let message of group.messages">
+                <div class="message-time">{{ message.time }}</div>
+                <div>{{ message.text }}</div>
+            </div>
         </div>
     </div>
-
     <div class="add-message-dialog">
         <app-dashboard-add-message></app-dashboard-add-message>
     </div>
