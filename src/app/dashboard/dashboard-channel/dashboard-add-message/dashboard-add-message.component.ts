@@ -58,8 +58,7 @@ export class DashboardAddMessageComponent implements OnInit {
       .doc(this.channelId)
       .valueChanges()
       .subscribe((channel: any) => {
-        this.channel = new Channel(channel);
-        console.log(this.channelId)
+        this.channel = new Channel(channel);        
       })
   }
 

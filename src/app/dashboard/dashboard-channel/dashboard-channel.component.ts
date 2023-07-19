@@ -48,7 +48,7 @@ export class DashboardChannelComponent implements OnInit {
       .subscribe((channel: any) => {
         this.channel = new Channel(channel);
         this.messages = this.groupMessagesByDate(this.channel.messages);
-        console.log(this.channel);
+
       });
   }
 
@@ -74,12 +74,15 @@ export class DashboardChannelComponent implements OnInit {
     return groupedMessages;
   }
 
-
+  @HostListener('window:scroll')
   onWindowScroll() {
-    console.log('scrolled')
-    for (let i = 0; i < this.messages.length; i++) {
+
+    for (let i = 1; i < this.messages.length; i++) {
       const dateContainer = document.getElementById('date-' + i);
-      if(this.isInViewport(dateContainer)) this.stickyDate = this.messages[i].date; 
+      if (dateContainer && this.isInViewport(dateContainer)) {
+        this.stickyDate = this.messages[i - 1].date;
+        break;
+      }
     }
   }
 
@@ -92,6 +95,4 @@ export class DashboardChannelComponent implements OnInit {
       rect.right <= (window.innerWidth || document.documentElement.clientWidth)
     );
   }
-
-
 }
