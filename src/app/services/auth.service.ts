@@ -40,7 +40,7 @@ export class AuthService {
         this._currentUser.next({
           uid: user.uid,
           email: user.email,
-          displayName: user.displayName,
+          displayName: user.username,
           password: ''
         });
       } else {
@@ -77,11 +77,13 @@ export class AuthService {
       try {
         await this.SignIn(guestEmail, guestPassword);
       } catch (error) {
-        console.error(error);      
+        console.error(error);
+        // handle error
       }
     } else {
       this.saveUser(displayName, uid, guestEmail);
-      this.router.navigate([`/dashboard/${uid}`]);  
+      this.router.navigate([`/dashboard/${uid}`]);
+      // Setting userData here
       this.userData = {
         uid: uid,
         email: guestEmail,
@@ -106,7 +108,7 @@ export class AuthService {
         this.SetUserData(result.user);
         const userId = result.user.uid
         const email = result.user.email
-        const displayName = result.user.displayName
+        const displayName = result.user.username
         this.saveUser(displayName, userId, email);
       })
       .catch((error) => {

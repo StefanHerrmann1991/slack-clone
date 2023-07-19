@@ -58,7 +58,7 @@ export class DashboardAddMessageComponent implements OnInit {
       .doc(this.channelId)
       .valueChanges()
       .subscribe((channel: any) => {
-        this.channel = new Channel(channel);        
+        this.channel = new Channel(channel);
       })
   }
 
@@ -86,17 +86,7 @@ export class DashboardAddMessageComponent implements OnInit {
   }
 
 
-  getData() {    
+  getData() {
     return new Date().toISOString();
   }
 }
-
-
-
-
-
-
-
-
-
-

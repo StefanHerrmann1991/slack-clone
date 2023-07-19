@@ -3,7 +3,7 @@ export class User {
     email: string;
     channels: string[];
     directMessages: string[];
-    userId: string;
+    uid: string;
     username: string;
 
     constructor(obj?: any) {
@@ -11,7 +11,7 @@ export class User {
         this.email = obj ? obj.email : '';
         this.channels = obj ? obj.channels : '';
         this.directMessages = obj ? obj.directMessages : '';
-        this.userId = obj ? obj.userId : '';
+        this.uid = obj ? obj.uid : '';
         this.username = obj ? obj.username : '';
     }
 
@@ -21,8 +21,8 @@ export class User {
             email: this.email,
             channels : this.channels,
             directMessages: this.directMessages,
-            userId: this.userId,
-            displayName: this.username,
+            userId: this.uid,
+            username: this.username,
         };
     }
 }

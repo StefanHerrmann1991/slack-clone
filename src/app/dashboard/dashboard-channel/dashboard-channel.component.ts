@@ -8,6 +8,7 @@ import { onAuthStateChanged, getAuth } from 'firebase/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { DatePipe } from '@angular/common';
 
+
 @Component({
   selector: 'app-dashboard-channel',
   templateUrl: './dashboard-channel.component.html',
@@ -15,6 +16,9 @@ import { DatePipe } from '@angular/common';
   providers: [DatePipe],
 })
 export class DashboardChannelComponent implements OnInit {
+
+
+  
 
   constructor(
     private route: ActivatedRoute,
@@ -67,7 +71,6 @@ export class DashboardChannelComponent implements OnInit {
           messages: []
         };
       }
-
       const messageTime = this.datePipe.transform(message.time, 'HH:mm', 'en-GB');
       groupedMessages[index].messages.push({ ...message, time: messageTime });
     }
@@ -76,7 +79,6 @@ export class DashboardChannelComponent implements OnInit {
 
   @HostListener('window:scroll')
   onWindowScroll() {
-
     for (let i = 1; i < this.messages.length; i++) {
       const dateContainer = document.getElementById('date-' + i);
       if (dateContainer && this.isInViewport(dateContainer)) {

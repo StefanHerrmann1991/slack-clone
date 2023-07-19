@@ -9,7 +9,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class RegisterComponent {
 
-  displayName = new FormControl('', Validators.required);
+  username = new FormControl('', Validators.required);
   email = new FormControl('', Validators.required);
   password = new FormControl('', Validators.required);
   

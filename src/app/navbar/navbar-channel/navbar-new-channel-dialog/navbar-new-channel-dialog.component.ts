@@ -9,12 +9,10 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ChannelsService } from 'src/app/services/channels.service';
 import { startWith, map } from 'rxjs/operators';
-import { timePassed } from 'src/app/services/utils/utils.service';
 import { getDateTime } from 'src/app/services/utils/utils.service';
-import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
-import { DatePipe } from '@angular/common';
-import { AuthService } from 'src/app/services/auth.service';
-
+import { Subscription } from 'rxjs';
+import { UserInterface as User } from '../../../services/user.service';
+import { AuthService } from '../../../services/auth.service';
 @Component({
   selector: 'app-navbar-new-channel-dialog',
   templateUrl: './navbar-new-channel-dialog.component.html',
@@ -32,50 +30,47 @@ export class NavbarNewChannelDialogComponent implements OnInit {
   items: Observable<any[]>;
   dataSource: any;
   timestamp: any
-  currentUser: any;
+  private userSubscription?: Subscription;
+  currentUser: User | null = null;
 
   constructor(private firestore: AngularFirestore,
     public dialogRef: MatDialogRef<NavbarNewChannelDialogComponent>,
     private afAuth: AngularFireAuth,
     private _formBuilder: FormBuilder,
     private ChannelService: ChannelsService,
+    private authService: AuthService
   ) {
   }
 
 
+
   // diese Funktion verwenden für saveEditedUser()
-  addNewChannel() {  
-    this.afAuth.authState.subscribe(currentUser => {
-      if (currentUser) {
-        this.firestore
-          .collection('users')
-          .get()
-          .subscribe(snapshot => {
-            onAuthStateChanged(getAuth(), (authUser) => {
-              this.usersId = authUser.uid;
-              this.usersEmail = authUser.email;
-            });
-            this.timestamp = getDateTime()
-            console.log(this.timestamp);
-            if (!this.isClosedArea) this.users = snapshot.docs.map(doc => doc.data());
-            this.newChannel = new Channel({
-              creatorId: currentUser.uid,
-              usersData: this.users,
-              channelName: this.channelNameInput,
-              description: this.channelDiscription,  // Corrected from 'discription' to 'description'
-              isClosedArea: this.isClosedArea,
-              creationTime: this.timestamp,
-              numberOfMembers: this.users.length,
-              messages: []  // You can initialize messages as an empty array if there are no messages at the time of channel creation
-            });       
-            this.firestore
-              .collection('channels')
-              .add(this.newChannel.toJSON())
-            this.ChannelService.tree = [];
-            this.ChannelService.renderTree();
+  addNewChannel() {
+    console.log(this.currentUser)
+    if (this.currentUser) {
+      this.firestore
+        .collection('users')
+        .get()
+        .subscribe(snapshot => {
+          this.timestamp = getDateTime()
+          if (!this.isClosedArea) this.users = snapshot.docs.map(doc => doc.data());
+          this.newChannel = new Channel({
+            creatorId: this.currentUser.uid,
+            usersData: this.users,
+            channelName: this.channelNameInput,
+            description: this.channelDiscription,  // Corrected from 'discription' to 'description'
+            isClosedArea: this.isClosedArea,
+            creationTime: this.timestamp,
+            numberOfMembers: this.users.length,
+            messages: []  // You can initialize messages as an empty array if there are no messages at the time of channel creation
           });
-      }
-    });
+          this.firestore
+            .collection('channels')
+            .add(this.newChannel.toJSON())
+          this.ChannelService.tree = [];
+          this.ChannelService.renderTree();
+        });
+    }
     this.dialogRef.close();
   }
 
@@ -83,6 +78,9 @@ export class NavbarNewChannelDialogComponent implements OnInit {
   filteredChannels: Observable<string[]>;
 
   ngOnInit() {
+    this.userSubscription = this.authService.currentUser$.subscribe(user => {
+      this.currentUser = user;
+    });
     this.ChannelService.getAllChannels();
     this.filteredChannels = this.control.valueChanges.pipe(
       startWith(''),
