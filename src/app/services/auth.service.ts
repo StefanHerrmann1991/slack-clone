@@ -66,8 +66,6 @@ export class AuthService {
   }
 
 
-
-
   async GuestLogin() {
     const guestEmail = 'sth1812@posteo.de';  // Replace with your guest account email
     const guestPassword = '111222';  // Replace with your guest account password
