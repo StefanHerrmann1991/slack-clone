@@ -56,7 +56,6 @@ export class AuthService {
       .signInWithEmailAndPassword(email, password)
       .then((result) => {
         const userId = result.user.uid
-        const email = result.user.email
         this.router.navigate([`/dashboard/${userId}`]);
         this.currentUserId = userId;
       })
@@ -64,6 +63,8 @@ export class AuthService {
         window.alert(error.message);
       });
   }
+
+
 
 
   async GuestLogin() {
@@ -93,25 +94,51 @@ export class AuthService {
   }
 
 
-/* TODO */
 
-  // Sign up/ login with email/password
-  SignUp(email: string, password: string) {
-    return this.afAuth
-      .createUserWithEmailAndPassword(email, password) // 3. Parameter username vorerst gelöscht, da cannot get
-      .then((result) => {
-        /* Call the SendVerificaitonMail() function when new user sign 
-        up and returns promise */
-        // this.SendVerificationMail();
-        this.SetUserData(result.user);
-        const userId = result.user.uid
-        const email = result.user.email
-        const displayName = result.user.displayName
-        this.saveUser(displayName, userId, email);
-      })
-      .catch((error) => {
-        window.alert(error.message);
-      });
+
+  async SignUp(email: string, password: string, displayName: string) {
+    try {
+      // Create the user using email and password
+      const result = await this.afAuth.createUserWithEmailAndPassword(email, password);
+      const userId = result.user.uid;
+      const userEmail = result.user.email;
+
+      // Set the display name in Firebase authentication using updateProfile
+      if (!displayName || displayName === undefined || displayName === null) {
+        displayName = userEmail.substring(0, userEmail.lastIndexOf("@"));
+      }
+
+      await result.user.updateProfile({ displayName: displayName });
+
+      // Save the user data in Firestore database
+      this.SetUserData(result.user);
+
+      // Save the user data in Firestore collection
+      this.saveUser(displayName, userId, userEmail);
+
+      console.log('User created:', result.user);
+    } catch (error) {
+      console.error('Error signing up:', error);
+      window.alert(error.message);
+    }
+  }
+
+
+
+  /* Setting up user data when sign in with username/password, 
+  sign up with username/password and sign in with social auth  
+  provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
+  SetUserData(user: any) {
+    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
+    const userData: User = {
+      uid: user.uid,
+      displayName: user.displayName,
+      email: user.email,
+      password: '',
+    };
+    return userRef.set(userData, {
+      merge: true,
+    });
   }
 
 
@@ -120,16 +147,15 @@ export class AuthService {
   }
 
 
-  saveUser(displayName: string, userId: string, email: string) {
-    if (!displayName || displayName.trim() === '') {
-      displayName = email.substring(0, email.lastIndexOf("@"));
-    }
+  saveUser(username: string, userId: string, email: string) {
     this.afs.collection('users').doc(userId).set({
-      username: displayName,
+      username: username,
       email: email,
       userId: userId
     });
   }
+
+
 
 
   // Reset Forggot password
@@ -175,31 +201,6 @@ export class AuthService {
       });
   }
 
-
-
-
-
-  /* Setting up user data when sign in with username/password, 
-  sign up with username/password and sign in with social auth  
-  provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
-  SetUserData(user: any) {
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
-    let displayName = user.displayName;
-
-    if (!displayName || displayName.trim() === '') {
-      displayName = user.email.substring(0, user.email.lastIndexOf("@"));
-    }
-
-    const userData: User = {
-      uid: user.uid,
-      displayName: displayName,
-      email: user.email,
-      password: '',
-    };
-    return userRef.set(userData, {
-      merge: true,
-    });
-  }
 
   // Sign out/ logout
   SignOut() {

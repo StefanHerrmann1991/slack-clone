@@ -8,10 +8,9 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { DatePipe } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../../services/auth.service';
-import { UserInterface as User } from '../../../services/user.service';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
-
+import { User } from 'firebase/auth';
 @Component({
   selector: 'app-dashboard-add-message',
   templateUrl: './dashboard-add-message.component.html',
@@ -36,14 +35,14 @@ export class DashboardAddMessageComponent implements OnInit {
   channelId = '';
   channel: Channel = new Channel();
   private userSubscription?: Subscription;
-  currentUser: User | null = null;
+  currentUser: User | null;
 
 
 
   ngOnInit() {
-    this.userSubscription = this.authService.currentUser$.subscribe(user => {
+    this.afAuth.authState.subscribe(user => {
       this.currentUser = user;
-      console.log(this.currentUser)
+      console.log(this.currentUser);
     });
     this.route.paramMap.subscribe(paramMap => {
       this.channelId = paramMap.get('channelId');
@@ -65,15 +64,14 @@ export class DashboardAddMessageComponent implements OnInit {
   addMessage(userData) {
     let date = this.getData();
     this.getChannel();
-    debugger    
     this.newMessage = new Message({
-        obj: {
-            text: this.messageTextInput,
-            time: date,
-            username: userData.displayName,
-            userId: userData.uid,
-            userEmail: userData.email
-        }
+      obj: {
+        text: this.messageTextInput,
+        time: date,
+        username: userData.displayName,
+        userId: userData.uid,
+        userEmail: userData.email
+      }
     });
     // push the plain JavaScript object representation to the messages array
     this.channel.messages.push(this.newMessage);
