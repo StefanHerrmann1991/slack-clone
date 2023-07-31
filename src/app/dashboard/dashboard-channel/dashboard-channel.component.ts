@@ -31,7 +31,6 @@ export class DashboardChannelComponent implements OnInit {
   channelId = '';
   channel: Channel = new Channel();
   messages: any;
-
   stickyDate = '';
   dateContainerPositions: { date: string; position: number }[] = [];
 
@@ -52,7 +51,7 @@ export class DashboardChannelComponent implements OnInit {
       .subscribe((channel: any) => {
         this.channel = new Channel(channel);
         this.messages = this.groupMessagesByDate(this.channel.messages);
-
+        console.log(this.channel)
       });
   }
 

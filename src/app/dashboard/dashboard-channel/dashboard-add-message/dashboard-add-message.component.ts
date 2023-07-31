@@ -43,6 +43,7 @@ export class DashboardAddMessageComponent implements OnInit {
   ngOnInit() {
     this.userSubscription = this.authService.currentUser$.subscribe(user => {
       this.currentUser = user;
+      console.log(this.currentUser)
     });
     this.route.paramMap.subscribe(paramMap => {
       this.channelId = paramMap.get('channelId');
@@ -64,13 +65,15 @@ export class DashboardAddMessageComponent implements OnInit {
   addMessage(userData) {
     let date = this.getData();
     this.getChannel();
-    // Here's where the Message is created.
+    debugger    
     this.newMessage = new Message({
-      text: this.messageTextInput,
-      time: date,
-      userName: userData.displayName,
-      userId: userData.uid,
-      userEmail: userData.email
+        obj: {
+            text: this.messageTextInput,
+            time: date,
+            username: userData.displayName,
+            userId: userData.uid,
+            userEmail: userData.email
+        }
     });
     // push the plain JavaScript object representation to the messages array
     this.channel.messages.push(this.newMessage);

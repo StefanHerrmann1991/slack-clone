@@ -40,7 +40,7 @@ export class AuthService {
         this._currentUser.next({
           uid: user.uid,
           email: user.email,
-          displayName: user.username,
+          displayName: user.displayName,
           password: ''
         });
       } else {
@@ -93,7 +93,7 @@ export class AuthService {
   }
 
 
-
+/* TODO */
 
   // Sign up/ login with email/password
   SignUp(email: string, password: string) {
@@ -106,7 +106,7 @@ export class AuthService {
         this.SetUserData(result.user);
         const userId = result.user.uid
         const email = result.user.email
-        const displayName = result.user.username
+        const displayName = result.user.displayName
         this.saveUser(displayName, userId, email);
       })
       .catch((error) => {
@@ -120,13 +120,12 @@ export class AuthService {
   }
 
 
-  saveUser(username: string, userId: string, email: string) {
-    if (!username || username.trim() === '') {
-      username = email.substring(0, email.lastIndexOf("@"));
+  saveUser(displayName: string, userId: string, email: string) {
+    if (!displayName || displayName.trim() === '') {
+      displayName = email.substring(0, email.lastIndexOf("@"));
     }
-
     this.afs.collection('users').doc(userId).set({
-      username: username,
+      username: displayName,
       email: email,
       userId: userId
     });

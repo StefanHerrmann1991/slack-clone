@@ -22,8 +22,7 @@ export class DashboardComponent {
     private firestore: AngularFirestore,
     private dialog: MatDialog)  { }
 
-  user: User = new User();
-  userName = this.user.email;
+  user: User = new User(); 
   userId = '';
   control = new FormControl('');
   streets: string[] = ['Champs-Élysées', 'Lombard Street', 'Abbey Road', 'Fifth Avenue'];

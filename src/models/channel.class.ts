@@ -17,7 +17,7 @@ export class Channel {
         this.description = obj ? obj.description : '';
         this.creationTime = obj ? obj.creationTime : '';
         this.numberOfMembers = obj ? obj.numberOfMembers : '';
-        this.messages = obj && obj.messages ? obj.messages.map(msg => new Message(msg)) : [];
+        this.messages = obj && obj.messages ? obj.messages.map(msg => new Message({ obj: msg })) : [];
     }
 
     public toJSON() {
@@ -38,14 +38,14 @@ export class Message {
     text: string;
     time: any;
     userId: string;
-    userName: string;
+    username: string;
     userEmail: string;
 
-    constructor(obj?: any) {
+    constructor({ obj }: { obj?: any; } = {}) {
         this.text = obj ? obj.text : '';
         this.time = obj ? obj.time : '';
         this.userId = obj ? obj.userId : '';
-        this.userName = obj ? obj.userName : '';
+        this.username = obj ? obj.username : '';
         this.userEmail = obj ? obj.userEmail : '';
     }
 
@@ -54,7 +54,7 @@ export class Message {
             text: this.text,
             time: this.time,
             userId: this.userId,
-            userName: this.userName,
+            username: this.username,
             userEmail: this.userEmail
         };
         
