@@ -1,13 +1,13 @@
 <mat-drawer-container class="navbar-container" autosize>
-    <ul>
+    <ul>       
+        <li><app-navbar-threads></app-navbar-threads></li>
         <li><app-navbar-channel class="navbar-channels"></app-navbar-channel></li>
         <li>
             <button (click)="newChannel()">
                 <mat-icon class="icon">add_box</mat-icon>
                 Add channels
             </button>
-        </li>
-        <li>Messages</li>
+        </li>      
         <li><app-navbar-messages></app-navbar-messages></li>
         <li>
             <button (click)="newMessage()">

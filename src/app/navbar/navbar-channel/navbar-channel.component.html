@@ -18,7 +18,6 @@
                 </mat-icon>
             </button>
         </div>
-        <span class="channels"
-            [ngStyle]="{'color': channelService.treeControl.isExpanded(node) ? 'gray' : 'white' }">{{node.name}}</span>
+        <span class="channels">{{node.name}}</span>
     </mat-tree-node>
 </mat-tree>

@@ -43,6 +43,14 @@ export class ChannelsService {
       })
   }
 
+  getCollection(collection: string, variableToUpdate: any) {
+    this.firestore
+      .collection(`${collection}`)
+      .valueChanges()
+      .subscribe((changes: any) => {
+        this[variableToUpdate] = changes;
+      })
+  }
 
   private _transformer = (node: ChannelsNode, level: number) => {
     return {

@@ -33,7 +33,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatInput } from '@angular/material/input';
+
 /* services */
 import { AuthService } from "./services/auth.service";
 
@@ -56,6 +56,8 @@ import { DashboardAddMessageComponent } from './dashboard/dashboard-channel/dash
 import { NavbarNewChannelDialogComponent } from './navbar/navbar-channel/navbar-new-channel-dialog/navbar-new-channel-dialog.component';
 import { DashboardMessagesComponent } from './dashboard/dashboard-messages/dashboard-messages.component';
 import { NavbarMessagesComponent } from './navbar/navbar-messages/navbar-messages.component';
+import { NavbarThreadsComponent } from './navbar/navbar-threads/navbar-threads.component';
+import { DashboardThreadsComponent } from './dashboard/dashboard-threads/dashboard-threads.component';
 
 
 
@@ -76,6 +78,8 @@ import { NavbarMessagesComponent } from './navbar/navbar-messages/navbar-message
     NavbarMessagesComponent,
     NavbarNewChannelDialogComponent,
     DashboardMessagesComponent,
+    NavbarThreadsComponent,
+    DashboardThreadsComponent,
   
 
 

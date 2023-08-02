@@ -18,8 +18,7 @@ import { ChannelsService } from 'src/app/services/channels.service';
 export class NavbarChannelComponent {
   changeText: boolean;
   /* Only shows the channels names but not the corresponding data. */
-  ngOnInit() {
-    
+  ngOnInit() {    
     this.channelService.renderTree();
   }
   constructor(public dialog: MatDialog, public channelService: ChannelsService) {
@@ -30,7 +29,6 @@ export class NavbarChannelComponent {
     // Code to toggle the expanded state of the node
     this.channelService.treeControl.toggle(node);
   }
-
   
   iconBackground: string = '';
   changeBackground(color: string) {

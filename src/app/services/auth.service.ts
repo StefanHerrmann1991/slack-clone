@@ -5,6 +5,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
+import { getDatabase, ref, onDisconnect, set, remove } from "firebase/database";
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +22,7 @@ export class AuthService {
     public afs: AngularFirestore, // Inject Firestore service
     public afAuth: AngularFireAuth, // Inject Firebase auth service
     public router: Router,
-    public ngZone: NgZone // NgZone service to remove outside scope warning
+    public ngZone: NgZone // NgZone service to remove outside scope warning    
   ) {
     /* Saving user data in localstorage when 
     logged in and setting up null when logged out */
@@ -49,6 +50,22 @@ export class AuthService {
     });
   }
 
+  private updateOnUserSignedIn() {
+    const userId = this.userData.uid;
+    const database = getDatabase();
+    const userStatusDatabaseRef = ref(database, '/status/' + userId);
+
+    set(userStatusDatabaseRef, {
+      state: 'online',
+      last_changed: Date.now(),
+    });
+
+    onDisconnect(userStatusDatabaseRef).set({
+      state: 'offline',
+      last_changed: Date.now(),
+    });
+  }
+
 
   // Sign in with email/password
   async SignIn(email: string, password: string) {
@@ -58,13 +75,12 @@ export class AuthService {
         const userId = result.user.uid
         this.router.navigate([`/dashboard/${userId}`]);
         this.currentUserId = userId;
+        this.updateOnUserSignedIn();
       })
       .catch((error) => {
         window.alert(error.message);
       });
   }
-
-
 
 
   async GuestLogin() {
@@ -92,8 +108,6 @@ export class AuthService {
       this._currentUser.next(this.userData);
     }
   }
-
-
 
 
   async SignUp(email: string, password: string, displayName: string) {
@@ -154,8 +168,6 @@ export class AuthService {
       userId: userId
     });
   }
-
-
 
 
   // Reset Forggot password
