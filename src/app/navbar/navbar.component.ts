@@ -24,9 +24,13 @@ export class NavbarComponent {
     });
   }
 
+
+
+  inviteCollegue() {}
+
   newMessage() {
   /*   this.dialog.open(NavbarNewMessagesDialogComponent, {
-      width: '520px',
+      width: '650px',
       hasBackdrop: true
     }); */
   }
