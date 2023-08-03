@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { UserComponent } from '../navbar/user/user.component';
+import { getDatabase, ref, onValue } from "firebase/database";
 
 @Component({
   selector: 'app-dashboard',
@@ -17,27 +18,40 @@ import { UserComponent } from '../navbar/user/user.component';
 export class DashboardComponent {
 
   constructor(
-    private route: ActivatedRoute, 
+    private route: ActivatedRoute,
     public authService: AuthService,
     private firestore: AngularFirestore,
-    private dialog: MatDialog)  { }
+    private dialog: MatDialog) { }
 
-  user: User = new User(); 
+  isOnline: boolean;
+  user: User = new User();
   userId = '';
   control = new FormControl('');
   streets: string[] = ['Champs-Élysées', 'Lombard Street', 'Abbey Road', 'Fifth Avenue'];
   filteredUsers: Observable<string[]>;
 
 
-  ngOnInit() {   
+  ngOnInit() {
     this.route.paramMap.subscribe(paramMap => {
-      this.userId = paramMap.get('id');     
+      this.userId = paramMap.get('id');
       this.getUser();
     })
     this.filteredUsers = this.control.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value || '')),
     );
+    this.fetchOnlineStatus(this.userId);
+  }
+
+  fetchOnlineStatus(userId: string) {
+    
+    const database = getDatabase();
+    const userStatusDatabaseRef = ref(database, '/status/' + userId);
+
+    onValue(userStatusDatabaseRef, (snapshot) => {
+      const status = snapshot.val();
+      this.isOnline = status.state === 'online';
+    });
   }
 
   getUser() {
@@ -47,10 +61,10 @@ export class DashboardComponent {
       .valueChanges()
       .subscribe((user: any) => {
         this.user = new User(user);
-             })
+      })
   }
 
-  private _filter(value: string, ): string[] {
+  private _filter(value: string,): string[] {
     const filterValue = this._normalizeValue(value);
     return this.streets.filter(street => this._normalizeValue(street).includes(filterValue));
   }

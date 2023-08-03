@@ -51,6 +51,7 @@ export class AuthService {
   }
 
   private updateOnUserSignedIn() {
+    
     const userId = this.userData.uid;
     const database = getDatabase();
     const userStatusDatabaseRef = ref(database, '/status/' + userId);
@@ -75,6 +76,7 @@ export class AuthService {
         const userId = result.user.uid
         this.router.navigate([`/dashboard/${userId}`]);
         this.currentUserId = userId;
+        this.userData = result.user;
         this.updateOnUserSignedIn();
       })
       .catch((error) => {

@@ -15,10 +15,6 @@
     display: flex
     width: 100%
 
-.user-icon
-    color: white
-    cursor: pointer
-
 .header
     display: flex
     justify-content: space-between
@@ -49,3 +45,57 @@
 
 .navbar-container
     width: 100%
+
+.menu-user-icon
+    padding: 0px
+    background-color: $accent-color
+    border-radius: 4px
+
+.user-icon
+    color: white
+    cursor: pointer
+    height: 30px
+    width: 30px
+    font-size: 30px
+    margin: 0px
+    margin-bottom: -12px
+
+.mat-mdc-icon-button.mat-mdc-button-base
+    --mdc-icon-button-state-layer-size: 26px
+    margin-right: 12px
+
+.icon-status
+    position: relative
+.status-circle
+    position: absolute
+    display: block
+    width: 15px
+    height: 15px
+    border-radius: 50%
+    border: 2.4px solid $tertiary-bg-color
+    right: -20%
+    bottom: -30%
+
+.inner-statur-circle
+    position: absolute
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+    height: 7.5px
+    width: 7.5px
+    background-color: $tertiary-bg-color
+    border-radius: 50%
+
+.additional-status
+    position: absolute
+    right: -25%
+    bottom: -5%
+    color: $primary-text-color
+    font-weight: 700
+    font-size: 12px
+
+.offline
+    background-color: $primary-text-color
+
+.online
+    background-color: green
