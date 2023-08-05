@@ -88,7 +88,7 @@ export class AuthService {
   async GuestLogin() {
     const guestEmail = 'sth1812@posteo.de';  // Replace with your guest account email
     const guestPassword = '111222';  // Replace with your guest account password
-    const uid = 'YY4B3AuZPQaAqyyqn0kTv7wfjW03';
+    const uid = 'GMHmWrI2mbVkKCyPvXJAODW7NEp1';
     const displayName = 'Guest';
     if (navigator.onLine) {  // if online, use Firebase
       try {

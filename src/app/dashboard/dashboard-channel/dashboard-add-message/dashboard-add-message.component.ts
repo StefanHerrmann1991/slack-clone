@@ -41,8 +41,7 @@ export class DashboardAddMessageComponent implements OnInit {
 
   ngOnInit() {
     this.afAuth.authState.subscribe(user => {
-      this.currentUser = user;
-      console.log(this.currentUser);
+      this.currentUser = user;      
     });
     this.route.paramMap.subscribe(paramMap => {
       this.channelId = paramMap.get('channelId');
@@ -62,6 +61,7 @@ export class DashboardAddMessageComponent implements OnInit {
   }
 
   addMessage(userData) {
+    debugger
     let date = this.getData();
     this.getChannel();
     this.newMessage = new Message({

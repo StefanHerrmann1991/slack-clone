@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { DatePipe } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { HttpClientModule } from '@angular/common/http';
 
 
 /* firebase */
@@ -58,12 +58,14 @@ import { DashboardMessagesComponent } from './dashboard/dashboard-messages/dashb
 import { NavbarMessagesComponent } from './navbar/navbar-messages/navbar-messages.component';
 import { NavbarThreadsComponent } from './navbar/navbar-threads/navbar-threads.component';
 import { DashboardThreadsComponent } from './dashboard/dashboard-threads/dashboard-threads.component';
+import { NavbarInviteCollegueDialogComponent } from './navbar/navbar-messages/navbar-invite-collegue-dialog/navbar-invite-collegue-dialog.component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    
     NavbarComponent,
     NavbarChannelComponent,
     LoginComponent,
@@ -80,6 +82,7 @@ import { DashboardThreadsComponent } from './dashboard/dashboard-threads/dashboa
     DashboardMessagesComponent,
     NavbarThreadsComponent,
     DashboardThreadsComponent,
+    NavbarInviteCollegueDialogComponent,
   
 
 
@@ -113,7 +116,8 @@ import { DashboardThreadsComponent } from './dashboard/dashboard-threads/dashboa
     AngularFireAuthModule,
     AngularFireStorageModule,
     BrowserModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HttpClientModule
   ],
   providers: [
     AuthService,
