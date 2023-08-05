@@ -1,17 +1,22 @@
 <mat-dialog-content>
+    <!-- TODO insert workspace name -->
+    <h2>Invite people to</h2>
     <form [formGroup]="inviteForm">
-      <mat-form-field class="full-width">
-        <input type="text" placeholder="Enter your colleague's email" matInput formControlName="email" [matAutocomplete]="auto">
-        <mat-autocomplete #auto="matAutocomplete">
-          <mat-option *ngFor="let option of filteredOptions | async" [value]="option.email">
-            {{ option.email }}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
-      <div class="action-buttons">
-        <button mat-raised-button color="primary" [disabled]="!inviteForm.valid" type="submit">Invite</button>
-        <button mat-button mat-dialog-close>Cancel</button>
-      </div>
+        <mat-form-field class="full-width">
+            <input type="text" placeholder="Enter your colleague's username" matInput formControlName="username"
+                [matAutocomplete]="auto">
+
+            <mat-autocomplete #auto="matAutocomplete">
+                <mat-option class="option-fields" *ngFor="let option of filteredOptions | async"
+                    [value]="option.username">
+                    <div>{{ option.username }}</div>
+                    <div> ({{ option.email}})</div>
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+        <div class="action-buttons">
+            <button mat-raised-button color="primary" [disabled]="!inviteForm.valid" type="submit">Invite</button>
+            <button mat-button mat-dialog-close>Cancel</button>
+        </div>
     </form>
-  </mat-dialog-content>
-  
+</mat-dialog-content>

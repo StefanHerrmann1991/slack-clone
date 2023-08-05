@@ -54,12 +54,12 @@ export class DashboardChannelComponent implements OnInit {
         console.log(this.channel)
       });
   }
+  
 
   groupMessagesByDate(messages): any[] {
     const groupedMessages = [];
     let currentDate = '';
     let index = -1;
-
     for (const message of messages) {
       const messageDate = this.datePipe.transform(message.time, 'EEEE, d MMMM', 'en-GB');
       if (messageDate !== currentDate) {

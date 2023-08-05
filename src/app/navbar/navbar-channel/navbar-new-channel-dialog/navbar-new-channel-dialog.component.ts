@@ -44,9 +44,8 @@ export class NavbarNewChannelDialogComponent implements OnInit {
 
 
 
-  // diese Funktion verwenden für saveEditedUser()
+
   addNewChannel() {
-    console.log(this.currentUser)
     if (this.currentUser) {
       this.firestore
         .collection('users')
@@ -58,7 +57,7 @@ export class NavbarNewChannelDialogComponent implements OnInit {
             creatorId: this.currentUser.uid,
             usersData: this.users,
             channelName: this.channelNameInput,
-            description: this.channelDiscription,  // Corrected from 'discription' to 'description'
+            description: this.channelDiscription,  
             isClosedArea: this.isClosedArea,
             creationTime: this.timestamp,
             numberOfMembers: this.users.length,

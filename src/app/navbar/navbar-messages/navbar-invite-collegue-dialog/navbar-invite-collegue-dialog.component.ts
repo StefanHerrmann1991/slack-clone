@@ -4,6 +4,8 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { User } from 'firebase/auth';
 
 
 @Component({
@@ -14,7 +16,7 @@ import { map, startWith } from 'rxjs/operators';
 export class NavbarInviteCollegueDialogComponent implements OnInit {
 
   inviteForm: FormGroup;
-  emailControl = new FormControl();
+  usernameControl = new FormControl();
   users: any[] = [];
   filteredOptions: Observable<any[]>;
 
@@ -22,30 +24,42 @@ export class NavbarInviteCollegueDialogComponent implements OnInit {
     private formBuilder: FormBuilder,
     private firestore: AngularFirestore,
     public dialogRef: MatDialogRef<NavbarInviteCollegueDialogComponent>,
+    private afAuth: AngularFireAuth
   ) { }
 
+
+  currentUser: User | null;
+  invitedUsers: string[] = [];
+
   ngOnInit(): void {
+    debugger
+    this.afAuth.authState.subscribe(user => {
+      this.currentUser = user;
+      console.log(this.currentUser)
+    });
     this.inviteForm = this.formBuilder.group({
-      email: this.emailControl,
+      username: this.usernameControl,
     });
     this.getUsers();
   }
 
   getUsers() {
+    debugger
     this.firestore.collection('users').valueChanges().subscribe((users: any) => {
-      this.users = users;
-      this.filteredOptions = this.emailControl.valueChanges.pipe(
+      this.users = users.filter(user => user.username !== this.currentUser.displayName && !this.invitedUsers.includes(user.username));
+      this.filteredOptions = this.usernameControl.valueChanges.pipe(
         startWith(''),
-        map(value => typeof value === 'string' ? value : value.email),
-        map(email => email ? this._filter(email) : this.users.slice())
+        map(value => typeof value === 'string' ? value : value.username),
+        map(username => username ? this._filter(username) : this.users.slice())
       );
     });
   }
 
   private _filter(value: string): any[] {
     const filterValue = value.toLowerCase();
-    return this.users.filter(option => option.email.toLowerCase().includes(filterValue));
+    return this.users.filter(option => option.username.toLowerCase().includes(filterValue));
   }
+
 
 
 }
