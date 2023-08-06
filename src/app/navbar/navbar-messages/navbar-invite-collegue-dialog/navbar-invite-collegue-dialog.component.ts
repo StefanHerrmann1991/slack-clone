@@ -19,6 +19,10 @@ export class NavbarInviteCollegueDialogComponent implements OnInit {
   usernameControl = new FormControl();
   users: any[] = [];
   filteredOptions: Observable<any[]>;
+  buttonText: string;
+  nameFormControl: any;
+  emailFormControl: FormControl<any>;
+  http: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -27,15 +31,14 @@ export class NavbarInviteCollegueDialogComponent implements OnInit {
     private afAuth: AngularFireAuth
   ) { }
 
-
+  isLoading: boolean = false;
   currentUser: User | null;
   invitedUsers: string[] = [];
 
   ngOnInit(): void {
-    debugger
+
     this.afAuth.authState.subscribe(user => {
       this.currentUser = user;
-      console.log(this.currentUser)
     });
     this.inviteForm = this.formBuilder.group({
       username: this.usernameControl,
@@ -43,8 +46,43 @@ export class NavbarInviteCollegueDialogComponent implements OnInit {
     this.getUsers();
   }
 
+
+  onSubmit(): void {
+    if (this.inviteForm.valid) {
+      const email = this.inviteForm.get('email').value;
+
+      // your invite logic here
+      // this could be a call to Firebase function to send an email, or you could just store this in Firestore collection
+      console.log(email);
+
+      this.dialogRef.close();
+    }
+  }
+
+
+  inviteUser() {
+    this.isLoading = true;
+    this.buttonText = "Submitting...";
+    let user = {
+      name: this.nameFormControl.value,
+      email: this.emailFormControl.value
+    }
+    this.http.sendEmail("http://localhost:3000/sendmail", user).subscribe(
+      data => {
+        let res: any = data;
+        console.log(`${user.name} is registerd`)
+      }
+
+    )
+  }
+
+
+
+
+
+
   getUsers() {
-    debugger
+
     this.firestore.collection('users').valueChanges().subscribe((users: any) => {
       this.users = users.filter(user => user.username !== this.currentUser.displayName && !this.invitedUsers.includes(user.username));
       this.filteredOptions = this.usernameControl.valueChanges.pipe(

@@ -131,8 +131,8 @@ export class AuthService {
 
       // Save the user data in Firestore collection
       this.saveUser(displayName, userId, userEmail);
-
-      console.log('User created:', result.user);
+      this.router.navigate([`/login`]);
+    
     } catch (error) {
       console.error('Error signing up:', error);
       window.alert(error.message);

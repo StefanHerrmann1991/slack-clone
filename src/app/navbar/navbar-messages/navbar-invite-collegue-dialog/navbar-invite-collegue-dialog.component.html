@@ -1,18 +1,12 @@
 <mat-dialog-content>
-    <!-- TODO insert workspace name -->
-    <h2>Invite people to</h2>
-    <form [formGroup]="inviteForm">
+    <form [formGroup]="inviteForm" (ngSubmit)="onSubmit()">
         <mat-form-field class="full-width">
-            <input type="text" placeholder="Enter your colleague's username" matInput formControlName="username"
-                [matAutocomplete]="auto">
+            <input matInput placeholder="Enter your colleague's email" formControlName="email">
+            <mat-error
+                *ngIf="inviteForm.get('email').invalid && (inviteForm.get('email').dirty || inviteForm.get('email').touched)">
+                Invalid email
+            </mat-error>
 
-            <mat-autocomplete #auto="matAutocomplete">
-                <mat-option class="option-fields" *ngFor="let option of filteredOptions | async"
-                    [value]="option.username">
-                    <div>{{ option.username }}</div>
-                    <div> ({{ option.email}})</div>
-                </mat-option>
-            </mat-autocomplete>
         </mat-form-field>
         <div class="action-buttons">
             <button mat-raised-button color="primary" [disabled]="!inviteForm.valid" type="submit">Invite</button>
@@ -20,3 +14,18 @@
         </div>
     </form>
 </mat-dialog-content>
+<mat-card>
+    <mat-form-field>
+        <input matInput placeholder="Name" [formControl]="nameFormControl">
+        <mat-error *ngIf="nameFormControl.hasError('required')">Name must have at least four characters long</mat-error>
+        <mat-error *ngIf="nameFormControl.hasError('required')">Name <strong>required</strong></mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Email" [formControl]="emailFormControl">
+        <mat-error *ngIf="emailFormControl.hasError('email')"></mat-error>
+        <mat-error *ngIf="emailFormControl.hasError('required')">Email is
+            <strong>required</strong>{{buttonText}}</mat-error>
+    </mat-form-field>
+    <button mat-raised-button [disabled]="emailFormControl.invalid || nameFormControl.invalid || isLoading"
+        (click)="inviteUser()"></button>
+</mat-card>
