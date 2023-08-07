@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Channel } from 'src/models/channel.class';
@@ -18,6 +18,8 @@ import { AuthService } from '../../../services/auth.service';
   templateUrl: './navbar-new-channel-dialog.component.html',
   styleUrls: ['./navbar-new-channel-dialog.component.sass']
 })
+
+
 export class NavbarNewChannelDialogComponent implements OnInit {
   channel: Channel = new Channel();
   channelNameInput: string;
@@ -57,7 +59,7 @@ export class NavbarNewChannelDialogComponent implements OnInit {
             creatorId: this.currentUser.uid,
             usersData: this.users,
             channelName: this.channelNameInput,
-            description: this.channelDiscription,  
+            description: this.channelDiscription,
             isClosedArea: this.isClosedArea,
             creationTime: this.timestamp,
             numberOfMembers: this.users.length,

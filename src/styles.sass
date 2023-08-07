@@ -1,3 +1,5 @@
+@import '~@angular/material/theming'
+
 *
     padding: 0px
     margin: 0px
@@ -20,7 +22,6 @@
     --tertiary-text-dark: rgb(171, 171, 173)
     --primary-button-dark: (#148567)
 
-    
     /* light theme */
     --primary-light-color: rgb(26, 29, 33)
     --secondary-light-color: rgb(25, 23, 29)
@@ -47,8 +48,6 @@ $secondary-text-color: var(--secondary-text-dark)
 $tertiary-text-color: var(--tertiary-text-dark)
 $tertiary-focus-color: var(--tertiary-focus-dark)
 
-
-
 /* Importing Bootstrap SCSS file. */
 @import "../node_modules/bootstrap/scss/bootstrap"
 
@@ -71,3 +70,13 @@ $tertiary-focus-color: var(--tertiary-focus-dark)
 mat-icon
     margin-left: 12px
     margin-right: 12px
+
+\::ng-deep.mat-form-field-appearance-fill .mat-form-field-flex
+    border-bottom: #BBB 1px solid
+    background-color: transparent
+
+\::ng-deep.mat-form-field.mat-focused .mat-form-field-ripple
+    background-color: rgb(51, 88, 155) !important
+
+\::ng-deep.mat-form-field:hover .mat-form-field-ripple
+    background-color: rgb(51, 88, 155) !important

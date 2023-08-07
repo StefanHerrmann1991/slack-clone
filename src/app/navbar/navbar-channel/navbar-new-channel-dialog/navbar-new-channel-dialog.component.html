@@ -6,14 +6,13 @@
         </div>
         <div class="channel-inputs">
             <div>Name</div>
-            <mat-form-field appearance="outline">
-                <input class="costom-input" [(ngModel)]="channelNameInput" matInput
+            <mat-form-field appearance="outline" class="full-width">
+                <input class="costom-input full-width" [(ngModel)]="channelNameInput" matInput 
                     placeholder="# e.g. budget-planning">
                 <!--  <mat-hint>Please enter a name.</mat-hint> -->
             </mat-form-field>
-            <div>Discription<span>(optional)</span></div>
+            <div>Discription<span> (optional)</span></div>
             <mat-form-field appearance="outline" class="full-width">
-
                 <input class="costom-input" [(ngModel)]="channelDiscription" matInput>
                 <!-- <mat-hint>Please enter a name.</mat-hint> -->
             </mat-form-field>
@@ -30,15 +29,4 @@
         </div>
     </div>
     <button class="create-channel" (click)="addNewChannel()">Create</button>
-    <!--   <form class="example-form">
-      <input type="text"
-             placeholder="Channels"
-             [formControl]="control"
-             [matAutocomplete]="auto"
-             class="example-input">
-      <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let channelOption of filteredChannels | async" [value]="channelOption">
-          {{channelOption}}
-        </mat-option>
-      </mat-autocomplete>
-    </form> -->
+ 
