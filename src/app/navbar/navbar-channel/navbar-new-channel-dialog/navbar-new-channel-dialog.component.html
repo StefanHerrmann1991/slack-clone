@@ -6,15 +6,48 @@
         </div>
         <div class="channel-inputs">
             <div>Name</div>
-            <mat-form-field appearance="outline" class="full-width">
-                <input class="costom-input full-width" [(ngModel)]="channelNameInput" matInput 
+
+            <input class="material-input" [(ngModel)]="channelNameInput" matInput placeholder="# e.g. budget-planning">
+            <!--  <mat-hint>Please enter a name.</mat-hint> -->
+
+            <div>Discription<span> (optional)</span></div>
+
+            <input class="material-input" [(ngModel)]="channelDiscription" matInput>
+            <!-- <mat-hint>Please enter a name.</mat-hint> -->
+
+        </div>
+        <div class="private">
+            <div>
+                <b>Make private</b>
+                When a channel is set to private, it can only be viewed or joined by invitation.
+                Make private
+
+                This can’t be undone. A private channel cannot be made public later on.
+            </div>
+            <mat-slide-toggle [(ngModel)]="isClosedArea"></mat-slide-toggle>
+        </div>
+    </div>
+    <button class="create-channel" (click)="addNewChannel()">Create</button>
+</div>
+
+
+<!-- <div class="dialog-container">
+    <div>
+        <h1>Create a channel</h1>
+        <div>Channels are where your team communicates. They’re best when organised around a topic – #marketing, for
+            example.
+        </div>
+        <div class="channel-inputs">
+            <div>Name</div>
+            <mat-form-field appearance="outline" class="material-input">
+                <input class="costom-input full-width" [(ngModel)]="channelNameInput" matInput
                     placeholder="# e.g. budget-planning">
-                <!--  <mat-hint>Please enter a name.</mat-hint> -->
+              <mat-hint>Please enter a name.</mat-hint> 
             </mat-form-field>
             <div>Discription<span> (optional)</span></div>
             <mat-form-field appearance="outline" class="full-width">
                 <input class="costom-input" [(ngModel)]="channelDiscription" matInput>
-                <!-- <mat-hint>Please enter a name.</mat-hint> -->
+                <mat-hint>Please enter a name.</mat-hint>
             </mat-form-field>
         </div>
         <div class="private">
@@ -29,4 +62,4 @@
         </div>
     </div>
     <button class="create-channel" (click)="addNewChannel()">Create</button>
- 
+</div> -->
