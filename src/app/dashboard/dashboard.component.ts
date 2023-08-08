@@ -9,6 +9,7 @@ import { map, startWith } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { UserComponent } from '../navbar/user/user.component';
 import { getDatabase, ref, onValue } from "firebase/database";
+import { ThemeService } from '../services/theme.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -21,6 +22,7 @@ export class DashboardComponent {
     private route: ActivatedRoute,
     public authService: AuthService,
     private firestore: AngularFirestore,
+    private themeService: ThemeService,
     private dialog: MatDialog) { }
 
   isOnline: boolean;
@@ -30,6 +32,8 @@ export class DashboardComponent {
   streets: string[] = ['Champs-Élysées', 'Lombard Street', 'Abbey Road', 'Fifth Avenue'];
   filteredUsers: Observable<string[]>;
 
+
+  
 
   ngOnInit() {
     this.route.paramMap.subscribe(paramMap => {
@@ -41,6 +45,11 @@ export class DashboardComponent {
       map(value => this._filter(value || '')),
     );
     this.fetchOnlineStatus(this.userId);
+  }
+
+
+  toggleTheme() {
+    this.themeService.toggleTheme();
   }
 
   fetchOnlineStatus(userId: string) {

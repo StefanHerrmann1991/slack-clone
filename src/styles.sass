@@ -5,6 +5,29 @@
     margin-block-end: 0px
     margin-block-start: 0px
 
+/* Importing Bootstrap SCSS file. */
+@import "../node_modules/bootstrap/scss/bootstrap"
+
+.mat-mdc-dialog-container
+    border-radius: 8px !important
+
+.mdc-dialog__surface
+    border-radius: 8px !important
+
+.mat-mdc-card
+    border-radius: none
+    border: none
+    box-shadow: 0 1px 0 0 $border-color
+
+@mixin flex-center
+    display: flex
+    justify-content: center
+    align-items: center
+
+mat-icon
+    margin-left: 12px
+    margin-right: 12px
+
 :root
     /* dark theme */
     --primary-dark-color: rgb(26, 29, 33)
@@ -46,27 +69,3 @@ $primary-text-color: var(--primary-text-dark)
 $secondary-text-color: var(--secondary-text-dark)
 $tertiary-text-color: var(--tertiary-text-dark)
 $tertiary-focus-color: var(--tertiary-focus-dark)
-
-/* Importing Bootstrap SCSS file. */
-@import "../node_modules/bootstrap/scss/bootstrap"
-
-.mat-mdc-dialog-container
-    border-radius: 8px !important
-
-.mdc-dialog__surface
-    border-radius: 8px !important
-
-.mat-mdc-card
-    border-radius: none
-    border: none
-    box-shadow: 0 1px 0 0 $border-color
-
-@mixin flex-center
-    display: flex
-    justify-content: center
-    align-items: center
-
-mat-icon
-    margin-left: 12px
-    margin-right: 12px
-

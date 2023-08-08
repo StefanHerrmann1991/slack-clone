@@ -1,4 +1,4 @@
-<nav class="navbar navbar-header fixed-top  p-0 shadow">
+<nav class="navbar navbar-header fixed-top">
     <form class="header">
         <div></div>
         <div class="search-history">
@@ -6,6 +6,7 @@
             <input type="text" placeholder="Searchbar" [formControl]="control" [matAutocomplete]="auto"
                 class="search-input">
         </div>
+        <button></button>
         <button mat-icon-button class="menu-user-icon" [matMenuTriggerFor]="headerMenu">
             <div class="icon-status">
                 <mat-icon class="user-icon" fontIcon="person-circle"></mat-icon>
@@ -31,6 +32,14 @@
             </mat-option>
         </mat-autocomplete>
     </form>
+    <nav class="navbar navbar-header fixed-top">
+        <!-- ... other code ... -->
+        <button (click)="toggleTheme()">
+            Toggle Theme
+        </button>
+        <!-- ... other code ... -->
+    </nav>
+
 </nav>
 
 

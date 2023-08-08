@@ -64,8 +64,7 @@ import { NavbarInviteCollegueDialogComponent } from './navbar/navbar-messages/na
 
 @NgModule({
   declarations: [
-    AppComponent,
-    
+    AppComponent,    
     NavbarComponent,
     NavbarChannelComponent,
     LoginComponent,

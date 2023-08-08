@@ -6,15 +6,16 @@
         </div>
         <div class="channel-inputs">
             <div>Name</div>
-
-            <input class="material-input" [(ngModel)]="channelNameInput" matInput placeholder="# e.g. budget-planning">
-            <!--  <mat-hint>Please enter a name.</mat-hint> -->
-
+            <mat-form-field>
+                <input class="material-input" [(ngModel)]="channelNameInput" matInput
+                    placeholder="# e.g. budget-planning">
+                <!--  <mat-hint>Please enter a name.</mat-hint> -->
+            </mat-form-field>
             <div>Discription<span> (optional)</span></div>
-
-            <input class="material-input" [(ngModel)]="channelDiscription" matInput>
-            <!-- <mat-hint>Please enter a name.</mat-hint> -->
-
+            <mat-form-field>
+                <input class="material-input" [(ngModel)]="channelDiscription" matInput>
+                <!-- <mat-hint>Please enter a name.</mat-hint> -->
+            </mat-form-field>
         </div>
         <div class="private">
             <div>
