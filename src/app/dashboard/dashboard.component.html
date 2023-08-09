@@ -1,6 +1,8 @@
 <nav class="navbar navbar-header fixed-top  p-0 shadow">
     <form class="header">
-        <div></div>
+        <button (click)="toggleTheme()">
+            Toggle Theme
+        </button>
         <div class="search-history">
             <mat-icon class="time">access_time</mat-icon>
             <input type="text" placeholder="Searchbar" [formControl]="control" [matAutocomplete]="auto"
@@ -32,14 +34,7 @@
             </mat-option>
         </mat-autocomplete>
     </form>
-    <nav class="navbar navbar-header fixed-top">
-        <!-- ... other code ... -->
-        <button (click)="toggleTheme()">
-            Toggle Theme
-        </button>
-        <!-- ... other code ... -->
-    </nav>
-
+  
 </nav>
 
 
