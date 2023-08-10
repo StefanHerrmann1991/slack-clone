@@ -70,11 +70,11 @@ export class NavbarInviteCollegueDialogComponent implements OnInit {
     mailFormData.append('message', message);
 
     // Send the request
-    const response = await fetch('https://stefan-herrmann.developerakademie.net/send_mail/send_mail.php', { 
+    const response = await fetch('https://stefan-herrmann.developerakademie.net/send_invitation/send_mail.php', { 
       method: 'POST',
       body: mailFormData
     });
-
+    
     // Error handling
     if (!response.ok) {
       throw new Error('Failed to send invitation email');
