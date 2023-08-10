@@ -47,16 +47,50 @@ export class NavbarInviteCollegueDialogComponent implements OnInit {
   }
 
 
-  onSubmit(): void {
-    if (this.inviteForm.valid) {
-      const email = this.inviteForm.get('email').value;
-
-      // your invite logic here
-      // this could be a call to Firebase function to send an email, or you could just store this in Firestore collection
-      console.log(email);
-
-      this.dialogRef.close();
+  /**
+   * Sends a user invitation email.
+   * @param {string} email - The email address of the user.
+   * @param {string} invitationToken - The token for user invitation.
+   * @returns {Promise<void>} A Promise that resolves when the email is sent successfully.
+   */
+  async sendUserInvitationEmail(formValue: any) {
+    const email = formValue.email;  // Extract email from form data
+    const invitationToken = this.generateRandomToken();
+    
+    // Construct the invitation URL
+    const inviteUrl = window.location.origin + '/Join/main/00login-register/invitation.html?token=' + invitationToken;
+    const message = `You have been invited! Click the following link to join Slack-Clone: ${inviteUrl}`;
+  
+    // Construct the FormData object
+    const mailFormData = new FormData();
+    mailFormData.append('email', email);
+    mailFormData.append('name', 'User Invitation');  // Subject for user invitation
+    mailFormData.append('message', message);
+  
+    // Send the request
+    const response = await fetch('https://stefan-herrmann.developerakademie.net/send_mail/send_mail.php', {  // Make sure to modify '...' to your actual server URL
+      method: 'POST',
+      body: mailFormData
+    });
+  
+    // Error handling
+    if (!response.ok) {
+      throw new Error('Failed to send invitation email');
     }
+  }
+
+  /**
+   * Generates a random token for password recovery.
+   * @returns {string} The generated random token.
+   */
+  generateRandomToken() {
+    const tokenLength = 20;
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < tokenLength; i++) {
+      result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return result;
   }
 
 

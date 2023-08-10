@@ -27,7 +27,7 @@ export class DashboardChannelComponent implements OnInit {
     private afAuth: AngularFireAuth,
     private datePipe: DatePipe,
   ) { }
-
+  showStickyLine: boolean = false;
   channelId = '';
   channel: Channel = new Channel();
   messages: any;
@@ -78,10 +78,11 @@ export class DashboardChannelComponent implements OnInit {
 
   @HostListener('window:scroll')
   onWindowScroll() {
-    for (let i = 1; i < this.messages.length; i++) {
+    for (let i = 0; i < this.messages.length; i++) {
       const dateContainer = document.getElementById('date-' + i);
+    
       if (dateContainer && this.isInViewport(dateContainer)) {
-        this.stickyDate = this.messages[i - 1].date;
+        this.stickyDate = this.messages[i].date;
         break;
       }
     }

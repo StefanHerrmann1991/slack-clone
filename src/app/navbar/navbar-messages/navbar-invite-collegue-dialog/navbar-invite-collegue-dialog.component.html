@@ -1,5 +1,5 @@
 <mat-dialog-content>
-    <form [formGroup]="inviteForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="inviteForm" (ngSubmit)="sendUserInvitationEmail(inviteForm.value)">
         <mat-form-field class="full-width">
             <input matInput placeholder="Enter your colleague's email" formControlName="email">
             <mat-error

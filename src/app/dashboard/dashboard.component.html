@@ -1,8 +1,7 @@
 <nav class="navbar navbar-header fixed-top  p-0 shadow">
-    <div>navbar is working</div>
     <form class="header">
-        <button (click)="toggleTheme()">
-            Toggle Theme
+        <button mat-button color="primary" (click)="toggleTheme()">
+            <mat-icon class="dark-light-theming">{{ isDarkTheme ? 'nights_stay' : 'wb_sunny' }}</mat-icon>
         </button>
         <div class="search-history">
             <mat-icon class="time">access_time</mat-icon>

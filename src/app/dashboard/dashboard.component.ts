@@ -31,9 +31,9 @@ export class DashboardComponent {
   control = new FormControl('');
   streets: string[] = ['Champs-Élysées', 'Lombard Street', 'Abbey Road', 'Fifth Avenue'];
   filteredUsers: Observable<string[]>;
+  isDarkTheme: boolean = false;
 
 
-  
 
   ngOnInit() {
     this.route.paramMap.subscribe(paramMap => {
@@ -49,11 +49,12 @@ export class DashboardComponent {
 
 
   toggleTheme() {
+    this.isDarkTheme = !this.isDarkTheme;
     this.themeService.toggleTheme();
   }
 
   fetchOnlineStatus(userId: string) {
-    
+
     const database = getDatabase();
     const userStatusDatabaseRef = ref(database, '/status/' + userId);
 
