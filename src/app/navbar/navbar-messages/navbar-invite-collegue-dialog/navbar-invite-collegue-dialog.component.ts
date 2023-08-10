@@ -35,17 +35,19 @@ export class NavbarInviteCollegueDialogComponent implements OnInit {
   currentUser: User | null;
   invitedUsers: string[] = [];
 
-  ngOnInit(): void {
-
+  ngOnInit(): void {  
     this.afAuth.authState.subscribe(user => {
       this.currentUser = user;
     });
+    this.emailFormControl = new FormControl('', [Validators.required, Validators.email]);
     this.inviteForm = this.formBuilder.group({
-      username: this.usernameControl,
+      email: this.emailFormControl
     });
     this.getUsers();
   }
 
+
+  /* TODO insert right url to access slack-clone */
 
   /**
    * Sends a user invitation email.
@@ -56,23 +58,23 @@ export class NavbarInviteCollegueDialogComponent implements OnInit {
   async sendUserInvitationEmail(formValue: any) {
     const email = formValue.email;  // Extract email from form data
     const invitationToken = this.generateRandomToken();
-    
+
     // Construct the invitation URL
     const inviteUrl = window.location.origin + '/Join/main/00login-register/invitation.html?token=' + invitationToken;
     const message = `You have been invited! Click the following link to join Slack-Clone: ${inviteUrl}`;
-  
+
     // Construct the FormData object
     const mailFormData = new FormData();
     mailFormData.append('email', email);
     mailFormData.append('name', 'User Invitation');  // Subject for user invitation
     mailFormData.append('message', message);
-  
+
     // Send the request
-    const response = await fetch('https://stefan-herrmann.developerakademie.net/send_mail/send_mail.php', {  // Make sure to modify '...' to your actual server URL
+    const response = await fetch('https://stefan-herrmann.developerakademie.net/send_mail/send_mail.php', { 
       method: 'POST',
       body: mailFormData
     });
-  
+
     // Error handling
     if (!response.ok) {
       throw new Error('Failed to send invitation email');
