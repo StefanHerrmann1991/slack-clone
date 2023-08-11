@@ -12,7 +12,9 @@ import { NavbarInviteCollegueDialogComponent } from './navbar-messages/navbar-in
 export class NavbarComponent {
   channelId = '';
 
-  constructor(private dialog: MatDialog, private firestore: AngularFirestore) { }
+  constructor(
+    private dialog: MatDialog,
+    private firestore: AngularFirestore) { }
 
   openNewChannelDialog() {
     this.dialog.open(NavbarNewChannelDialogComponent, {

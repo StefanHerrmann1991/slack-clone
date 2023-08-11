@@ -8,7 +8,7 @@ import { onAuthStateChanged, getAuth } from 'firebase/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { DatePipe } from '@angular/common';
 import { EditChannelComponent } from './edit-channel/edit-channel.component';
-
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-dashboard-channel',
   templateUrl: './dashboard-channel.component.html',
@@ -21,6 +21,7 @@ export class DashboardChannelComponent implements OnInit {
 
 
   constructor(
+    private dialog: MatDialog,
     private route: ActivatedRoute,
     public channelService: ChannelsService,
     private firestore: AngularFirestore,
@@ -43,10 +44,11 @@ export class DashboardChannelComponent implements OnInit {
     })
   }
 
- 
+
   openDialog() {
     this.dialog.open(EditChannelComponent, {
-      width: '300px',
+      width: '550px',
+      height: '600px',
       hasBackdrop: true
     });
   }
