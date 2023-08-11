@@ -105,16 +105,10 @@ export class NavbarInviteCollegueDialogComponent implements OnInit {
     }
     this.http.sendEmail("http://localhost:3000/sendmail", user).subscribe(
       data => {
-        let res: any = data;
-        console.log(`${user.name} is registerd`)
+        let res: any = data;       
       }
-
     )
   }
-
-
-
-
 
 
   getUsers() {

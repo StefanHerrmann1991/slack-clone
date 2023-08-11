@@ -28,8 +28,7 @@ export class EditUserComponent implements OnInit {
       .doc(this.userId)
       .update({ name: this.user.username })
       .then((result: any) => {
-        this.loading = false;
-        console.log(this.user);
+        this.loading = false;       
         this.dialogRef.close();
       })
   }

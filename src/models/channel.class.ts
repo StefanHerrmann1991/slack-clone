@@ -2,7 +2,7 @@ export class Channel {
     id: string;
     channelName: string;
     description: string;
-    usersData: string[];
+    usersData: { email: string, userId: string, username: string }[];
     creatorId: string;
     isClosedArea: boolean;
     creationTime: any;

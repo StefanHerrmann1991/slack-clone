@@ -1,5 +1,4 @@
-<mat-tab-group>
-
+<mat-tab-group color="primary">
     <!-- About Tab -->
     <mat-tab label="About">
       <p>
@@ -12,12 +11,12 @@
     <!-- Members Tab -->
     <mat-tab label="Members">
       <ul>
-        <li *ngFor="let member of channel.usersData">{{ member }}</li>
+        <li *ngFor="let member of channel.usersData">{{ member?.username }}</li>
       </ul>
     </mat-tab>
   
     <!-- Settings Tab -->
-    <mat-tab label="Settings">
+    <mat-tab label="Settings" color="primary">
       <div>
         <h3>Change Channel Name</h3>
         <mat-form-field>

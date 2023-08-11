@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { ChannelsService } from 'src/app/services/channels.service';
 import { Channel } from 'src/models/channel.class';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import {MatTabsModule} from '@angular/material/tabs'; 
+import { MatTabsModule } from '@angular/material/tabs';
+import { ActivatedRoute } from '@angular/router';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 
 @Component({
@@ -11,19 +13,26 @@ import {MatTabsModule} from '@angular/material/tabs';
   styleUrls: ['./edit-channel.component.sass']
 })
 export class EditChannelComponent {
+  usersData: { email: string, userId: string, username: string }[];
   channelNameInput: any;
   channelDiscription: any;
   isClosedArea: any;
   channelTopic: any;
-  constructor(
-    public channelService: ChannelsService,
-    private firestore: AngularFirestore,
-  ) { }
-
-  channelId = '';
+  channelId = this.data.channelId;
   channel: Channel = new Channel();
   messages: any;
 
+
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public channelService: ChannelsService,
+    private firestore: AngularFirestore,
+    private route: ActivatedRoute,
+  ) { }
+
+  ngOnInit() {   
+      this.getChannel();
+  }
 
   getChannel(): void {
     this.firestore
@@ -31,7 +40,7 @@ export class EditChannelComponent {
       .doc(this.channelId)
       .valueChanges()
       .subscribe((channel: any) => {
-        this.channel = new Channel(channel);     
+        this.channel = new Channel(channel);
       });
   }
 

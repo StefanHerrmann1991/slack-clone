@@ -14,14 +14,21 @@ import { NavbarChannelComponent } from './navbar/navbar-channel/navbar-channel.c
 import { UserComponent as NavbarUserComponent } from './navbar/user/user.component';
 import { NavbarMessagesComponent } from './navbar/navbar-messages/navbar-messages.component';
 import { DashboardMessagesComponent } from './dashboard/dashboard-messages/dashboard-messages.component';
-
+import { EditChannelComponent } from './dashboard/dashboard-channel/edit-channel/edit-channel.component';
 
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
     path: 'dashboard/:id', component: DashboardComponent,
-    children: [{ path: 'dashboard-channel/:channelId', component: DashboardChannelComponent }] 
+    children: [
+      { 
+        path: 'dashboard-channel/:channelId', component: DashboardChannelComponent 
+      },
+      {
+        path: 'dashboard-channel/edit/:channelId', component: EditChannelComponent
+      }
+    ]
   },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
@@ -31,6 +38,7 @@ const routes: Routes = [
   { path: 'messages', component: NavbarMessagesComponent },
   { path: 'user', component: NavbarUserComponent }
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

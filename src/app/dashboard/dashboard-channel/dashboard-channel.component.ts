@@ -38,7 +38,7 @@ export class DashboardChannelComponent implements OnInit {
 
 
   ngOnInit() {
-    this.route.paramMap.subscribe(paramMap => {
+        this.route.paramMap.subscribe(paramMap => {
       this.channelId = paramMap.get('channelId');
       this.getChannel();
     })
@@ -47,6 +47,7 @@ export class DashboardChannelComponent implements OnInit {
 
   openDialog() {
     this.dialog.open(EditChannelComponent, {
+      data: { channelId: this.channelId },
       width: '550px',
       height: '600px',
       hasBackdrop: true
@@ -61,7 +62,6 @@ export class DashboardChannelComponent implements OnInit {
       .subscribe((channel: any) => {
         this.channel = new Channel(channel);
         this.messages = this.groupMessagesByDate(this.channel.messages);
-        console.log(this.channel)
       });
   }
 
