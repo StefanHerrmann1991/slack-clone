@@ -1,21 +1,13 @@
-<div class="main-dashbaord" (scroll)="onWindowScroll()">
-    <div class="channel-chatroom relative">
-        <div class="line-with-date sticky" id="stickyLine" >
-            <div class="dividing-line"></div>
-            <div class="sticky-date-container message-date">{{ stickyDate }}</div>
-            <div class="dividing-line"></div>
-        </div>
-
+<div class="main-dashbaord">
+    <div class="channel-chatroom">     
         <div class="channel">
-
-            <button class="channel-btn">
+            <button class="channel-btn" (click)="openDialog()">
                 <mat-icon class="mat-icon" [ngStyle]="{'font-style': channel.isClosedArea ? 'normal' : 'italic' }">
                     {{ channel.isClosedArea ? 'lock' : 'tag' }}
                 </mat-icon>
                 <div>{{ channel.channelName }}</div>
                 <mat-icon class="mat-icon">expand_more</mat-icon>
             </button>
-
         </div>
 
         <div *ngFor="let group of messages; let i = index" class="message-group">
@@ -24,6 +16,11 @@
                 <div class="message-date" id="date-{{i}}">{{ group.date }}</div>
                 <div class="dividing-line"></div>
             </div>
+           <!--  <div class="line-with-date sticky" id="stickyLine" *ngIf="showStickyLine">
+                <div class="dividing-line"></div>
+                <div class="sticky-date-container message-date">{{ group.date }}</div>
+                <div class="dividing-line"></div>
+            </div> -->
             <div *ngFor="let message of group.messages">
                 <div class="name-and-time"dark-light-theming>
                     <div class="user-name">{{message.username}}</div>

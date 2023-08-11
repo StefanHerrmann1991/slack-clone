@@ -33,6 +33,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import {MatTabsModule} from '@angular/material/tabs'; 
 
 /* services */
 import { AuthService } from "./services/auth.service";
@@ -59,6 +60,7 @@ import { NavbarMessagesComponent } from './navbar/navbar-messages/navbar-message
 import { NavbarThreadsComponent } from './navbar/navbar-threads/navbar-threads.component';
 import { DashboardThreadsComponent } from './dashboard/dashboard-threads/dashboard-threads.component';
 import { NavbarInviteCollegueDialogComponent } from './navbar/navbar-messages/navbar-invite-collegue-dialog/navbar-invite-collegue-dialog.component';
+import { EditChannelComponent } from './dashboard/dashboard-channel/edit-channel/edit-channel.component';
 
 
 
@@ -82,11 +84,10 @@ import { NavbarInviteCollegueDialogComponent } from './navbar/navbar-messages/na
     NavbarThreadsComponent,
     DashboardThreadsComponent,
     NavbarInviteCollegueDialogComponent,
-  
-
-
+    EditChannelComponent,
   ],
   imports: [
+    MatTabsModule,
     MatSlideToggleModule,
     MatAutocompleteModule,
     MatAutocompleteModule,

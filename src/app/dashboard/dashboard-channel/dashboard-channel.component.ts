@@ -7,7 +7,7 @@ import { Channel } from 'src/models/channel.class';
 import { onAuthStateChanged, getAuth } from 'firebase/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { DatePipe } from '@angular/common';
-
+import { EditChannelComponent } from './edit-channel/edit-channel.component';
 
 @Component({
   selector: 'app-dashboard-channel',
@@ -18,7 +18,7 @@ import { DatePipe } from '@angular/common';
 export class DashboardChannelComponent implements OnInit {
 
 
-  
+
 
   constructor(
     private route: ActivatedRoute,
@@ -27,6 +27,7 @@ export class DashboardChannelComponent implements OnInit {
     private afAuth: AngularFireAuth,
     private datePipe: DatePipe,
   ) { }
+
   showStickyLine: boolean = false;
   channelId = '';
   channel: Channel = new Channel();
@@ -42,6 +43,13 @@ export class DashboardChannelComponent implements OnInit {
     })
   }
 
+ 
+  openDialog() {
+    this.dialog.open(EditChannelComponent, {
+      width: '300px',
+      hasBackdrop: true
+    });
+  }
 
   getChannel(): void {
     this.firestore
@@ -54,7 +62,7 @@ export class DashboardChannelComponent implements OnInit {
         console.log(this.channel)
       });
   }
-  
+
 
   groupMessagesByDate(messages): any[] {
     const groupedMessages = [];
@@ -80,21 +88,16 @@ export class DashboardChannelComponent implements OnInit {
   onWindowScroll() {
     for (let i = 0; i < this.messages.length; i++) {
       const dateContainer = document.getElementById('date-' + i);
-    
-      if (dateContainer && this.isInViewport(dateContainer)) {
+
+      if (dateContainer && this.topEdgeInViewport(dateContainer)) {
         this.stickyDate = this.messages[i].date;
         break;
       }
     }
   }
 
-  isInViewport(element) {
+  topEdgeInViewport(element) {
     const rect = element.getBoundingClientRect();
-    return (
-      rect.top >= 0 &&
-      rect.left >= 0 &&
-      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-    );
+    return rect.top <= 0;  // Top edge of the element is at or above the top edge of the viewport
   }
 }

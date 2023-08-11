@@ -1,10 +1,7 @@
-import { FlatTreeControl } from '@angular/cdk/tree';
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { NavbarNewChannelDialogComponent } from './navbar-channel/navbar-new-channel-dialog/navbar-new-channel-dialog.component';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Channel } from 'src/models/channel.class';
 import { NavbarInviteCollegueDialogComponent } from './navbar-messages/navbar-invite-collegue-dialog/navbar-invite-collegue-dialog.component';
 
 @Component({
