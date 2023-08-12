@@ -13,7 +13,6 @@ import { DashboardChannelComponent } from './dashboard/dashboard-channel/dashboa
 import { NavbarChannelComponent } from './navbar/navbar-channel/navbar-channel.component';
 import { UserComponent as NavbarUserComponent } from './navbar/user/user.component';
 import { NavbarMessagesComponent } from './navbar/navbar-messages/navbar-messages.component';
-import { DashboardMessagesComponent } from './dashboard/dashboard-messages/dashboard-messages.component';
 import { EditChannelComponent } from './dashboard/dashboard-channel/edit-channel/edit-channel.component';
 
 
