@@ -1,5 +1,7 @@
 @use "sass:map";
 
+
+
 $dark-primary-text: rgba(#000939, 0.87);
 $dark-secondary-text: rgba(#000939, 0.54);
 $dark-disabled-text: rgba(#000939, 0.38);
@@ -45,7 +47,7 @@ $night-palette: (
   500: #64748b,
   600: #475569,
   700: #334155,
-  800: #1e293b,
+  800: black,
   900: #0f172a,
   contrast: (
     50: $dark-primary-text,

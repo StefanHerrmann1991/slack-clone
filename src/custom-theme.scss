@@ -13,6 +13,10 @@ $app-theme: app.define-dark-theme((color: (primary: $app-primary,
       )));
 
 
+@include mat.core-theme($app-theme);
+@include mat.button-theme($app-theme);
+@include mat.expansion-theme($app-theme);
+
 html,
 body {
   height: 100%;
