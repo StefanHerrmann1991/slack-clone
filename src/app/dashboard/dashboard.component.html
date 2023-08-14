@@ -1,4 +1,4 @@
-<nav class="navbar navbar-header fixed-top  p-0 shadow">
+<mat-toolbar class="toolbar">
     <form class="header">
         <button mat-button color="primary" (click)="toggleTheme()">
             <mat-icon class="dark-light-theming">{{ isDarkTheme ? 'nights_stay' : 'wb_sunny' }}</mat-icon>
@@ -28,17 +28,20 @@
             </mat-menu>
         </button>
         <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let street of filteredUsers | async" [value]="user">
+            <mat-option *ngFor="let user of filteredUsers | async" [value]="user">
                 {{user}}
             </mat-option>
         </mat-autocomplete>
     </form>
+</mat-toolbar>
+<mat-drawer-container class="main-container">
+    <mat-drawer class="sidenav" mode="side" opened>
+        <app-navbar class="navbar-container"></app-navbar>
+    </mat-drawer>
+    <mat-drawer-content><router-outlet></router-outlet></mat-drawer-content>
+</mat-drawer-container>
 
-</nav>
 
 
-<!-- NAVBAR & ROUTER (CHANNEL DASHBOARD/ MASSEGE DASHBOARD & DASHBOARD PROFILE) -->
-<div class="nav-dash-container">
-    <app-navbar class="navbar-container"></app-navbar>
-    <router-outlet></router-outlet>
-</div>
+
+

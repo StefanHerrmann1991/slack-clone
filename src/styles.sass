@@ -8,7 +8,6 @@
 @import "../node_modules/bootstrap/scss/bootstrap"
 @import './custom-theme.scss'
 
-
 .mat-mdc-dialog-container
     border-radius: 8px !important
 
@@ -24,8 +23,6 @@
     display: flex
     justify-content: center
     align-items: center
-
-
 
 :root
     /* dark theme */
@@ -72,8 +69,19 @@ $tertiary-focus-color: var(--tertiary-focus-dark)
 .mat-tab-group
     background-color: red
 
-
-mat-icon 
+mat-icon
     font-size: 16px
     height: 16px
-    width:  16px
+    width: 16px
+
+.expand-channels-btn
+    .mat-mdc-icon-button
+    --mdc-icon-button-state-layer-size: 15px
+    --mdc-icon-button-icon-size: 12px
+    --mdc-icon-button-disabled-icon-color: black
+    --mdc-icon-button-disabled-icon-opacity: 0.38
+    .mdc-button, .mat-mdc-button, .mat-unthemed, .mat-mdc-button-base
+        min-width: 20px
+        height: 20px !important
+    &:hover
+        background-color: green
