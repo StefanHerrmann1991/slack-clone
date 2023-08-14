@@ -4,20 +4,18 @@
     <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent="0"
         [routerLink]="['dashboard-channel/' + node.channelId]">
         <!-- use a disabled button to provide padding for tree leaf -->
-        <button mat-icon-button>
-            <mat-icon class="closed-area" [ngStyle]="{'font-style': node.isClosedArea ? 'normal' : 'italic' }"> {{
+        <button mat-button class="channel-btn">
+            <mat-icon [ngStyle]="{'font-style': node.isClosedArea ? 'normal' : 'italic' }"> {{
                 node.isClosed ? 'lock' : 'tag'}}</mat-icon>
+            <div>{{node.name}}</div>
         </button>
-        {{node.name}}
     </mat-tree-node>
     <mat-tree-node *matTreeNodeDef="let node;when: channelService.hasChild" matTreeNodePadding class="hightest-node">
-        <div class="mat-button">
-            <button  mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
-                <mat-icon  (click)="toggleExpanded(node)">
-                    {{ channelService.treeControl.isExpanded(node) ? 'arrow_drop_down' : 'arrow_right' }}
-                </mat-icon>
-            </button>
-        </div>
+        <button mat-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+            <mat-icon (click)="toggleExpanded(node)">
+                {{ channelService.treeControl.isExpanded(node) ? 'arrow_drop_down' : 'arrow_right' }}
+            </mat-icon>
+        </button>
         <span class="channels">{{node.name}}</span>
     </mat-tree-node>
 </mat-tree>
