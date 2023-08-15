@@ -1,6 +1,6 @@
 <mat-toolbar class="toolbar">
     <form class="header">
-        <button mat-button color="primary" (click)="toggleTheme()">
+        <button mat-icon-button color="primary" (click)="toggleTheme()">
             <mat-icon class="dark-light-theming">{{ isDarkTheme ? 'nights_stay' : 'wb_sunny' }}</mat-icon>
         </button>
         <div class="search-history">
@@ -28,10 +28,11 @@
             </mat-menu>
         </button>
         <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let user of filteredUsers | async" [value]="user">
-                {{user}}
+            <mat-option *ngFor="let user of filteredUsers | async" [value]="user.username">
+              {{ user.username }}
             </mat-option>
-        </mat-autocomplete>
+          </mat-autocomplete>
+          
     </form>
 </mat-toolbar>
 <mat-drawer-container class="main-container">

@@ -28,11 +28,10 @@ export class DashboardComponent {
   isOnline: boolean;
   user: User = new User();
   userId = '';
-  control = new FormControl('');
-  streets: string[] = ['Champs-Élysées', 'Lombard Street', 'Abbey Road', 'Fifth Avenue'];
-  filteredUsers: Observable<string[]>;
+  control = new FormControl(''); 
+  filteredUsers: Observable<User[]>;
   isDarkTheme: boolean = false;
-
+  users: User[] = [];
 
 
   ngOnInit() {
@@ -40,6 +39,7 @@ export class DashboardComponent {
       this.userId = paramMap.get('id');
       this.getUser();
     })
+    this.getAllUsers();
     this.filteredUsers = this.control.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value || '')),
@@ -47,6 +47,16 @@ export class DashboardComponent {
     this.fetchOnlineStatus(this.userId);
   }
 
+  private _filter(value: string): User[] {
+    const filterValue = this._normalizeValue(value);
+    return this.users.filter(user => this._normalizeValue(user.username).includes(filterValue));
+  }
+
+  getAllUsers() {
+    this.firestore.collection('users').valueChanges().subscribe((usersData: any[]) => {
+      this.users = usersData.map(userData => new User(userData));
+    });
+  }
 
   toggleTheme() {
     this.isDarkTheme = !this.isDarkTheme;
@@ -72,11 +82,6 @@ export class DashboardComponent {
       .subscribe((user: any) => {
         this.user = new User(user);
       })
-  }
-
-  private _filter(value: string,): string[] {
-    const filterValue = this._normalizeValue(value);
-    return this.streets.filter(street => this._normalizeValue(street).includes(filterValue));
   }
 
   private _normalizeValue(value: string): string {
