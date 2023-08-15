@@ -1,21 +1,31 @@
-<h2>Slack Clone</h2>
-<mat-tree [dataSource]="channelService.dataSource" [treeControl]="channelService.treeControl">
+<mat-tree class="mat-tree" [dataSource]="channelService.dataSource" [treeControl]="channelService.treeControl">
     <!-- This is the tree node template for leaf nodes -->
-    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent="0"
+    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent="0px"
         [routerLink]="['dashboard-channel/' + node.channelId]">
         <!-- use a disabled button to provide padding for tree leaf -->
-        <button mat-button class="channel-btn">
+        <button class="mat-tree-node-btn" mat-button>
             <mat-icon [ngStyle]="{'font-style': node.isClosedArea ? 'normal' : 'italic' }"> {{
                 node.isClosed ? 'lock' : 'tag'}}</mat-icon>
             <div>{{node.name}}</div>
         </button>
     </mat-tree-node>
-    <mat-tree-node *matTreeNodeDef="let node;when: channelService.hasChild" matTreeNodePadding class="hightest-node">
-        <button class="expand-channels-btn" mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
-            <mat-icon (click)="toggleExpanded(node)">
-                {{ channelService.treeControl.isExpanded(node) ? 'arrow_drop_down' : 'arrow_right' }}
-            </mat-icon>
-        </button>
-        <span class="channels">{{node.name}}</span>
+    <mat-tree-node *matTreeNodeDef="let node;when: channelService.hasChild" matTreeNodePadding class="highest-node">
+        <div class="main-node">
+            <button class="expand-channels-btn" mat-icon-button matTreeNodeToggle
+                [attr.aria-label]="'Toggle ' + node.name">
+                <mat-icon class="main-icon" (click)="toggleExpanded(node)">
+                    {{ channelService.treeControl.isExpanded(node) ? 'arrow_drop_down' : 'arrow_right' }}
+                </mat-icon>
+            </button>
+            <span class="channels" (mouseover)="hovering = true" (mouseout)="hovering = false"
+                [matMenuTriggerFor]="menu">{{node.name}}
+                <mat-icon *ngIf="hovering">expand_more</mat-icon>
+            </span>
+            <mat-menu #menu="matMenu">
+                <button class="channel-options" mat-menu-item (click)="createChannel()">Create</button>
+                <mat-divider></mat-divider>
+                <button class="channel-options" mat-menu-item (click)="manageChannels()">Manage</button>
+            </mat-menu>
+        </div>
     </mat-tree-node>
 </mat-tree>

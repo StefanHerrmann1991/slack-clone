@@ -17,6 +17,8 @@ import { ChannelsService } from 'src/app/services/channels.service';
 })
 export class NavbarChannelComponent {
   changeText: boolean;
+  hovering: boolean = false;
+
   /* Only shows the channels names but not the corresponding data. */
   ngOnInit() {    
     this.channelService.renderTree();
@@ -34,4 +36,10 @@ export class NavbarChannelComponent {
   changeBackground(color: string) {
       this.iconBackground = color;
   } 
+
+  createChannel(){};
+  manageChannels(){};
+
+
+
 }

@@ -76,12 +76,18 @@ mat-icon
 
 .expand-channels-btn
     .mat-mdc-icon-button
-    --mdc-icon-button-state-layer-size: 15px
-    --mdc-icon-button-icon-size: 12px
+    --mdc-icon-button-state-layer-size: 24px
+    --mdc-icon-button-icon-size: 24px
     --mdc-icon-button-disabled-icon-color: black
     --mdc-icon-button-disabled-icon-opacity: 0.38
     .mdc-button, .mat-mdc-button, .mat-unthemed, .mat-mdc-button-base
-        min-width: 20px
-        height: 20px !important
+        min-width: 24px
+        height: 24px !important
     &:hover
-        background-color: green
+        background-color: $hover-effect-color
+        border-radius: 4px
+
+.mat-mdc-icon-button .mat-mdc-button-touch-target
+    height: 24px !important
+    width: 24px !important
+    padding: 6px

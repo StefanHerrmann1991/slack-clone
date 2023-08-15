@@ -34,7 +34,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {MatTabsModule} from '@angular/material/tabs'; 
-
+import {MatDividerModule} from '@angular/material/divider'; 
 /* services */
 import { AuthService } from "./services/auth.service";
 
@@ -100,6 +100,7 @@ import { EditChannelComponent } from './dashboard/dashboard-channel/edit-channel
     MatFormFieldModule,
     MatDatepickerModule,
     MatProgressBarModule,
+    MatDividerModule,
     MatCardModule,
     MatTreeModule,
     MatMenuModule,

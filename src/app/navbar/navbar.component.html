@@ -1,17 +1,13 @@
-<ul>
-    <li><app-navbar-threads></app-navbar-threads></li>
-    <li><app-navbar-channel class="navbar-channels"></app-navbar-channel></li>
-    <li>
-        <button (click)="openNewChannelDialog()" mat-button>
-            <mat-icon class="icon">add_box</mat-icon>
-            Add channels
-        </button>
-    </li>
-    <li><app-navbar-messages></app-navbar-messages></li>
-    <li>
-        <button (click)="openInviteCollegueDialog()" mat-button>
-            <mat-icon class="icon">add_box</mat-icon>
-            Add collegues
-        </button>
-    </li>
-</ul>
+<app-navbar-threads></app-navbar-threads>
+<mat-divider></mat-divider>
+<div class="navbar-channels"><app-navbar-channel ></app-navbar-channel></div>
+<button class="channel-btn" (click)="openNewChannelDialog()" mat-button>
+    <mat-icon class="icon">add_box</mat-icon>
+    Add channels
+</button>
+
+<app-navbar-messages></app-navbar-messages>
+<button class="channel-btn" (click)="openInviteCollegueDialog()" mat-button>
+    <mat-icon class="icon">add_box</mat-icon>
+    Add collegues
+</button>
