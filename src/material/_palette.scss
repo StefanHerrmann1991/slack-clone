@@ -2,7 +2,7 @@
 
 
 
-$dark-primary-text: rgba(#000939, 0.87);
+$dark-primary-text: rgba(#000939, 1);
 $dark-secondary-text: rgba(#000939, 0.54);
 $dark-disabled-text: rgba(#000939, 0.38);
 $dark-dividers: rgba(#000939, 0.12);
@@ -36,6 +36,8 @@ $grey-palette: (
     900: $light-primary-text,
   ),
 );
+
+/* bs-body-color */
 
 $night-palette: (
   50: #f8fafc,

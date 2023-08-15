@@ -37,7 +37,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatDividerModule} from '@angular/material/divider'; 
 /* services */
 import { AuthService } from "./services/auth.service";
-
+import {OverlayModule} from '@angular/cdk/overlay'; 
 /* components */
 /* auth */
 /* navbar */
@@ -61,6 +61,7 @@ import { NavbarThreadsComponent } from './navbar/navbar-threads/navbar-threads.c
 import { DashboardThreadsComponent } from './dashboard/dashboard-threads/dashboard-threads.component';
 import { NavbarInviteCollegueDialogComponent } from './navbar/navbar-messages/navbar-invite-collegue-dialog/navbar-invite-collegue-dialog.component';
 import { EditChannelComponent } from './dashboard/dashboard-channel/edit-channel/edit-channel.component';
+import { EditChannelDialogComponent } from './dashboard/dashboard-channel/edit-channel/edit-channel-dialog/edit-channel-dialog.component';
 
 
 
@@ -85,6 +86,7 @@ import { EditChannelComponent } from './dashboard/dashboard-channel/edit-channel
     DashboardThreadsComponent,
     NavbarInviteCollegueDialogComponent,
     EditChannelComponent,
+    EditChannelDialogComponent,
   ],
   imports: [
     MatTabsModule,
@@ -97,6 +99,7 @@ import { EditChannelComponent } from './dashboard/dashboard-channel/edit-channel
     MatSidenavModule,
     MatButtonModule,
     MatInputModule,
+    OverlayModule,
     MatFormFieldModule,
     MatDatepickerModule,
     MatProgressBarModule,

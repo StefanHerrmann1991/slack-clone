@@ -5,7 +5,8 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ActivatedRoute } from '@angular/router';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-
+import { EditChannelDialogComponent } from './edit-channel-dialog/edit-channel-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-edit-channel',
@@ -22,16 +23,21 @@ export class EditChannelComponent {
   channel: Channel = new Channel();
   messages: any;
 
+  isChannelNameOpen = false;
+  isDescriptionOpen = false;
+  isTopicOpen = false;
+
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public channelService: ChannelsService,
     private firestore: AngularFirestore,
     private route: ActivatedRoute,
+    private dialog: MatDialog,
   ) { }
 
-  ngOnInit() {   
-      this.getChannel();
+  ngOnInit() {
+    this.getChannel();
   }
 
   getChannel(): void {
@@ -57,5 +63,10 @@ export class EditChannelComponent {
     // TODO: Archive the channel logic here
   }
 
-  editCannel() { }
+  openDialog(title: string, content: string): void {
+    this.dialog.open(EditChannelDialogComponent, {
+      width: '250px',
+      data: { title: title, content: content }
+    });
+  }
 }

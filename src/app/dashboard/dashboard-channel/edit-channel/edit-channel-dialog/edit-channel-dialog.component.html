@@ -1,0 +1,20 @@
+<h2>{{ data.title }}</h2>
+
+<!-- Conditionally display content based on data.type -->
+<div *ngIf="data.type === 'channelName'">
+  Content for Channel Name Edit
+  <!-- You can add more complex HTML structure here -->
+</div>
+
+<div *ngIf="data.type === 'description'">
+  Content for Description Edit
+  <!-- You can add more complex HTML structure here -->
+</div>
+
+<div *ngIf="data.type === 'topic'">
+  Content for Topic Edit
+  <!-- You can add more complex HTML structure here -->
+</div>
+
+<button mat-button (click)="close()">Close</button>
+
