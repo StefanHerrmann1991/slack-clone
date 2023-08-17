@@ -1,0 +1,47 @@
+<div class="login-main">
+    <h2><img src="assets/img/slack-icon.png">slack-clone</h2>
+    <h1>First, enter your email</h1>
+    <div class="suggestion">We suggest using the <b>email address you use at work.</b></div>
+    <div class="displayTable">
+        <div class="displayTableCell">
+            <div class="authBlock">
+                <div class="formGroup">
+                    <input type="text" class="formControl" placeholder="Username" #userName required>
+                </div>
+                <div class="formGroup">
+                    <input type="password" class="formControl" placeholder="Password" #userPassword required>
+                </div>
+                <!-- Calling SignIn Api from AuthService -->
+                <div class="formGroup">
+                    <input type="button" class="continue" value="Continue"
+                        (click)="authService.SignIn(userName.value, userPassword.value)">
+                </div>
+                <!-- authService.navigateToRoute('/dashboard/' + users.id) -->
+                <div class="formGroup">
+                    <h4 class="or"><span class="orInner">OR</span></h4>
+                </div>
+                <div class="formGroup">
+                    <input type="button" class="continue" value="Continue as Guest"
+                        (click)="authService.GuestLogin()">
+                </div>
+                <!-- Calling GoogleAuth Api from AuthService -->
+                <div class="additionals">
+                    <div class="formGroup">
+                        <button type="button" class="btn google-btn" (click)="authService.GoogleAuth()">
+                            <img class="small-img" src="assets/img/google.png">
+                            <div>Continue With Google</div>
+                        </button>
+                    </div>
+                    <div class="forgotPassword">
+                        <span routerLink="forgot-password">Forgot Password?</span>
+                    </div>
+                    <div>
+                        <span>Don't have an account?<span class="redirect" routerLink="/register"
+                                routerLinkActive="active"> Sign Up</span></span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

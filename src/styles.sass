@@ -1,1 +1,57 @@
-/* You can add global styles to this file, and also import other style files */
+@import './custom-theme.scss'
+
+*
+    padding: 0px
+    margin: 0px
+    margin-block-end: 0px
+    margin-block-start: 0px
+
+@mixin flex-center
+    display: flex
+    justify-content: center
+    align-items: center
+
+:root
+    /* dark theme */
+    --primary-dark-color: rgb(26, 29, 33)
+    --secondary-dark-color: rgb(25, 23, 29)
+    --tertiary-dark-color: rgb(18, 16, 22)
+    --highlight-dark-color: #611f69
+    --hover-effect-dark: rgba(209,210,211,0.2)
+    --accent-color: #4285f4
+    --primary-focus-dark: rgb(17, 100, 163)
+    --secondary-focus-dark: rgb(26, 67, 86)
+    --border-dark: rgb(45, 48, 52)
+    --primary-text-dark: rgb(206, 207, 208)
+    --secondary-text-dark: #D1D2D3
+    --tertiary-text-dark: rgb(171, 171, 173)
+    --primary-button-dark: (#148567)
+
+    /* light theme */
+    --primary-light-color: rgb(26, 29, 33)
+    --secondary-light-color: rgb(25, 23, 29)
+    --tertiary-light-color: rgb(18, 16, 22)
+    --highlight-light-color: #611f69
+    --hover-effect-light: rgba(209,210,211,0.2)
+    --accent-color: #4285f4
+    --primary-focus-light: rgb(29, 155, 209)
+    --secondary-focus-light: rgb(26, 67, 86)
+    --border-light: rgb(45, 48, 52)
+    --primary-text-light: rgb(16, 18, 19)
+    --secondary-text-light: #202529
+    --tertiary-text-light: rgb(36, 36, 41)
+    --primary-button-light: black
+
+$primary-bg-color: var(--primary-dark-color)
+$secondary-bg-color: var(--secondary-dark-color)
+$tertiary-bg-color: var(--tertiary-dark-color)
+$highlight-color: var(--highlight-dark-color)
+$hover-effect-color: var(--hover-effect-dark)
+$accent-color: var(--accent-color)
+$primary-focus-color: var(--primary-focus-dark)
+$secondary-focus-color: var(--secondary-focus-dark)
+$border-color: var(--border-dark)
+$primary-text-color: var(--primary-text-dark)
+$secondary-text-color: var(--secondary-text-dark)
+$tertiary-text-color: var(--tertiary-text-dark)
+

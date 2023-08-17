@@ -1,0 +1,13 @@
+<div class="dialog-container">
+    <div>
+        <h1>Edit User Data</h1>
+        <mat-form-field appearance="outline">
+            <mat-label>User Name</mat-label>
+            <input [disabled]="loading" [(ngModel)]="user.username" matInput placeholder="User Name">
+        </mat-form-field>
+        <div mat-dialog-actions>
+            <button mat-button [mat-dialog-close]="">Cancel</button>
+            <button mat-button [mat-dialog-close]="" (click)="saveEditedUser()" cdkFocusInitial>Save</button>
+        </div>
+    </div>
+</div>

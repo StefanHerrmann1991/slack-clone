@@ -1,0 +1,49 @@
+<mat-toolbar class="toolbar">
+    <form class="header">
+        <button mat-icon-button color="primary" (click)="toggleTheme()">
+            <mat-icon class="dark-light-theming">{{ isDarkTheme ? 'nights_stay' : 'wb_sunny' }}</mat-icon>
+        </button>
+        <div class="search-history">
+            <mat-icon class="time">access_time</mat-icon>
+            <input type="text" placeholder="Searchbar" [formControl]="control" [matAutocomplete]="auto"
+                class="search-input">
+        </div>
+        <button mat-icon-button class="menu-user-icon" [matMenuTriggerFor]="headerMenu">
+            <div class="icon-status">
+                <mat-icon class="user-icon" fontIcon="person-circle"></mat-icon>
+                <span class="status-circle" [ngClass]="{'online' : isOnline, 'offline' : !isOnline}">
+                    <span class="inner-statur-circle"></span>
+                </span>
+                <span class="additional-status">{{ isOnline ? '' : 'z' }}</span>
+            </div>
+            <mat-menu #headerMenu="matMenu">
+                <button mat-menu-item (click)="openProfile()">
+                    <mat-icon fontIcon="person-circle"></mat-icon>
+                    <span>Profile</span>
+                </button>
+                <button mat-menu-item (click)="authService.SignOut()">
+                    <mat-icon>logout</mat-icon>
+                    <span>Logout</span>
+                </button>
+            </mat-menu>
+        </button>
+        <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let user of filteredUsers | async" [value]="user.username">
+              {{ user.username }}
+            </mat-option>
+          </mat-autocomplete>
+          
+    </form>
+</mat-toolbar>
+<mat-drawer-container class="main-container">
+    <mat-drawer class="sidenav" mode="side" opened>
+        <app-navbar class="navbar-container"></app-navbar>
+    </mat-drawer>
+    <mat-drawer-content><router-outlet></router-outlet></mat-drawer-content>
+</mat-drawer-container>
+
+
+
+
+
+
