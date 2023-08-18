@@ -54,7 +54,11 @@ import { UserComponent } from './main/user/user.component';
 import { EditUserComponent } from './main/user/edit-user/edit-user.component';
 import { ChannelComponent } from './main/channel/channel.component';
 import { MessageComponent } from './main/message/message.component';
-import { EditChannelComponent } from './main/channel/edit-channel/edit-channel.component';
+import { EditChannelDialogComponent } from './main/channel/edit-channel-dialog/edit-channel-dialog.component';
+import { InviteCollegueDialogComponent } from './main/navbar/invite-collegue-dialog/invite-collegue-dialog.component';
+import { SendMessageDialogComponent } from './main/send-message-dialog/send-message-dialog.component';
+import { CreateChannelDialogComponent } from './main/channel/create-channel-dialog/create-channel-dialog.component';
+import { EditChannelMenuComponent } from './main/channel/edit-channel-menu/edit-channel-menu.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +71,11 @@ import { EditChannelComponent } from './main/channel/edit-channel/edit-channel.c
     EditUserComponent,
     ChannelComponent,
     MessageComponent,
-    EditChannelComponent
+    EditChannelDialogComponent,
+    InviteCollegueDialogComponent,
+    SendMessageDialogComponent,
+    CreateChannelDialogComponent,
+    EditChannelMenuComponent
   ],
   imports: [
     MatTabsModule,

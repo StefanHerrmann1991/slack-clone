@@ -1,0 +1,36 @@
+<h2>{{ data.title }}</h2>
+
+<!-- Conditionally display content based on data.type -->
+<div *ngIf="data.type === 'channelName'">
+  <h2>Rename this channel</h2>
+  <div>Channel name</div>
+  <input mat-input outline>
+  <span>Names must be lower case, without spaces or full stops, and can’t be longer than 80 characters.</span>
+  <div>
+    <button (click)="dialogRef.close()">Cancel</button>
+    <button (click)="dialogRef.close(data.channelName)">Save Changes</button>
+  </div>
+</div>
+
+
+<div *ngIf="data.type === 'topic'">
+  <div>Edit topic</div>
+  <textarea></textarea>
+  <span>Let people know what #allgemein is focused on right now (e.g. a project milestone). Topics are always visible in the header.</span>
+  <div>
+    <button (click)="dialogRef.close()">Cancel</button>
+    <button (click)="dialogRef.close(data.topic)">Save Changes</button>
+  </div>
+</div>
+<div *ngIf="data.type === 'description'">
+  <h2>Edit description</h2>
+  
+  <input mat-input outline>
+  <span>Let people know what this channel is for.</span>
+  <div>
+    <button (click)="dialogRef.close()">Cancel</button>
+    <button (click)="dialogRef.close(data.description)">Save Changes</button>
+  </div>
+</div>
+
+<button mat-button (click)="close()">Close</button>

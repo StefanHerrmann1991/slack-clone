@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatDialog } from '@angular/material/dialog';
-import { User } from 'src/models/AppUser.class';
+import { User } from 'src/models/app-user.class';
 import { AuthService } from '../../services/auth.service';
 import { EditUserComponent } from './edit-user/edit-user.component';
 

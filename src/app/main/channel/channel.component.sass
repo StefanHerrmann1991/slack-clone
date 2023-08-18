@@ -1,0 +1,88 @@
+@import '../../../styles.sass'
+
+.channel-chatroom
+    padding-bottom: 120px
+
+.user-name
+    font-weight: bold
+
+
+.relative
+    position: relative
+
+.sticky
+    position: sticky
+    top: 5%
+    width: 100%
+
+.mdc-card
+    justify-content: center !important
+
+.line-with-date
+    display: flex
+    width: 100%
+    justify-content: center
+    align-items: center
+    .dividing-line
+        height: 1px
+        background-color: $border-color
+        width: calc( 100% - 80px - 16px)
+        z-index: 1
+    .message-date
+        white-space: nowrap
+        font-size: 14px
+        padding: 4px 16px 4px 16px
+        @include flex-center
+        z-index: 2
+        width: 160px
+        border-radius: 24px
+        border: 1px solid $border-color
+
+.channel
+    border: none
+    border-radius: 0px
+    width: 100%
+    display: flex
+    align-items: center
+
+    .channel-btn
+        display: flex
+        justify-content: flex-start
+        align-items: center
+        flex-direction: row
+
+mat-card
+    height: 49px
+
+mat-card-title
+    height: 100%
+
+button
+    height: 30px
+    background-color: $primary-bg-color
+    border: none
+    color: $primary-text-color
+    padding: 12px
+    &:hover
+        background-color: $hover-effect-color
+        border-radius: 4px
+
+.add-message-dialog
+    position: fixed
+    bottom: 2.5%
+    width: calc( 100% - 315px )
+
+.message-group
+    margin: 20px 12px 20px 12px
+
+.name-and-time
+    display: flex
+    align-items: flex-end
+
+    .message-time
+        margin-left: 12px
+        font-size: 12px
+        color: $tertiary-text-color
+
+.hide
+    display: none

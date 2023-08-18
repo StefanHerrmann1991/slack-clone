@@ -1,0 +1,16 @@
+<mat-dialog-content>
+    <form [formGroup]="inviteForm" (ngSubmit)="sendUserInvitationEmail(inviteForm.value)">
+        <mat-form-field class="full-width">
+            <input matInput placeholder="Enter your colleague's email" formControlName="email">
+            <mat-error
+                *ngIf="inviteForm?.get('email')?.invalid && (inviteForm?.get('email')?.dirty || inviteForm?.get('email')?.touched)">
+                Invalid email
+            </mat-error>
+        </mat-form-field>
+        <div class="action-buttons">
+            <button mat-raised-button color="primary" [disabled]="!inviteForm.valid" type="submit">Invite</button>
+            <button mat-button mat-dialog-close>Cancel</button>
+        </div>
+    </form>
+</mat-dialog-content>
+

@@ -1,15 +1,31 @@
 @import './custom-theme.scss'
 
-*
-    padding: 0px
-    margin: 0px
-    margin-block-end: 0px
-    margin-block-start: 0px
+@mixin scrollbar
+    &::-webkit-scrollbar
+        width: 8px
+        background-color: transparent
+        border-radius: 5px
+
+    &::-webkit-scrollbar-thumb
+        background-color: rgb(100, 102, 105)
+        border-radius: 5px
+
+    &::-webkit-scrollbar-track
+        background-color: transparent
+
+        scrollbar-width: thin
+        scrollbar-color: rgb(100, 102, 105) transparent
 
 @mixin flex-center
     display: flex
     justify-content: center
     align-items: center
+*
+    padding: 0px
+    margin: 0px
+    margin-block-end: 0px
+    margin-block-start: 0px
+    @include scrollbar
 
 :root
     /* dark theme */
@@ -26,6 +42,7 @@
     --secondary-text-dark: #D1D2D3
     --tertiary-text-dark: rgb(171, 171, 173)
     --primary-button-dark: (#148567)
+    --toolbar-dark: #0d0d0e
 
     /* light theme */
     --primary-light-color: rgb(26, 29, 33)
@@ -41,6 +58,7 @@
     --secondary-text-light: #202529
     --tertiary-text-light: rgb(36, 36, 41)
     --primary-button-light: black
+    --toolbar-light: rgb(97, 30, 206)
 
 $primary-bg-color: var(--primary-dark-color)
 $secondary-bg-color: var(--secondary-dark-color)
@@ -54,4 +72,47 @@ $border-color: var(--border-dark)
 $primary-text-color: var(--primary-text-dark)
 $secondary-text-color: var(--secondary-text-dark)
 $tertiary-text-color: var(--tertiary-text-dark)
+$toolbar-color: var(--toolbar-dark)
 
+.mat-mdc-dialog-container
+    border-radius: 8px !important
+
+.mdc-dialog__surface
+    border-radius: 8px !important
+
+.mat-mdc-card
+    border-radius: none
+    border: none
+    box-shadow: 0 1px 0 0 $border-color
+
+.mat-tab-group
+    background-color: red
+
+.mat-icon
+    font-size: 16px
+    height: 16px
+    width: 16px
+
+.expand-channels-btn
+    .mat-mdc-icon-button
+        --mdc-icon-button-state-layer-size: 24px
+        --mdc-icon-button-icon-size: 24px
+        --mdc-icon-button-disabled-icon-color: black
+        --mdc-icon-button-disabled-icon-opacity: 0.38
+    .mdc-button, .mat-mdc-button, .mat-unthemed, .mat-mdc-button-base
+        min-width: 24px
+        height: 24px !important
+    &:hover
+        background-color: $hover-effect-color
+        border-radius: 4px
+
+.mat-mdc-icon-button .mat-mdc-button-touch-target
+    height: 24px !important
+    width: 24px !important
+    padding: 6px
+
+button
+    cursor: pointer
+
+.mat-mdc-tab-body-wrapper
+    height: 100%

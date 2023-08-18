@@ -11,9 +11,7 @@
         <button mat-icon-button class="menu-user-icon" [matMenuTriggerFor]="headerMenu">
             <div class="icon-status">
                 <mat-icon class="user-icon" fontIcon="person-circle"></mat-icon>
-                <span class="status-circle" [ngClass]="{'online' : isOnline, 'offline' : !isOnline}">
-                    <span class="inner-statur-circle"></span>
-                </span>
+                <span class="ring" [ngClass]="{'online' : isOnline, 'offline' : !isOnline}"></span>
                 <span class="additional-status">{{ isOnline ? '' : 'z' }}</span>
             </div>
             <mat-menu #headerMenu="matMenu">
@@ -29,10 +27,10 @@
         </button>
         <mat-autocomplete #auto="matAutocomplete">
             <mat-option *ngFor="let user of filteredUsers | async" [value]="user.username">
-              {{ user.username }}
+                {{ user.username }}
             </mat-option>
-          </mat-autocomplete>
-          
+        </mat-autocomplete>
+
     </form>
 </mat-toolbar>
 <mat-drawer-container class="main-container">
@@ -41,9 +39,3 @@
     </mat-drawer>
     <mat-drawer-content><router-outlet></router-outlet></mat-drawer-content>
 </mat-drawer-container>
-
-
-
-
-
-
