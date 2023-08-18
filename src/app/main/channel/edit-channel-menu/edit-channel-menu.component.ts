@@ -32,12 +32,15 @@ export class EditChannelMenuComponent {
       this.overlayContainer.getContainerElement().classList.add(this.data.theme);
     }
 
-    console.log(this.channelId)
+    
     // Now, you can use the channelId to fetch the channel data
     if (this.channelId) {
       this.channelsService.getChannel(this.channelId).subscribe(data => {
         this.channel = new Channel(data);
-        console.log(this.channel);
+        this.channelName = this.channel.channelName;
+        this.description = this.channel.description;
+        
+
       });
     } else {
       console.error('channelId is undefined');
@@ -48,6 +51,7 @@ export class EditChannelMenuComponent {
 
   updateCollectionFromInput(inputValue: string) {
     this.channelsService.updateCollection(this.channelId, 'channels', 'channelName', inputValue)
+    this.close();
   }
 
   close(): void {

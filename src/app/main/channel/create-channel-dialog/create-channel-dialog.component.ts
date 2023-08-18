@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Channel } from 'src/models/channel.class';
@@ -33,6 +33,8 @@ export class CreateChannelDialogComponent {
   timestamp: any
   private userSubscription?: Subscription;
   currentUser: User | null = null;
+  topic: string = '';
+
 
   constructor(private firestore: AngularFirestore,
     public dialogRef: MatDialogRef<CreateChannelDialogComponent>,
@@ -40,9 +42,10 @@ export class CreateChannelDialogComponent {
     private _formBuilder: FormBuilder,
     private ChannelService: ChannelsService,
     private authService: AuthService
-  ) {  }
+  ) { }
 
   addNewChannel() {
+    debugger
     if (this.currentUser) {
       this.firestore
         .collection('users')
@@ -58,6 +61,7 @@ export class CreateChannelDialogComponent {
             isClosedArea: this.isClosedArea,
             creationTime: this.timestamp,
             numberOfMembers: this.users.length,
+            channelTopic: this.topic,
             messages: []  // You can initialize messages as an empty array if there are no messages at the time of channel creation
           });
           this.firestore

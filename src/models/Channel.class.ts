@@ -7,6 +7,7 @@ export class Channel {
     isClosedArea: boolean;
     creationTime: any;
     numberOfMembers: number;
+    channelTopic: string;
     messages: Message[];
 
     constructor(obj?: any) {
@@ -17,6 +18,7 @@ export class Channel {
         this.description = obj ? obj.description : '';
         this.creationTime = obj ? obj.creationTime : '';
         this.numberOfMembers = obj ? obj.numberOfMembers : '';
+        this.channelTopic = obj ? obj.channelTopic : '';
         this.messages = obj && obj.messages ? obj.messages.map(msg => new Message({ obj: msg })) : [];
     }
 
@@ -29,6 +31,7 @@ export class Channel {
             description: this.description,
             creationTime: this.creationTime,
             numberOfMembers: this.numberOfMembers,
+            channelTopic: this.channelTopic,
             messages: this.messages.map(message => message.toJSON())
         }
     }
