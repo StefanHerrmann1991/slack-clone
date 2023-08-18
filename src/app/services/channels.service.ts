@@ -100,7 +100,7 @@ export class ChannelsService {
     this.firestore.collection('channels').doc(id).update({ channelName: newName });
   }
 
-  updateValue(id: string, collectionName: string, field: string, newValue: any) {
+  updateCollection(id: string, collectionName: string, field: string, newValue: any) {
     this.firestore.collection(collectionName).doc(id).update({ [field]: newValue });
   }
 

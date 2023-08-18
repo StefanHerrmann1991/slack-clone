@@ -17,7 +17,7 @@ export class EditChannelMenuComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private overlayContainer: OverlayContainer,
     private channelsService: ChannelsService,
-    private route: ActivatedRoute
+
   ) { }
 
   channel = new Channel();
@@ -31,9 +31,9 @@ export class EditChannelMenuComponent {
     if (this.data.theme === 'app-theme') {
       this.overlayContainer.getContainerElement().classList.add(this.data.theme);
     }
- 
+
     console.log(this.channelId)
-     // Now, you can use the channelId to fetch the channel data
+    // Now, you can use the channelId to fetch the channel data
     if (this.channelId) {
       this.channelsService.getChannel(this.channelId).subscribe(data => {
         this.channel = new Channel(data);
@@ -41,10 +41,16 @@ export class EditChannelMenuComponent {
       });
     } else {
       console.error('channelId is undefined');
-    }  
-}
+    }
+  }
 
-close(): void {
-  this.dialogRef.close();
-}
+
+
+  updateCollectionFromInput(inputValue: string) {
+    this.channelsService.updateCollection(this.channelId, 'channels', 'channelName', inputValue)
+  }
+
+  close(): void {
+    this.dialogRef.close();
+  }
 }
