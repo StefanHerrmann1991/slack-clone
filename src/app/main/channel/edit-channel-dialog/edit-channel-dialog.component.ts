@@ -80,7 +80,7 @@ export class EditChannelDialogComponent {
 
     this.dialog.open(EditChannelMenuComponent, {
       width: '250px',
-      data: { type: type }
+      data: { type: type, channelId: this.channelId }
     });
   }
 }

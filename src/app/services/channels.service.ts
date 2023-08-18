@@ -44,6 +44,10 @@ export class ChannelsService {
       })
   }
 
+  getChannel(channelId: string) {
+    return this.firestore.collection('channels').doc(channelId).valueChanges();
+  }
+
   getCollection(collection: string, variableToUpdate: any) {
     this.firestore
       .collection(`${collection}`)
@@ -94,6 +98,10 @@ export class ChannelsService {
 
   updateChannelName(id: string, newName: string) {
     this.firestore.collection('channels').doc(id).update({ channelName: newName });
+  }
+
+  updateValue(id: string, collectionName: string, field: string, newValue: any) {
+    this.firestore.collection(collectionName).doc(id).update({ [field]: newValue });
   }
 
 

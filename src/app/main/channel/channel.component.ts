@@ -37,7 +37,7 @@ export class ChannelComponent {
 
 
   ngOnInit() {
-        this.route.paramMap.subscribe(paramMap => {
+      this.route.paramMap.subscribe(paramMap => {
       this.channelId = paramMap.get('channelId');
       this.getChannel();
     })
