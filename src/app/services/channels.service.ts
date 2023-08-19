@@ -105,6 +105,40 @@ export class ChannelsService {
   }
 
 
+  deleteChannel(channelId: string): void {
+    if (confirm("Are you sure you want to delete this channel? This action cannot be undone.")) {
+      this.firestore.collection('channels').doc(channelId).delete().then(() => {
+        console.log("Channel successfully deleted!");
+        // You might want to navigate the user to a different view after deleting the channel.
+      }).catch((error) => {
+        console.error("Error removing channel: ", error);
+      });
+    }
+  }
+
+  archiveChannel(channelId: string): void {
+    if (confirm("Are you sure you want to archive this channel?")) {
+      this.firestore.collection('channels').doc(channelId).update({ isArchived: true }).then(() => {
+        console.log("Channel successfully archived!");
+        // Maybe navigate the user to a different view or refresh the channel list.
+      }).catch((error) => {
+        console.error("Error archiving channel: ", error);
+      });
+    }
+  }
+
+
+  leaveChannel(userId: string, channelId: string): void {
+    if (this.channel && this.channel.usersData) {
+      // Filter out the user data from the usersData array
+      const updatedUsersData = this.channel.usersData.filter(user => user.userId !== userId);
+      this.channel.usersData = updatedUsersData;
+  
+      // Update the channel document in Firestore with the new usersData array
+      this.firestore.collection('channels').doc(channelId).update({ usersData: updatedUsersData });
+    }
+  }
+
 }
 
 

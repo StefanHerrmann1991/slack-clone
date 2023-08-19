@@ -4,8 +4,8 @@ import { Channel } from 'src/models/channel.class';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { EditChannelMenuComponent } from '../edit-channel-menu/edit-channel-menu.component';
 import { ActivatedRoute } from '@angular/router';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog  } from '@angular/material/dialog';
+
 
 
 
@@ -23,7 +23,7 @@ export class EditChannelDialogComponent {
   channelId = this.data.channelId;
   channel: Channel = new Channel();
   messages: any;
-
+  userId = this.data.userId;
   isChannelNameOpen = false;
   isDescriptionOpen = false;
   isTopicOpen = false;
@@ -68,19 +68,16 @@ export class EditChannelDialogComponent {
 
     switch (type) {
       case 'channelName':
-
         break;
       case 'description':
-
         break;
       case 'topic':
-
         break;
     }
 
     this.dialog.open(EditChannelMenuComponent, {
       width: '250px',
-      data: { type: type, channelId: this.channelId }
+      data: { type: type, channelId: this.channelId, userId: this.userId }
     });
   }
 }

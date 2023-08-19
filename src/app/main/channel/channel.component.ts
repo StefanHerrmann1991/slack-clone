@@ -34,71 +34,75 @@ export class ChannelComponent {
   messages: any;
   stickyDate = '';
   dateContainerPositions: { date: string; position: number }[] = [];
-
+  userId: string;
 
   ngOnInit() {
-      this.route.paramMap.subscribe(paramMap => {
+    this.route.paramMap.subscribe(paramMap => {
       this.channelId = paramMap.get('channelId');
       this.getChannel();
     })
+    this.route.parent.paramMap.subscribe(parentParamMap => {
+      this.userId = parentParamMap.get('id');  // Accessing parent route's parameters
+         });
+
   }
 
 
-  openDialog() {
-    this.dialog.open(EditChannelDialogComponent, {
-      data: { channelId: this.channelId },
-      width: '550px',
-      height: '600px',
-      hasBackdrop: true
+openDialog() {
+  this.dialog.open(EditChannelDialogComponent, {
+    data: { channelId: this.channelId, userId: this.userId },
+    width: '550px',
+    height: '600px',
+    hasBackdrop: true
+  });
+}
+
+getChannel(): void {
+  this.firestore
+    .collection('channels')
+    .doc(this.channelId)
+    .valueChanges()
+    .subscribe((channel: any) => {
+      this.channel = new Channel(channel);
+      this.messages = this.groupMessagesByDate(this.channel.messages);
     });
-  }
-
-  getChannel(): void {
-    this.firestore
-      .collection('channels')
-      .doc(this.channelId)
-      .valueChanges()
-      .subscribe((channel: any) => {
-        this.channel = new Channel(channel);
-        this.messages = this.groupMessagesByDate(this.channel.messages);
-      });
-  }
+}
 
 
-  groupMessagesByDate(messages): any[] {
-    const groupedMessages = [];
-    let currentDate = '';
-    let index = -1;
-    for (const message of messages) {
-      const messageDate = this.datePipe.transform(message.time, 'EEEE, d MMMM', 'en-GB');
-      if (messageDate !== currentDate) {
-        currentDate = messageDate;
-        index++;
-        groupedMessages[index] = {
-          date: currentDate,
-          messages: []
-        };
-      }
-      const messageTime = this.datePipe.transform(message.time, 'HH:mm', 'en-GB');
-      groupedMessages[index].messages.push({ ...message, time: messageTime });
+groupMessagesByDate(messages): any[] {
+  const groupedMessages = [];
+  let currentDate = '';
+  let index = -1;
+  for (const message of messages) {
+    const messageDate = this.datePipe.transform(message.time, 'EEEE, d MMMM', 'en-GB');
+    if (messageDate !== currentDate) {
+      currentDate = messageDate;
+      index++;
+      groupedMessages[index] = {
+        date: currentDate,
+        messages: []
+      };
     }
-    return groupedMessages;
+    const messageTime = this.datePipe.transform(message.time, 'HH:mm', 'en-GB');
+    groupedMessages[index].messages.push({ ...message, time: messageTime });
   }
+  return groupedMessages;
+}
 
-  @HostListener('window:scroll')
-  onWindowScroll() {
-    for (let i = 0; i < this.messages.length; i++) {
-      const dateContainer = document.getElementById('date-' + i);
+@HostListener('window:scroll')
+onWindowScroll() {
+  for (let i = 0; i < this.messages.length; i++) {
+    const dateContainer = document.getElementById('date-' + i);
 
-      if (dateContainer && this.topEdgeInViewport(dateContainer)) {
-        this.stickyDate = this.messages[i].date;
-        break;
-      }
+    if (dateContainer && this.topEdgeInViewport(dateContainer)) {
+      this.stickyDate = this.messages[i].date;
+      break;
     }
   }
+}
 
-  topEdgeInViewport(element) {
-    const rect = element.getBoundingClientRect();
-    return rect.top <= 0;  // Top edge of the element is at or above the top edge of the viewport
-  }
+topEdgeInViewport(element) {
+  const rect = element.getBoundingClientRect();
+  return rect.top <= 0;  // Top edge of the element is at or above the top edge of the viewport
+}
 }

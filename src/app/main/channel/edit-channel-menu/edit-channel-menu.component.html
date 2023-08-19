@@ -4,35 +4,40 @@
 <div *ngIf="data.type === 'channelName'">
   <h2>Rename this channel</h2>
   <div>Channel name</div>
-  <input #channelNameInput [(ngModel)]="channelName" [placeholder]="channel?.channelName" />
+  <mat-form-field>
+    <input matInput outline #channelNameInput [(ngModel)]="channelName" [placeholder]="channel?.channelName" />
+  </mat-form-field>
   <span>Names must be lower case, without spaces or full stops, and can’t be longer than 80 characters.</span>
   <div>
-    <button (click)="dialogRef.close()">Cancel</button>
-    <button (click)="updateCollectionFromInput(channelNameInput.value)">Save Changes</button>
+    <button mat-button (click)="dialogRef.close()">Cancel</button>
+    <button mat-button (click)="updateCollectionFromInput('channelName', channelNameInput.value)">Save Changes</button>
   </div>
 </div>
-
 
 
 
 <div *ngIf="data.type === 'topic'">
   <div>Edit topic</div>
-  <textarea [(ngModel)]="topic"></textarea>
-  <span>Let people know what #allgemein is focused on right now (e.g. a project milestone). Topics are always visible in the header.</span>
+  <mat-form-field>
+    <textarea matInput #channelTopicInput [(ngModel)]="channelTopic" [placeholder]="channel?.channelTopic"></textarea>
+  </mat-form-field>
+  <span>Let people know what #allgemein is focused on right now (e.g. a project milestone). Topics are always visible in
+    the header.</span>
   <div>
-    <button (click)="dialogRef.close()">Cancel</button>
-    <button (click)="dialogRef.close(data.topic)">Save Changes</button>
+    <button mat-button (click)="dialogRef.close()">Cancel</button>
+    <button mat-button (click)="updateCollectionFromInput('channelTopic', channelTopicInput.value)">Save
+      Changes</button>
   </div>
 </div>
 <div *ngIf="data.type === 'description'">
   <h2>Edit description</h2>
-  
-  <input mat-input [(ngModel)]="description" outline>
+  <mat-form-field>
+    <textarea matInput #descriptionInput [(ngModel)]="description" [placeholder]="channel?.description"></textarea>
+  </mat-form-field>
   <span>Let people know what this channel is for.</span>
   <div>
-    <button (click)="dialogRef.close()">Cancel</button>
-    <button (click)="dialogRef.close(data.description)">Save Changes</button>
+    <button mat-button (click)="dialogRef.close()">Cancel</button>
+    <button mat-button (click)="updateCollectionFromInput('description', descriptionInput.value)">Save
+      Changes</button>
   </div>
 </div>
-
-<button mat-button (click)="close()">Close</button>
