@@ -55,6 +55,7 @@ export class CreateChannelDialogComponent {
           if (!this.isClosedArea) this.users = snapshot.docs.map(doc => doc.data());
           this.newChannel = new Channel({
             creatorId: this.currentUser.uid,
+            channelCreator: this.currentUser.displayName,
             usersData: this.users,
             channelName: this.channelNameInput,
             description: this.channelDiscription,

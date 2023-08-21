@@ -4,8 +4,8 @@ import { Channel } from 'src/models/channel.class';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { EditChannelMenuComponent } from '../edit-channel-menu/edit-channel-menu.component';
 import { ActivatedRoute } from '@angular/router';
-import { MAT_DIALOG_DATA, MatDialog  } from '@angular/material/dialog';
-
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { User } from 'src/models/app-user.class'
 
 
 
@@ -27,7 +27,7 @@ export class EditChannelDialogComponent {
   isChannelNameOpen = false;
   isDescriptionOpen = false;
   isTopicOpen = false;
-
+  channelCreator;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -38,7 +38,7 @@ export class EditChannelDialogComponent {
   ) { }
 
   ngOnInit() {
-    this.getChannel();
+    this.getChannel();  
   }
 
   getChannel(): void {
@@ -49,6 +49,7 @@ export class EditChannelDialogComponent {
       .subscribe((channel: any) => {
         this.channel = new Channel(channel);
       });
+
   }
 
 

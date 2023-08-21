@@ -8,6 +8,7 @@ export class Channel {
     creationTime: any;
     numberOfMembers: number;
     channelTopic: string;
+    channelCreator: string;
     messages: Message[];
 
     constructor(obj?: any) {
@@ -19,6 +20,7 @@ export class Channel {
         this.creationTime = obj ? obj.creationTime : '';
         this.numberOfMembers = obj ? obj.numberOfMembers : '';
         this.channelTopic = obj ? obj.channelTopic : '';
+        this.channelCreator = obj ? obj.channelCreator : '';
         this.messages = obj && obj.messages ? obj.messages.map(msg => new Message({ obj: msg })) : [];
     }
 
@@ -32,6 +34,7 @@ export class Channel {
             creationTime: this.creationTime,
             numberOfMembers: this.numberOfMembers,
             channelTopic: this.channelTopic,
+            channelCreator: this.channelCreator,
             messages: this.messages.map(message => message.toJSON())
         }
     }
