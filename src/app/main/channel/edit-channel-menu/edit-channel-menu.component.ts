@@ -39,7 +39,7 @@ export class EditChannelMenuComponent {
     
     // Now, you can use the channelId to fetch the channel data
     if (this.channelId) {
-      this.channelsService.getChannel(this.channelId).subscribe(data => {
+        this.channelsService.getChannel(this.channelId).subscribe(data => {
         this.channel = new Channel(data);
         this.channelName = this.channel.channelName;
         this.description = this.channel.description;
@@ -52,8 +52,6 @@ export class EditChannelMenuComponent {
    
 
   }
-
-
 
   updateCollectionFromInput(field: string, inputValue: string) {
     this.channelsService.updateCollection(this.channelId, 'channels', field, inputValue)

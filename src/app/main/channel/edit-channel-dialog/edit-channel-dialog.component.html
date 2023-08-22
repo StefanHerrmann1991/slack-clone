@@ -27,16 +27,19 @@
   <mat-tab label="Settings">
     <div>
       <h3>Change Channel Name</h3>
-      <mat-form-field>
-        <input [(ngModel)]="channel.channelName" matInput placeholder="# e.g. budget-planning">
-      </mat-form-field>
+
+      <div><strong>Channel Name: </strong> {{channel.channelName}}</div>
+      <button mat-button (click)="openDialog('channelName')">Edit</button>
 
       <h3>Make Private</h3>
       <p>When a channel is set to private, it can only be viewed or joined by invitation.</p>
 
       <mat-slide-toggle [(ngModel)]="channel.isClosedArea" (change)="toggleChannelPrivacy()"></mat-slide-toggle>
       <button mat-button color="warn" (click)="deleteChannel()">Delete Channel</button>
-      <button mat-button color="primary" (click)="archiveChannel()">Archive Channel</button>
+      <button mat-button color="primary" (click)="archiveChannel()">
+        {{ channel.archived ? 'Unarchive' : 'Archive' }} Channel
+      </button>
+
     </div>
   </mat-tab>
 </mat-tab-group>

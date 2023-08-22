@@ -133,7 +133,7 @@ export class ChannelsService {
       // Filter out the user data from the usersData array
       const updatedUsersData = this.channel.usersData.filter(user => user.userId !== userId);
       this.channel.usersData = updatedUsersData;
-  
+
       // Update the channel document in Firestore with the new usersData array
       this.firestore.collection('channels').doc(channelId).update({ usersData: updatedUsersData });
     }

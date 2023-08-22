@@ -27,7 +27,8 @@ export class CreateChannelDialogComponent {
   channelDiscription: string = '';
   usersId: string;
   usersEmail: string;
-  isClosedArea = false;
+  isClosedArea: boolean = false;
+  archived: boolean = false;
   items: Observable<any[]>;
   dataSource: any;
   timestamp: any
@@ -45,8 +46,7 @@ export class CreateChannelDialogComponent {
   ) { }
 
   addNewChannel() {
-    debugger
-    if (this.currentUser) {
+      if (this.currentUser) {
       this.firestore
         .collection('users')
         .get()
@@ -63,6 +63,7 @@ export class CreateChannelDialogComponent {
             creationTime: this.timestamp,
             numberOfMembers: this.users.length,
             channelTopic: this.topic,
+            archived: this.archived,
             messages: []  // You can initialize messages as an empty array if there are no messages at the time of channel creation
           });
           this.firestore
