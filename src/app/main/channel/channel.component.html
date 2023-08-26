@@ -20,6 +20,9 @@
             </div> -->
 
     <div *ngFor="let message of group.messages">
+
+        <button mat-tooltip="reply" mat-icon-button [routerLink]="['message/' + message.messageId]"><mat-icon>chat</mat-icon></button>
+
         <div class="name-and-time" dark-light-theming>
             <div class="user-name">{{message.username}}</div>
             <div class="message-time">{{ message.time }}</div>
@@ -28,5 +31,5 @@
     </div>
 </div>
 <div class="add-message-dialog">
-<app-send-message-dialog></app-send-message-dialog>
+    <app-send-message-dialog></app-send-message-dialog>
 </div>

@@ -42,6 +42,7 @@ export class MainComponent {
       this.userId = paramMap.get('id');
       this.getUser();
     })
+    
     this.getAllUsers();
     this.filteredUsers = this.control.valueChanges.pipe(
       startWith(''),

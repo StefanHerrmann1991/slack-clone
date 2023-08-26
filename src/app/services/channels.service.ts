@@ -3,7 +3,9 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { collection } from '@angular/fire/firestore';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
-import { Channel } from 'src/models/channel.class';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Channel, Message } from 'src/models/channel.class';
 
 let themes;
 
@@ -47,6 +49,28 @@ export class ChannelsService {
   getChannel(channelId: string) {
     return this.firestore.collection('channels').doc(channelId).valueChanges();
   }
+
+
+  getChannelById(channelId: string): Observable<Channel> {
+    return this.firestore
+      .collection('channels')
+      .doc(channelId)
+      .valueChanges()
+      .pipe(map((channel: any) => new Channel(channel)));
+  }
+
+  updateChannel(channelId: string, channel: Channel): Promise<void> {
+    return this.firestore
+      .collection('channels')
+      .doc(channelId)
+      .update(channel.toJSON());
+  }
+
+  addMessageToChannel(channel: Channel, message: Message): Channel {
+    channel.messages.push(message);
+    return channel;
+  }
+
 
   getCollection(collection: string, variableToUpdate: any) {
     this.firestore
@@ -109,8 +133,7 @@ export class ChannelsService {
     if (confirm("Are you sure you want to delete this channel? This action cannot be undone.")) {
       this.firestore.collection('channels').doc(channelId).delete().then(() => {
         console.log("Channel successfully deleted!");
-        // You might want to navigate the user to a different view after deleting the channel.
-      }).catch((error) => {
+       }).catch((error) => {
         console.error("Error removing channel: ", error);
       });
     }
@@ -119,8 +142,7 @@ export class ChannelsService {
   archiveChannel(channelId: string): void {
     if (confirm("Are you sure you want to archive this channel?")) {
       this.firestore.collection('channels').doc(channelId).update({ isArchived: true }).then(() => {
-        console.log("Channel successfully archived!");
-        // Maybe navigate the user to a different view or refresh the channel list.
+        console.log("Channel successfully archived!");       
       }).catch((error) => {
         console.error("Error archiving channel: ", error);
       });
@@ -138,7 +160,6 @@ export class ChannelsService {
       this.firestore.collection('channels').doc(channelId).update({ usersData: updatedUsersData });
     }
   }
-
 }
 
 

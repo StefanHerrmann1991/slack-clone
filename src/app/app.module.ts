@@ -59,6 +59,7 @@ import { InviteCollegueDialogComponent } from './main/navbar/invite-collegue-dia
 import { SendMessageDialogComponent } from './main/send-message-dialog/send-message-dialog.component';
 import { CreateChannelDialogComponent } from './main/channel/create-channel-dialog/create-channel-dialog.component';
 import { EditChannelMenuComponent } from './main/channel/edit-channel-menu/edit-channel-menu.component';
+import { ThreadComponent } from './main/thread/thread.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +76,8 @@ import { EditChannelMenuComponent } from './main/channel/edit-channel-menu/edit-
     InviteCollegueDialogComponent,
     SendMessageDialogComponent,
     CreateChannelDialogComponent,
-    EditChannelMenuComponent
+    EditChannelMenuComponent,
+    ThreadComponent
   ],
   imports: [
     MatTabsModule,

@@ -46,33 +46,59 @@ export class CreateChannelDialogComponent {
   ) { }
 
   addNewChannel() {
-      if (this.currentUser) {
-      this.firestore
-        .collection('users')
-        .get()
-        .subscribe(snapshot => {
-          this.timestamp = getDateTime()
-          if (!this.isClosedArea) this.users = snapshot.docs.map(doc => doc.data());
-          this.newChannel = new Channel({
-            creatorId: this.currentUser.uid,
-            channelCreator: this.currentUser.displayName,
-            usersData: this.users,
-            channelName: this.channelNameInput,
-            description: this.channelDiscription,
-            isClosedArea: this.isClosedArea,
-            creationTime: this.timestamp,
-            numberOfMembers: this.users.length,
-            channelTopic: this.topic,
-            archived: this.archived,
-            messages: []  // You can initialize messages as an empty array if there are no messages at the time of channel creation
-          });
-          this.firestore
-            .collection('channels')
-            .add(this.newChannel.toJSON())
-          this.ChannelService.tree = [];
-          this.ChannelService.renderTree();
-        });
+    if (this.currentUser) {
+      this.fetchUsersFromFirestore().subscribe(snapshot => {
+        this.timestamp = this.getCurrentTimestamp();
+        this.users = this.getUsersFromSnapshot(snapshot);
+        this.createNewChannel();
+        this.addChannelToFirestore();
+        this.resetChannelServiceTree();
+      });
     }
+    this.closeDialog();
+  }
+
+  fetchUsersFromFirestore() {
+    return this.firestore.collection('users').get();
+  }
+
+  getCurrentTimestamp() {
+    return getDateTime();
+  }
+
+  getUsersFromSnapshot(snapshot) {
+    if (!this.isClosedArea) {
+      return snapshot.docs.map(doc => doc.data());
+    }
+    return [];
+  }
+
+  createNewChannel() {
+    this.newChannel = new Channel({
+      creatorId: this.currentUser.uid,
+      channelCreator: this.currentUser.displayName,
+      usersData: this.users,
+      channelName: this.channelNameInput,
+      description: this.channelDiscription,
+      isClosedArea: this.isClosedArea,
+      creationTime: this.timestamp,
+      numberOfMembers: this.users.length,
+      channelTopic: this.topic,
+      archived: this.archived,
+      messages: []
+    });
+  }
+
+  addChannelToFirestore() {
+    this.firestore.collection('channels').add(this.newChannel.toJSON());
+  }
+
+  resetChannelServiceTree() {
+    this.ChannelService.tree = [];
+    this.ChannelService.renderTree();
+  }
+
+  closeDialog() {
     this.dialogRef.close();
   }
 
@@ -89,12 +115,16 @@ export class CreateChannelDialogComponent {
       map(value => this._filter(value || '')),
     );
   }
+
+
   private _filter(value: string): string[] {
     const filterValue = this._normalizeValue(value);
     if (this.ChannelService.allChannels) return this.ChannelService.allChannels.filter(channel => this._normalizeValue(channel.channelName).includes(filterValue)).map(channel => channel.channelName);
     else return [];
 
   }
+
+
   private _normalizeValue(value: string): string {
     return value.toLowerCase().replace(/\s/g, '');
   }

@@ -28,68 +28,53 @@ export class SendMessageDialogComponent {
     private authService: AuthService) { }
 
 
-    textareaFocused = false;
-    placeholderText: string;
-    newMessage: Message = new Message();
-    messageTextInput: string;
-    myDate: any = new Date();
-    myTime: any = new Date();
-    channelId = '';
-    channel: Channel = new Channel();
-    private userSubscription?: Subscription;
-    currentUser: User | null;
+  textareaFocused = false;
+  placeholderText: string;
+  newMessage: Message = new Message();
+  messageTextInput: string;
+  myDate: any = new Date();
+  myTime: any = new Date();
+  channelId = '';
+  channel: Channel = new Channel();
+  private userSubscription?: Subscription;
+  currentUser: User | null;
 
 
-    ngOnInit() {
-      this.afAuth.authState.subscribe(user => {
-        this.currentUser = user;    
-      
-      });
-      this.route.paramMap.subscribe(paramMap => {
-        this.channelId = paramMap.get('channelId');
-        this.getChannel();
-      });
-    }
-  
-  
-    getChannel() {
-      this.firestore
-        .collection('channels')
-        .doc(this.channelId)
-        .valueChanges()
-        .subscribe((channel: any) => {
-          this.channel = new Channel(channel);
-        })
-    }
-  
-    addMessage(userData) {
-      
-      let date = this.getData();
-      this.getChannel();
-      this.newMessage = new Message({
-        obj: {
-          text: this.messageTextInput,
-          time: date,
-          username: userData.displayName,
-          userId: userData.uid,
-          userEmail: userData.email
-        }
-      });
-      // push the plain JavaScript object representation to the messages array
-      this.channel.messages.push(this.newMessage);
-      this.saveChannel();
-    }
-  
-    saveChannel() {
-      this.firestore
-        .collection('channels')
-        .doc(this.channelId)
-        .update(this.channel.toJSON())
-    }
-  
-  
-    getData() {
-      return new Date().toISOString();
-    }
+  ngOnInit() {
+    this.afAuth.authState.subscribe(user => {
+      this.currentUser = user;
+    });
 
+    this.route.paramMap.subscribe(paramMap => {
+      this.channelId = paramMap.get('channelId');
+      this.channelService.getChannelById(this.channelId).subscribe(channel => {
+        this.channel = channel;
+      });
+    });
+  }
+
+  addMessage(userData) {
+    let date = this.getData();
+    const messageId = this.firestore.createId(); // Generate a unique ID
+
+    this.newMessage = new Message({
+      obj: {
+        messageId: messageId,
+        text: this.messageTextInput,
+        time: date,
+        username: userData.displayName,
+        userId: userData.uid,
+        userEmail: userData.email
+      }
+    });
+
+    // update channel with new message
+    this.channel = this.channelService.addMessageToChannel(this.channel, this.newMessage);
+    this.channelService.updateChannel(this.channelId, this.channel);
+  }
+
+
+  getData() {
+    return new Date().toISOString();
+  }
 }

@@ -49,6 +49,7 @@ export class Message {
     userId: string;
     username: string;
     userEmail: string;
+    messageId: string;
     replies: Reply[]; 
 
     constructor({ obj }: { obj?: any; } = {}) {
@@ -57,6 +58,7 @@ export class Message {
         this.userId = obj ? obj.userId : '';
         this.username = obj ? obj.username : '';
         this.userEmail = obj ? obj.userEmail : '';
+        this.messageId = obj ? obj.messageId : '';
         this.replies = obj && obj.replies ? obj.replies.map(reply => new Reply({ obj: reply })) : [];
     }
 
@@ -67,6 +69,7 @@ export class Message {
             userId: this.userId,
             username: this.username,
             userEmail: this.userEmail,
+            messageId: this.messageId,
             replies: this.replies.map(reply => reply.toJSON()) 
         };
     }
