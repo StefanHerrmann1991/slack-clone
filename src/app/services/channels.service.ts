@@ -108,6 +108,7 @@ export class ChannelsService {
   public dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
   renderTree() {
+   
     this.tree = [];
     this.channelsRef = this.firestore.collection('channels');
     this.channelsRef.get().subscribe(snapshot => {
@@ -133,7 +134,7 @@ export class ChannelsService {
     if (confirm("Are you sure you want to delete this channel? This action cannot be undone.")) {
       this.firestore.collection('channels').doc(channelId).delete().then(() => {
         console.log("Channel successfully deleted!");
-       }).catch((error) => {
+      }).catch((error) => {
         console.error("Error removing channel: ", error);
       });
     }
@@ -142,7 +143,7 @@ export class ChannelsService {
   archiveChannel(channelId: string): void {
     if (confirm("Are you sure you want to archive this channel?")) {
       this.firestore.collection('channels').doc(channelId).update({ isArchived: true }).then(() => {
-        console.log("Channel successfully archived!");       
+        console.log("Channel successfully archived!");
       }).catch((error) => {
         console.error("Error archiving channel: ", error);
       });

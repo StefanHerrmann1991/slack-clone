@@ -31,6 +31,8 @@ export class NavbarComponent {
   } 
 
   createChannel(){};
+
+  
   manageChannels(){};
 
 

@@ -5,7 +5,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { EditChannelMenuComponent } from '../edit-channel-menu/edit-channel-menu.component';
 import { ActivatedRoute } from '@angular/router';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
-
+import { UserService } from 'src/app/services/user.service';
 
 
 
@@ -23,7 +23,7 @@ export class EditChannelDialogComponent {
   channelId = this.data.channelId;
   channel: Channel = new Channel();
   messages: any;
-  userId = this.data.userId;
+  userId;
   isChannelNameOpen = false;
   isDescriptionOpen = false;
   isTopicOpen = false;
@@ -35,16 +35,19 @@ export class EditChannelDialogComponent {
     private firestore: AngularFirestore,
     private route: ActivatedRoute,
     private dialog: MatDialog,
+    private userService: UserService
   ) { }
+
 
   ngOnInit() {
     this.channelService.getChannel(this.channelId)
       .subscribe(data => {
-        this.channel = new Channel(data)  
+        this.channel = new Channel(data)
       }
       );
-
+    this.userId = this.userService.getUserId();
   }
+
 
   getChannel(): void {
     this.firestore
@@ -54,6 +57,10 @@ export class EditChannelDialogComponent {
       .subscribe((channel: any) => {
         this.channel = new Channel(channel);
       });
+  }
+
+  leaveChannel(): void {
+    this.channelService.leaveChannel(this.channelId, this.userId);
   }
 
   toggleChannelPrivacy(): void {
@@ -69,7 +76,6 @@ export class EditChannelDialogComponent {
   }
 
   openDialog(type: string): void {
-
     switch (type) {
       case 'channelName':
         break;

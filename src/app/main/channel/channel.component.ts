@@ -33,7 +33,7 @@ export class ChannelComponent {
   messages: any;
   stickyDate = '';
   dateContainerPositions: { date: string; position: number }[] = [];
-  userId: string;
+  userId = '';
 
 
   ngOnInit() {
@@ -41,6 +41,7 @@ export class ChannelComponent {
       this.channelId = paramMap.get('channelId');
       this.getChannel();
     })
+    this.userId = this.route.parent.snapshot.paramMap.get('id');   
   }
 
   replyToMessage(messageId) {

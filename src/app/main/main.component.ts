@@ -9,7 +9,7 @@ import { map, startWith } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { getDatabase, ref, onValue } from "firebase/database";
 import { UserComponent } from './user/user.component';
-
+import { UserService } from '../services/user.service';
 
 
 @Component({
@@ -24,7 +24,8 @@ export class MainComponent {
     private route: ActivatedRoute,
     public authService: AuthService,
     private firestore: AngularFirestore,   
-    private dialog: MatDialog) { }
+    private dialog: MatDialog,
+    private userService: UserService) { }
 
 
   isOnline: boolean;
@@ -40,6 +41,7 @@ export class MainComponent {
   ngOnInit() {
     this.route.paramMap.subscribe(paramMap => {
       this.userId = paramMap.get('id');
+      this.userService.setUserId(this.userId);
       this.getUser();
     })
     
@@ -65,8 +67,7 @@ export class MainComponent {
     toggleTheme() {   
     }
   
-    fetchOnlineStatus(userId: string) {
-  
+    fetchOnlineStatus(userId: string) {  
       const database = getDatabase();
       const userStatusDatabaseRef = ref(database, '/status/' + userId);
   
