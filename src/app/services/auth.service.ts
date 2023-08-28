@@ -77,7 +77,7 @@ export class AuthService {
       .signInWithEmailAndPassword(email, password)
       .then((result) => {
         const userId = result.user.uid
-        this.router.navigate([`/main/${userId}`]);
+        this.router.navigate(['/main', userId, { outlets: { mainOutlet: ['channel', 'iLOTSv8LDiFhfw5cAnq8'] }}]);
         this.currentUserId = userId;
         this.userData = result.user;
         this.updateOnUserSignedIn();

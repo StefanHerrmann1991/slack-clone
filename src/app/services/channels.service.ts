@@ -6,6 +6,7 @@ import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree'
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Channel, Message } from 'src/models/channel.class';
+import { UserService } from './user.service';
 
 let themes;
 
@@ -35,7 +36,7 @@ export class ChannelsService {
   themes: any;
 
 
-  constructor(private firestore: AngularFirestore) { }
+  constructor(private firestore: AngularFirestore, private userService: UserService) { }
 
   getAllChannels() {
     this.firestore
@@ -107,15 +108,18 @@ export class ChannelsService {
 
   public dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
-  renderTree() {
-   
+  renderTree() {   
     this.tree = [];
     this.channelsRef = this.firestore.collection('channels');
     this.channelsRef.get().subscribe(snapshot => {
       snapshot.forEach(doc => {
-        const channel = new Channel(doc.data());
+        const channel = new Channel(doc.data());    
+        const userId = this.userService.getUserId();    
+        const userIsPartOfChannel = channel.usersData.some(user => user.userId === userId);
+        if (userIsPartOfChannel) {
+          console.log(this.tree)
         this.tree.push({ name: `${channel.channelName}`, isClosedArea: channel.isClosedArea, channelId: doc.id });
-      });
+    }});
       themes = [{ name: 'Channels', children: this.tree }];
       this.dataSource.data = themes;
     });
@@ -151,16 +155,7 @@ export class ChannelsService {
   }
 
 
-  leaveChannel(userId: string, channelId: string): void {
-    if (this.channel && this.channel.usersData) {
-      // Filter out the user data from the usersData array
-      const updatedUsersData = this.channel.usersData.filter(user => user.userId !== userId);
-      this.channel.usersData = updatedUsersData;
 
-      // Update the channel document in Firestore with the new usersData array
-      this.firestore.collection('channels').doc(channelId).update({ usersData: updatedUsersData });
-    }
-  }
 }
 
 

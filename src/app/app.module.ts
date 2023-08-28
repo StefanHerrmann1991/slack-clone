@@ -60,6 +60,7 @@ import { SendMessageDialogComponent } from './main/send-message-dialog/send-mess
 import { CreateChannelDialogComponent } from './main/channel/create-channel-dialog/create-channel-dialog.component';
 import { EditChannelMenuComponent } from './main/channel/edit-channel-menu/edit-channel-menu.component';
 import { ThreadComponent } from './main/thread/thread.component';
+import { ErrorMessagesComponent } from './error-messages/error-messages.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +78,8 @@ import { ThreadComponent } from './main/thread/thread.component';
     SendMessageDialogComponent,
     CreateChannelDialogComponent,
     EditChannelMenuComponent,
-    ThreadComponent
+    ThreadComponent,
+    ErrorMessagesComponent
   ],
   imports: [
     MatTabsModule,

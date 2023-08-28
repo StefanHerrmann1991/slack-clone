@@ -6,7 +6,7 @@ import { EditChannelMenuComponent } from '../edit-channel-menu/edit-channel-menu
 import { ActivatedRoute } from '@angular/router';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { UserService } from 'src/app/services/user.service';
-
+import { ErrorMessagesService } from 'src/app/services/error-messages.service';
 
 
 @Component({
@@ -35,7 +35,8 @@ export class EditChannelDialogComponent {
     private firestore: AngularFirestore,
     private route: ActivatedRoute,
     private dialog: MatDialog,
-    private userService: UserService
+    private userService: UserService,
+    private errorService: ErrorMessagesService
   ) { }
 
 
@@ -59,9 +60,22 @@ export class EditChannelDialogComponent {
       });
   }
 
+
   leaveChannel(): void {
-    this.channelService.leaveChannel(this.channelId, this.userId);
+    if (this.channel && this.channel.usersData && this.channel.channelName !== 'allgemein') {
+      // Filter out the user data from the usersData array
+      const updatedUsersData = this.channel.usersData.filter(user => user.userId !== this.userId);
+      this.channel.usersData = updatedUsersData;
+      // Update the channel document in Firestore with the new usersData array
+      this.firestore.collection('channels').doc(this.channelId).update({ usersData: updatedUsersData });
+    }
+    if (this.channel.channelName === 'allgemein') {
+      this.errorService.showError(`Membership is required in ${this.channel.channelName}`,
+        'Every workspace has one channel that contains all the members of this workspace – this is that channel for you.')
+    }
+    this.channelService.renderTree();
   }
+
 
   toggleChannelPrivacy(): void {
     this.channel.isClosedArea = !this.channel.isClosedArea;

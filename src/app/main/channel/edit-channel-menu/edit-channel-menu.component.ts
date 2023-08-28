@@ -5,7 +5,6 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 import { ChannelsService } from 'src/app/services/channels.service';
 import { Channel } from 'src/models/channel.class'
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { User } from 'src/models/app-user.class';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({

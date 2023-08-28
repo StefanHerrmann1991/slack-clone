@@ -7,7 +7,7 @@
     <!-- This is the tree node template for leaf nodes !IMPORTANT -->
     <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent="0px"
     
-    [routerLink]="[{ outlets: { mainOutlet: ['channel', node.channelId] } }]">
+    [routerLink]="[{ outlets: { mainOutlet: ['channel', node.channelId] }}]">
         <!-- use a disabled button to provide padding for tree leaf -->
         <button class="mat-tree-node-btn" mat-button>
             <mat-icon [ngStyle]="{'font-style': node.isClosedArea ? 'normal' : 'italic' }"> {{
