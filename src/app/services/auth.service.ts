@@ -77,7 +77,9 @@ export class AuthService {
       .signInWithEmailAndPassword(email, password)
       .then((result) => {
         const userId = result.user.uid
-        this.router.navigate(['/main', userId, { outlets: { mainOutlet: ['channel', 'iLOTSv8LDiFhfw5cAnq8'] }}]);
+        const lastUrl = this.userService.getLastUrl();
+        if(lastUrl) this.router.navigateByUrl(lastUrl);
+        else this.router.navigate(['/main', userId, { outlets: { mainOutlet: ['channel', 'iLOTSv8LDiFhfw5cAnq8'] }}]);
         this.currentUserId = userId;
         this.userData = result.user;
         this.updateOnUserSignedIn();
@@ -222,6 +224,7 @@ export class AuthService {
   // Sign out/ logout
   SignOut() {
     return this.afAuth.signOut().then(() => {
+      this.userService.storeLastUrl(this.router.url);
       this.router.navigate(['login']);
     });
   }

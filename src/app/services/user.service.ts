@@ -19,4 +19,13 @@ export class UserService {
   getUserId(): string {
     return this.userId;   
   }
+
+  storeLastUrl(url: string) {
+    localStorage.setItem('lastUrl', url);
+  }
+
+  getLastUrl(): string | null {
+    return localStorage.getItem('lastUrl');
+  }
+
 }
