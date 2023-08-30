@@ -39,13 +39,18 @@ export class ChannelComponent {
 
   ngOnInit() {
 
-     this.route.paramMap.subscribe(paramMap => {
-      this.channelId = paramMap.get('channelId');
-      this.getChannel();
-    }) 
-    this.userId = this.route.parent.snapshot.paramMap.get('id');  
+    this.route.paramMap.subscribe(paramMap => {
+      const channelId = paramMap.get('channelId');
+      if (channelId) {
+        this.channelId = channelId;
+        this.getChannel();
+      } else {
+        console.error('Channel ID not found in route.');
+      }
+    });
+    this.userId = this.route.parent.snapshot.paramMap.get('id');
   }
-  
+
 
   replyToMessage(messageId: string): void {
     this.router.navigate([
@@ -72,15 +77,18 @@ export class ChannelComponent {
     });
   }
 
-  getChannel(): void {    
-    this.firestore
-      .collection('channels')
-      .doc(this.channelId)
-      .valueChanges()
-      .subscribe((channel: any) => {
-        this.channel = new Channel(channel);
-        this.messages = this.groupMessagesByDate(this.channel.messages);
+  getChannel(): void {
+    this.channelService.getChannel(this.channelId)
+      .subscribe({
+        next: (channel) => {
+          this.channel = channel;
+          this.messages = this.groupMessagesByDate(this.channel.messages);
+        },
+        error: (error) => {
+          console.error('Error fetching channel:', error);
+        }
       });
+
   }
 
 

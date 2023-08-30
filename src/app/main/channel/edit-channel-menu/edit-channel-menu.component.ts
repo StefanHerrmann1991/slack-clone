@@ -7,6 +7,8 @@ import { Channel } from 'src/models/channel.class'
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { ActivatedRoute } from '@angular/router';
 
+
+
 @Component({
   selector: 'app-edit-channel-menu',
   templateUrl: './edit-channel-menu.component.html',
@@ -56,9 +58,9 @@ export class EditChannelMenuComponent {
 
 
   updateCollectionFromInput(field: string, inputValue: string) {
-
     this.channelsService.updateCollection(this.channelId, 'channels', field, inputValue)
     this.close();
+   
   }
 
 

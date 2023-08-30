@@ -1,26 +1,26 @@
-<mat-tab-group class="menu">
+<mat-tab-group class="menu" *ngIf="channel">
   <!-- About Tab -->
   <mat-tab label="About">
     <p>
       Channels are where your team communicates. They’re best when organized around a topic – #marketing, for example.
     </p>
 
-    <div><strong>Channel Name: </strong> {{channel.channelName}}</div>
+    <div><strong>Channel Name: </strong> {{channel?.channelName}}</div>
     <button mat-button (click)="openDialog('channelName')">Edit</button>
 
-    <div><strong>Description: </strong> {{channel.description}}</div>
+    <div><strong>Description: </strong> {{channel?.description}}</div>
     <button mat-button (click)="openDialog('description')">Edit</button>
 
     <div><strong>Topic </strong></div>
     <button mat-button (click)="openDialog('topic')">Edit</button>
-    <div>{{channel.channelCreator}}</div>
+    <div>{{channel?.channelCreator}}</div>
     <button mat-button color="warn"  (click)="leaveChannel();" >Leave Channel</button>
   </mat-tab>
 
   <!-- Members Tab -->
-  <mat-tab label="Members {{channel.numberOfMembers}}">
+  <mat-tab label="Members {{channel?.numberOfMembers}}">
     <ul>
-      <li *ngFor="let member of channel.usersData">{{ member?.username }}</li>
+      <li *ngFor="let member of channel.usersData || []">{{ member?.username }}</li>
     </ul>
   </mat-tab>
 
@@ -40,7 +40,6 @@
       <button mat-button color="primary" (click)="this.channelService.archiveChannel(this.channelId)">
         {{ channel.archived ? 'Unarchive' : 'Archive' }} Channel
       </button>
-
     </div>
   </mat-tab>
 </mat-tab-group>

@@ -40,13 +40,18 @@ export class EditChannelDialogComponent {
   ) { }
 
   ngOnInit() {
-
-       this.channelService.getChannel(this.channelId)
-        .subscribe(data => {
-          this.channel = new Channel(data)
-        }
-        );
-        this.userId = this.userService.getUserId();
+    if (this.channel) {
+      this.channelService.getChannel(this.channelId)
+        .subscribe({
+          next: (data) => {
+            this.channel = new Channel(data);
+          },
+          error: (error) => {
+            console.error('Error fetching channel:', error);
+          }
+        });
+    }
+    this.userId = this.userService.getUserId();
   }
 
   leaveChannel() {

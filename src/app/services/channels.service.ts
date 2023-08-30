@@ -59,19 +59,19 @@ export class ChannelsService {
 
   getChannel(channelId: string): Observable<Channel> {
     return this.firestore
-      .collection('channels')
-      .doc<Channel>(channelId)
-      .valueChanges()
+    .collection('channels')
+    .doc<Channel>(channelId)
+    .valueChanges()
       .pipe(
-        catchError((error) => {
+        map(data => new Channel(data)),
+        catchError(error => {
           console.error('Error fetching channel:', error);
-          return throwError(error);
+          throw new Error('Failed to fetch channel.');
         })
       );
   }
   
   getChannelById(channelId: string): Observable<Channel> {
-
     return this.firestore
       .collection('channels')
       .doc(channelId)
@@ -164,15 +164,14 @@ export class ChannelsService {
 
 
 
-  deleteChannel(channelId: string): void {
+deleteChannel(channelId: string) {
 
     if (confirm("Are you sure you want to delete this channel? This action cannot be undone.") && this.channel.channelName !== 'allgemein') {
       let userId = this.userService.getUserId();
       this.dialog.closeAll();
       this.router.navigate(['/main', userId, { outlets: { mainOutlet: ['channel', 'iLOTSv8LDiFhfw5cAnq8'] } }]);
       this.firestore.collection('channels').doc(channelId).delete().then(() => {
-        console.log("Channel successfully deleted!");
-     
+        console.log("Channel successfully deleted!");     
       }).catch((error) => {
         console.error("Error removing channel: ", error);
       });
