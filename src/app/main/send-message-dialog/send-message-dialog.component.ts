@@ -41,22 +41,22 @@ export class SendMessageDialogComponent {
 
 
   ngOnInit() {
+  
     this.afAuth.authState.subscribe(user => {
       this.currentUser = user;
     });
 
-    this.route.paramMap.subscribe(paramMap => {
+     this.route.paramMap.subscribe(paramMap => {
       this.channelId = paramMap.get('channelId');
       this.channelService.getChannelById(this.channelId).subscribe(channel => {
         this.channel = channel;
       });
-    });
+    }); 
   }
 
   addMessage(userData) {
     let date = this.getData();
     const messageId = this.firestore.createId(); // Generate a unique ID
-
     this.newMessage = new Message({
       obj: {
         messageId: messageId,

@@ -13,12 +13,6 @@
         <div class="message-date" id="date-{{i}}">{{ group.date }}</div>
         <div class="dividing-line"></div>
     </div>
-    <!--  <div class="line-with-date sticky" id="stickyLine" *ngIf="showStickyLine">
-                <div class="dividing-line"></div>
-                <div class="sticky-date-container message-date">{{ group.date }}</div>
-                <div class="dividing-line"></div>
-            </div> -->
-
     <div *ngFor="let message of group.messages">
 
         <button mat-tooltip="reply" mat-icon-button [routerLink]="['message/' + message.messageId]"><mat-icon>chat</mat-icon></button>
@@ -33,3 +27,10 @@
 <div class="add-message-dialog">
     <app-send-message-dialog></app-send-message-dialog>
 </div>
+
+
+    <!--  <div class="line-with-date sticky" id="stickyLine" *ngIf="showStickyLine">
+                <div class="dividing-line"></div>
+                <div class="sticky-date-container message-date">{{ group.date }}</div>
+                <div class="dividing-line"></div>
+            </div> -->

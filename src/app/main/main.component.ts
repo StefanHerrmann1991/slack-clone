@@ -39,6 +39,8 @@ export class MainComponent {
 
 
   ngOnInit() {
+    
+    
     this.route.paramMap.subscribe(paramMap => {
       this.userId = paramMap.get('id');
       this.userService.setUserId(this.userId);
@@ -46,6 +48,7 @@ export class MainComponent {
     })
     
     this.getAllUsers();
+    
     this.filteredUsers = this.control.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value || '')),
@@ -59,6 +62,7 @@ export class MainComponent {
     }
   
     getAllUsers() {
+      
       this.firestore.collection('users').valueChanges().subscribe((usersData: any[]) => {
         this.users = usersData.map(userData => new User(userData));
       });
@@ -78,6 +82,7 @@ export class MainComponent {
     }
   
     getUser() {
+      
       this.firestore
         .collection('users')
         .doc(this.userId)

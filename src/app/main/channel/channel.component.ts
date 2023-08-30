@@ -25,6 +25,7 @@ export class ChannelComponent {
     private afAuth: AngularFireAuth,
     private datePipe: DatePipe,
     private router: Router,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   showStickyLine: boolean = false;
@@ -37,17 +38,30 @@ export class ChannelComponent {
 
 
   ngOnInit() {
-    this.route.paramMap.subscribe(paramMap => {
+
+     this.route.paramMap.subscribe(paramMap => {
       this.channelId = paramMap.get('channelId');
       this.getChannel();
-    })
-    this.userId = this.route.parent.snapshot.paramMap.get('id');   
+    }) 
+    this.userId = this.route.parent.snapshot.paramMap.get('id');  
+  }
+  
+
+  replyToMessage(messageId: string): void {
+    this.router.navigate([
+      {
+        outlets: {
+          // This assumes that you're already within a specific channel context
+          mainOutlet: ['channel', this.channelId],
+          threadOutlet: ['message', messageId]
+        }
+      }
+    ], { relativeTo: this.activatedRoute.parent });
   }
 
-  replyToMessage(messageId) {
-    this.router.navigate(['/message', messageId]);
-  }
 
+
+  navigateToThreads() { }
 
   openDialog() {
     this.dialog.open(EditChannelDialogComponent, {
@@ -58,7 +72,7 @@ export class ChannelComponent {
     });
   }
 
-  getChannel(): void {
+  getChannel(): void {    
     this.firestore
       .collection('channels')
       .doc(this.channelId)

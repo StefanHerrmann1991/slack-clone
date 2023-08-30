@@ -13,11 +13,10 @@ export class UserService {
 
   setUserId(id: string): void {
     this.userId = id;
-    console.log(this.userId)
   }
 
   getUserId(): string {
-    return this.userId;   
+    return this.userId;
   }
 
   storeLastUrl(url: string) {

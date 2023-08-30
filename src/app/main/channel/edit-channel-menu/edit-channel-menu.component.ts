@@ -29,26 +29,34 @@ export class EditChannelMenuComponent {
   channelId = this.data.channelId;
 
 
+  
   ngOnInit() {
     if (this.data.theme === 'app-theme') {
       this.overlayContainer.getContainerElement().classList.add(this.data.theme);
-    }
-    
-
+    }    
+  
     if (this.channelId) {
-      this.channelsService.getChannel(this.channelId).subscribe(data => {
-        this.channel = new Channel(data);
-        this.channelName = this.channel.channelName;
-        this.description = this.channel.description;
-        this.channelTopic = this.channel.channelTopic;
-      });
+      this.channelsService.getChannel(this.channelId).subscribe(
+        data => {
+          this.channel = new Channel(data);
+          this.channelName = this.channel.channelName;
+          this.description = this.channel.description;
+          this.channelTopic = this.channel.channelTopic;
+        },
+        error => {
+          console.error('Error fetching channel data:', error);
+        }
+      );
     } else {
       console.error('channelId is undefined');
     }
   }
+  
+  
 
 
   updateCollectionFromInput(field: string, inputValue: string) {
+
     this.channelsService.updateCollection(this.channelId, 'channels', field, inputValue)
     this.close();
   }

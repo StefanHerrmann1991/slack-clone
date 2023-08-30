@@ -46,6 +46,7 @@ export class CreateChannelDialogComponent {
   ) { }
 
   addNewChannel() {
+
     if (this.currentUser) {
       this.fetchUsersFromFirestore().subscribe(snapshot => {
         this.timestamp = this.getCurrentTimestamp();
@@ -106,14 +107,16 @@ export class CreateChannelDialogComponent {
   filteredChannels: Observable<string[]>;
 
   ngOnInit() {
+
     this.userSubscription = this.authService.currentUser$.subscribe(user => {
       this.currentUser = user;
     });
+
     this.ChannelService.getAllChannels();
-    this.filteredChannels = this.control.valueChanges.pipe(
+     this.filteredChannels = this.control.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value || '')),
-    );
+    ); 
   }
 
 

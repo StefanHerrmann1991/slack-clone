@@ -14,13 +14,15 @@ const routes: Routes = [
     path: 'main/:id', component: MainComponent,
     children: [
       {
-        path: 'channel/:channelId',
-        component: ChannelComponent,
-        outlet: 'mainOutlet',
-        children: [{
+        
+          path: 'channel/:channelId',
+          component: ChannelComponent,
+          outlet: 'mainOutlet',
+        },
+        {
           path: 'message/:messageId',
-          component: ThreadComponent
-        }]
+          component: ThreadComponent,
+          outlet: 'threadOutlet'          
       },
 
       {

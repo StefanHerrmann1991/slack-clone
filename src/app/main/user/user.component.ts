@@ -17,20 +17,10 @@ export class UserComponent {
   userId = '';
 
   constructor(
-    public authService: AuthService,
-    private firestore: AngularFirestore,
+    public authService: AuthService,   
     public dialog: MatDialog
   ) { }
 
-  getUser() {
-    this.firestore
-      .collection('users')
-      .doc(this.userId)
-      .valueChanges()
-      .subscribe((user: any) => {
-        this.user = new User(user);
-      })
-  }
 
   editProfileDialog() {
     const dialogRef = this.dialog.open(EditUserComponent, {

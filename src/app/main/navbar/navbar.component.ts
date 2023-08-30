@@ -13,7 +13,8 @@ export class NavbarComponent {
   changeText: boolean;
   hovering: boolean = false;
   /* Only shows the channels names but not the corresponding data. */
-  ngOnInit() {    
+  ngOnInit() {  
+
     this.channelService.renderTree();
   }
   constructor(public dialog: MatDialog, public channelService: ChannelsService) {

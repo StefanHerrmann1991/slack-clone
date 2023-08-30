@@ -36,6 +36,7 @@ export class InviteCollegueDialogComponent {
   invitedUsers: string[] = [];
 
   ngOnInit(): void {  
+  
     this.afAuth.authState.subscribe(user => {
       this.currentUser = user;
     });
@@ -112,15 +113,14 @@ export class InviteCollegueDialogComponent {
 
 
   getUsers() {
-
-    this.firestore.collection('users').valueChanges().subscribe((users: any) => {
+ /*    this.firestore.collection('users').valueChanges().subscribe((users: any) => {
       this.users = users.filter(user => user.username !== this.currentUser.displayName && !this.invitedUsers.includes(user.username));
       this.filteredOptions = this.usernameControl.valueChanges.pipe(
         startWith(''),
         map(value => typeof value === 'string' ? value : value.username),
         map(username => username ? this._filter(username) : this.users.slice())
       );
-    });
+    }); */
   }
 
   private _filter(value: string): any[] {
