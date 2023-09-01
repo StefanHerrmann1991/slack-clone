@@ -36,8 +36,8 @@
       <p>When a channel is set to private, it can only be viewed or joined by invitation.</p>
 
       <mat-slide-toggle [(ngModel)]="channel.isClosedArea" (change)="toggleChannelPrivacy()"></mat-slide-toggle>
-      <button mat-button color="warn" (click)="this.channelService.deleteChannel(this.channelId)">Delete Channel</button>
-      <button mat-button color="primary" (click)="this.channelService.archiveChannel(this.channelId)">
+      <button mat-button color="warn" (click)="this.channelsService.deleteChannel(this.channelId)">Delete Channel</button>
+      <button mat-button color="primary" (click)="this.channelsService.archiveChannel(this.channelId)">
         {{ channel.archived ? 'Unarchive' : 'Archive' }} Channel
       </button>
     </div>

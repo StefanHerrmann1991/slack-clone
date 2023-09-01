@@ -22,7 +22,7 @@ export class SendMessageDialogComponent {
   constructor(
     private datePipe: DatePipe,
     private route: ActivatedRoute,
-    public channelService: ChannelsService,
+    public channelsService: ChannelsService,
     private firestore: AngularFirestore,
     private afAuth: AngularFireAuth,
     private authService: AuthService) { }
@@ -41,17 +41,21 @@ export class SendMessageDialogComponent {
 
 
   ngOnInit() {
-  
+
     this.afAuth.authState.subscribe(user => {
       this.currentUser = user;
     });
 
-     this.route.paramMap.subscribe(paramMap => {
+    this.route.paramMap.subscribe(paramMap => {
       this.channelId = paramMap.get('channelId');
-      this.channelService.getChannelById(this.channelId).subscribe(channel => {
+      this.channelsService.getChannelById(this.channelId).subscribe(channel => {
         this.channel = channel;
       });
-    }); 
+    });
+  }
+
+  ngOnDestroy() {
+    this.channelsService.unsubscribeAll();
   }
 
   addMessage(userData) {
@@ -69,8 +73,8 @@ export class SendMessageDialogComponent {
     });
 
     // update channel with new message
-    this.channel = this.channelService.addMessageToChannel(this.channel, this.newMessage);
-    this.channelService.updateChannel(this.channelId, this.channel);
+    this.channel = this.channelsService.addMessageToChannel(this.channel, this.newMessage);
+    this.channelsService.updateChannel(this.channelId, this.channel);
   }
 
 

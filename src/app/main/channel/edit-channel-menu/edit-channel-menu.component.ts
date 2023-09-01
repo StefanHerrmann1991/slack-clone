@@ -32,7 +32,7 @@ export class EditChannelMenuComponent {
 
 
   
-  ngOnInit() {
+  ngOnInit() { 
     if (this.data.theme === 'app-theme') {
       this.overlayContainer.getContainerElement().classList.add(this.data.theme);
     }    

@@ -9,6 +9,8 @@ import { UserService } from 'src/app/services/user.service';
 import { ErrorMessagesService } from 'src/app/services/error-messages.service';
 import { Route } from '@angular/router';
 
+
+
 @Component({
   selector: 'app-edit-channel-dialog',
   templateUrl: './edit-channel-dialog.component.html',
@@ -31,7 +33,7 @@ export class EditChannelDialogComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    public channelService: ChannelsService,
+    public channelsService: ChannelsService,
     private firestore: AngularFirestore,
     private dialog: MatDialog,
     private userService: UserService,
@@ -39,9 +41,9 @@ export class EditChannelDialogComponent {
     private router: Router
   ) { }
 
-  ngOnInit() {
+  ngOnInit() { 
     if (this.channel) {
-      this.channelService.getChannel(this.channelId)
+      this.channelsService.getChannel(this.channelId)
         .subscribe({
           next: (data) => {
             this.channel = new Channel(data);
@@ -55,10 +57,12 @@ export class EditChannelDialogComponent {
   }
 
   leaveChannel() {
-    this.dialog.closeAll();
-    this.router.navigate(['/main', this.userId, { outlets: { mainOutlet: ['channel', 'iLOTSv8LDiFhfw5cAnq8'] } }]);
+    this.channelsService.leaveChannel(this.userId, this.channelId, this.channel);
   }
 
+  ngOnDestroy() {
+    this.channelsService.unsubscribeAll();
+  }
 
   toggleChannelPrivacy(): void {
     this.channel.isClosedArea = !this.channel.isClosedArea;

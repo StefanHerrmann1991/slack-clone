@@ -20,7 +20,7 @@ export class ChannelComponent {
   constructor(
     private dialog: MatDialog,
     private route: ActivatedRoute,
-    public channelService: ChannelsService,
+    public channelsService: ChannelsService,
     private firestore: AngularFirestore,
     private afAuth: AngularFireAuth,
     private datePipe: DatePipe,
@@ -51,6 +51,9 @@ export class ChannelComponent {
     this.userId = this.route.parent.snapshot.paramMap.get('id');
   }
 
+  ngOnDestroy() {
+    this.channelsService.unsubscribeAll();
+  }
 
   replyToMessage(messageId: string): void {
     this.router.navigate([
@@ -78,7 +81,7 @@ export class ChannelComponent {
   }
 
   getChannel(): void {
-    this.channelService.getChannel(this.channelId)
+    this.channelsService.getChannel(this.channelId)
       .subscribe({
         next: (channel) => {
           this.channel = channel;

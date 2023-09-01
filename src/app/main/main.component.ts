@@ -38,7 +38,7 @@ export class MainComponent {
 
 
 
-  ngOnInit() {
+  ngOnInit() { 
     
     
     this.route.paramMap.subscribe(paramMap => {

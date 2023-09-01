@@ -16,7 +16,7 @@ export class LoginComponent {
   constructor(public authService: AuthService, private route: ActivatedRoute) {}
 
      
-  ngOnInit() {
+  ngOnInit() { 
    
   }
 }

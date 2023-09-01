@@ -41,7 +41,7 @@ export class CreateChannelDialogComponent {
     public dialogRef: MatDialogRef<CreateChannelDialogComponent>,
     private afAuth: AngularFireAuth,
     private _formBuilder: FormBuilder,
-    private ChannelService: ChannelsService,
+    private channelsService: ChannelsService,
     private authService: AuthService
   ) { }
 
@@ -57,6 +57,10 @@ export class CreateChannelDialogComponent {
       });
     }
     this.closeDialog();
+  }
+
+  ngOnDestroy() {
+    this.channelsService.unsubscribeAll();
   }
 
   fetchUsersFromFirestore() {
@@ -95,8 +99,8 @@ export class CreateChannelDialogComponent {
   }
 
   resetChannelServiceTree() {
-    this.ChannelService.tree = [];
-    this.ChannelService.renderTree();
+    this.channelsService.tree = [];
+    this.channelsService.renderTree();
   }
 
   closeDialog() {
@@ -112,17 +116,18 @@ export class CreateChannelDialogComponent {
       this.currentUser = user;
     });
 
-    this.ChannelService.getAllChannels();
-     this.filteredChannels = this.control.valueChanges.pipe(
+    this.channelsService.getAllChannels();
+    this.filteredChannels = this.control.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value || '')),
-    ); 
+    );
   }
+
 
 
   private _filter(value: string): string[] {
     const filterValue = this._normalizeValue(value);
-    if (this.ChannelService.allChannels) return this.ChannelService.allChannels.filter(channel => this._normalizeValue(channel.channelName).includes(filterValue)).map(channel => channel.channelName);
+    if (this.channelsService.allChannels) return this.channelsService.allChannels.filter(channel => this._normalizeValue(channel.channelName).includes(filterValue)).map(channel => channel.channelName);
     else return [];
 
   }

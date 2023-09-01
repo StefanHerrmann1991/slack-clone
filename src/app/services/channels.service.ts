@@ -1,7 +1,6 @@
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { collection } from '@angular/fire/firestore';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -11,6 +10,11 @@ import { ErrorMessagesService } from './error-messages.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { catchError } from 'rxjs/operators';
+import * as firebase from 'firebase/compat/app';
+import 'firebase/compat/firestore';
+import { from } from 'rxjs';
+import { Subscription } from 'rxjs';
+
 
 let themes;
 
@@ -39,7 +43,7 @@ export class ChannelsService {
   allChannels;
   themes: any;
   channelId: string;
-
+  private subscriptions: Subscription[] = [];
 
   constructor(
     private firestore: AngularFirestore,
@@ -49,19 +53,20 @@ export class ChannelsService {
     private dialog: MatDialog) { }
 
   getAllChannels() {
-    this.firestore
+    const sub = this.firestore
       .collection('channels')
       .valueChanges()
       .subscribe((changes: any) => {
         this.allChannels = changes;
-      })
+      });
+    this.subscriptions.push(sub);
   }
 
   getChannel(channelId: string): Observable<Channel> {
     return this.firestore
-    .collection('channels')
-    .doc<Channel>(channelId)
-    .valueChanges()
+      .collection('channels')
+      .doc<Channel>(channelId)
+      .valueChanges()
       .pipe(
         map(data => new Channel(data)),
         catchError(error => {
@@ -70,7 +75,7 @@ export class ChannelsService {
         })
       );
   }
-  
+
   getChannelById(channelId: string): Observable<Channel> {
     return this.firestore
       .collection('channels')
@@ -121,7 +126,7 @@ export class ChannelsService {
   renderTree() {
     this.tree = [];
     this.channelsRef = this.firestore.collection('channels');
-    this.channelsRef.get().subscribe(snapshot => {
+    const sub = this.channelsRef.get().subscribe(snapshot => {
       snapshot.forEach(doc => {
         const channel = new Channel(doc.data());
         const userId = this.userService.getUserId();
@@ -133,7 +138,12 @@ export class ChannelsService {
       themes = [{ name: 'Channels', children: this.tree }];
       this.dataSource.data = themes;
     });
+    this.subscriptions.push(sub);
   }
+
+  unsubscribeAll() {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
+}
 
   updateChannelName(id: string, newName: string) {
     this.firestore.collection('channels').doc(id).update({ channelName: newName });
@@ -143,35 +153,42 @@ export class ChannelsService {
     this.firestore.collection(collectionName).doc(id).update({ [field]: newValue });
   }
 
-  /* TODO */
-  leaveChannel(): void {
-    if (this.channel && this.channel.usersData && this.channel.channelName !== 'allgemein') {
-      let userId = this.userService.getUserId();
-      // Filter out the user data from the usersData array
-      const updatedUsersData = this.channel.usersData.filter(user => user.userId !== userId);
-      this.channel.usersData = updatedUsersData;
-      setTimeout(() => {
-        this.updateChannel(this.channelId, this.channel);
-      }, 2000);
+  leaveChannel(userId: string, channelId: string, channel: Channel) {
+    return from(new Promise<void>((resolve, reject) => {
+      if (channel && channel.usersData && channel.channelName !== 'allgemein') {
+        const updatedUsersData = channel.usersData.filter(user => user.userId !== userId);
+   
+        this.firestore.collection('channels').doc(channelId).update({ usersData: updatedUsersData })
+          .then(() => {
+            console.log('Successfully left channel');
+            resolve();
+            this.router.navigate(['/main', userId, { outlets: { mainOutlet: ['channel', 'iLOTSv8LDiFhfw5cAnq8'] } }]);
+          })
+          .catch(err => {
+            console.error('Error leaving channel:', err);
+            reject(err);
+          });
+      } else if (channel.channelName === 'allgemein') {
+        this.errorService.showError(`Membership is required in ${channel.channelName}`,
+          'Every workspace has one channel that contains all the members of this workspace – this is that channel for you.');
+        reject(new Error('Cannot leave the "allgemein" channel.'));
+      } else {
+        reject(new Error('Channel information is not valid.'));
+      }
       this.renderTree();
-    }
-    if (this.channel.channelName === 'allgemein') {
-      this.errorService.showError(`Membership is required in ${this.channel.channelName}`,
-        'Every workspace has one channel that contains all the members of this workspace – this is that channel for you.')
-    }
+    }));
   }
 
 
-
-
-deleteChannel(channelId: string) {
+  deleteChannel(channelId: string) {
 
     if (confirm("Are you sure you want to delete this channel? This action cannot be undone.") && this.channel.channelName !== 'allgemein') {
       let userId = this.userService.getUserId();
       this.dialog.closeAll();
       this.router.navigate(['/main', userId, { outlets: { mainOutlet: ['channel', 'iLOTSv8LDiFhfw5cAnq8'] } }]);
       this.firestore.collection('channels').doc(channelId).delete().then(() => {
-        console.log("Channel successfully deleted!");     
+        console.log("Channel successfully deleted!");
+        this.renderTree();
       }).catch((error) => {
         console.error("Error removing channel: ", error);
       });

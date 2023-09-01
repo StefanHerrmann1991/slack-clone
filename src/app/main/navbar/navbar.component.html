@@ -3,7 +3,7 @@
 <div>Threads</div>
 <mat-divider></mat-divider>
 
-<mat-tree class="mat-tree" [dataSource]="channelService.dataSource" [treeControl]="channelService.treeControl">
+<mat-tree class="mat-tree" [dataSource]="channelsService.dataSource" [treeControl]="channelsService.treeControl">
     <!-- This is the tree node template for leaf nodes !IMPORTANT -->
     <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent="0px"
     
@@ -15,12 +15,12 @@
             <div>{{node.name}}</div>
         </button>
     </mat-tree-node>
-    <mat-tree-node *matTreeNodeDef="let node;when: channelService.hasChild" matTreeNodePadding class="highest-node">
+    <mat-tree-node *matTreeNodeDef="let node;when: channelsService.hasChild" matTreeNodePadding class="highest-node">
         <div class="main-node">
             <button class="expand-channels-btn" mat-icon-button matTreeNodeToggle
                 [attr.aria-label]="'Toggle ' + node.name">
                 <mat-icon class="main-icon" (click)="toggleExpanded(node)">
-                    {{ channelService.treeControl.isExpanded(node) ? 'arrow_drop_down' : 'arrow_right' }}
+                    {{ channelsService.treeControl.isExpanded(node) ? 'arrow_drop_down' : 'arrow_right' }}
                 </mat-icon>
             </button>
             <span class="channels" (mouseover)="hovering = true" (mouseout)="hovering = false"
