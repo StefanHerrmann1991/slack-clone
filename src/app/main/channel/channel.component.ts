@@ -1,5 +1,5 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ChannelsService } from 'src/app/services/channels.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Channel } from 'src/models/channel.class';
@@ -8,6 +8,8 @@ import { DatePipe } from '@angular/common';
 import { EditChannelDialogComponent } from './edit-channel-dialog/edit-channel-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-channel',
@@ -17,6 +19,8 @@ import { Router } from '@angular/router';
 
 
 export class ChannelComponent {
+  channel$: Observable<Channel>;
+
   constructor(
     private dialog: MatDialog,
     private route: ActivatedRoute,
@@ -38,16 +42,27 @@ export class ChannelComponent {
 
 
   ngOnInit() {
-
-    this.route.paramMap.subscribe(paramMap => {
-      const channelId = paramMap.get('channelId');
-      if (channelId) {
-        this.channelId = channelId;
-        this.getChannel();
-      } else {
-        console.error('Channel ID not found in route.');
+    this.route.paramMap.pipe(
+      switchMap(paramMap => {
+        const channelId = paramMap.get('channelId');
+        if (channelId) {
+          this.channelId = channelId;
+          return this.channelsService.getChannelByRouteId(channelId);
+        } else {
+          console.error('Channel ID not found in route.');
+          return throwError('Channel ID not found in route.'); // this will skip subsequent operations and jump straight to error handling if you have any
+        }
+      })
+    ).subscribe(
+      channel => {
+        // Handle the channel data here, for example:
+        this.channel = channel;
+      },
+      error => {
+        console.error('Error fetching channel:', error);
       }
-    });
+    );
+
     this.userId = this.route.parent.snapshot.paramMap.get('id');
   }
 

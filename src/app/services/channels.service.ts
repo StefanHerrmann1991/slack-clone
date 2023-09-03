@@ -43,7 +43,8 @@ export class ChannelsService {
   allChannels;
   themes: any;
   channelId: string;
-  private subscriptions: Subscription[] = [];
+  public subscriptions: Subscription[] = [];
+
 
   constructor(
     private firestore: AngularFirestore,
@@ -75,6 +76,22 @@ export class ChannelsService {
         })
       );
   }
+
+
+  getChannelByRouteId(id: string): Observable<Channel> {
+    return this.firestore
+      .collection('channels')
+      .doc<Channel>(id)
+      .valueChanges()
+      .pipe(
+        map(data => new Channel(data)),
+        catchError(error => {
+          console.error('Error fetching channel:', error);
+          throw new Error('Failed to fetch channel.');
+        })
+      );
+  }
+
 
   getChannelById(channelId: string): Observable<Channel> {
     return this.firestore
@@ -143,7 +160,7 @@ export class ChannelsService {
 
   unsubscribeAll() {
     this.subscriptions.forEach(sub => sub.unsubscribe());
-}
+  }
 
   updateChannelName(id: string, newName: string) {
     this.firestore.collection('channels').doc(id).update({ channelName: newName });
@@ -153,16 +170,15 @@ export class ChannelsService {
     this.firestore.collection(collectionName).doc(id).update({ [field]: newValue });
   }
 
-  leaveChannel(userId: string, channelId: string, channel: Channel) {
-    return from(new Promise<void>((resolve, reject) => {
+  leaveChannel(userId: string, channelId: string, channel: Channel): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
       if (channel && channel.usersData && channel.channelName !== 'allgemein') {
         const updatedUsersData = channel.usersData.filter(user => user.userId !== userId);
-   
         this.firestore.collection('channels').doc(channelId).update({ usersData: updatedUsersData })
           .then(() => {
-            console.log('Successfully left channel');
             resolve();
             this.router.navigate(['/main', userId, { outlets: { mainOutlet: ['channel', 'iLOTSv8LDiFhfw5cAnq8'] } }]);
+            this.renderTree();
           })
           .catch(err => {
             console.error('Error leaving channel:', err);
@@ -175,8 +191,7 @@ export class ChannelsService {
       } else {
         reject(new Error('Channel information is not valid.'));
       }
-      this.renderTree();
-    }));
+    });
   }
 
 

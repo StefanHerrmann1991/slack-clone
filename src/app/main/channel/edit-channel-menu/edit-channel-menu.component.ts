@@ -54,7 +54,9 @@ export class EditChannelMenuComponent {
     }
   }
   
-  
+  ngOnDestroy() {
+    this.channelsService.unsubscribeAll();
+  }
 
 
   updateCollectionFromInput(field: string, inputValue: string) {

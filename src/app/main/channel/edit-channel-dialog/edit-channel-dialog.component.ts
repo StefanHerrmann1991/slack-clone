@@ -41,22 +41,25 @@ export class EditChannelDialogComponent {
     private router: Router
   ) { }
 
-  ngOnInit() { 
+  ngOnInit() {
     if (this.channel) {
-      this.channelsService.getChannel(this.channelId)
+      const sub = this.channelsService.getChannel(this.channelId)
         .subscribe({
           next: (data) => {
             this.channel = new Channel(data);
+
           },
           error: (error) => {
             console.error('Error fetching channel:', error);
           }
         });
+      this.channelsService.subscriptions.push(sub);
     }
     this.userId = this.userService.getUserId();
   }
 
   leaveChannel() {
+    this.dialog.closeAll();
     this.channelsService.leaveChannel(this.userId, this.channelId, this.channel);
   }
 
