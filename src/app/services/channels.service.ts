@@ -10,9 +10,7 @@ import { ErrorMessagesService } from './error-messages.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { catchError } from 'rxjs/operators';
-import * as firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
-import { from } from 'rxjs';
 import { Subscription } from 'rxjs';
 
 

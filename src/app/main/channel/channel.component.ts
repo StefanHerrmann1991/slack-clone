@@ -57,6 +57,7 @@ export class ChannelComponent {
       channel => {
         // Handle the channel data here, for example:
         this.channel = channel;
+        this.getChannel();    
       },
       error => {
         console.error('Error fetching channel:', error);
