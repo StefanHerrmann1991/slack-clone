@@ -41,7 +41,7 @@ export class ChannelsService {
   allChannels;
   themes: any;
   channelId: string;
-  public subscriptions: Subscription[] = [];
+   public subscriptions: Subscription[] = [];
 
 
   constructor(

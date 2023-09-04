@@ -11,16 +11,16 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
-    path: 'main/:id', component: MainComponent,
+    path: 'main/:id',
+    component: MainComponent,
     children: [
-      {
-        
+      {       
           path: 'channel/:channelId',
           component: ChannelComponent,
           outlet: 'mainOutlet',
         },
         {
-          path: 'message/:messageId',
+          path: 'channelReply/:messageId',
           component: ThreadComponent,
           outlet: 'threadOutlet'          
       },

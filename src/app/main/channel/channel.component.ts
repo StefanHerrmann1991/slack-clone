@@ -57,7 +57,7 @@ export class ChannelComponent {
       channel => {
         // Handle the channel data here, for example:
         this.channel = channel;
-        this.getChannel();    
+        this.getChannel();
       },
       error => {
         console.error('Error fetching channel:', error);
@@ -71,16 +71,19 @@ export class ChannelComponent {
     this.channelsService.unsubscribeAll();
   }
 
-  replyToMessage(messageId: string): void {
-    this.router.navigate([
-      {
-        outlets: {
-          // This assumes that you're already within a specific channel context
-          mainOutlet: ['channel', this.channelId],
-          threadOutlet: ['message', messageId]
+  openThreadToReply(messageId: string): void {
+    this.router.navigate(
+      [
+        '/main', this.userId,
+        {
+          outlets: {
+            mainOutlet: ['channel', this.channelId],
+            threadOutlet: ['channelReply', messageId, { channelId: this.channelId }]
+          }
         }
-      }
-    ], { relativeTo: this.activatedRoute.parent });
+      ],
+      { relativeTo: this.activatedRoute }
+    );
   }
 
 
