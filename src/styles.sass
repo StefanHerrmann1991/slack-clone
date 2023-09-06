@@ -91,27 +91,46 @@ $warn-color: var (--warn)
     background-color: red
 
 .mat-icon
-    font-size: 16px
-    height: 16px
-    width: 16px
+    font-size: 20px !important
+    height: 20px !important
+    width: 20px !important
 
-.expand-channels-btn
-    .mat-mdc-icon-button
-        --mdc-icon-button-state-layer-size: 24px
-        --mdc-icon-button-icon-size: 24px
-        --mdc-icon-button-disabled-icon-color: black
-        --mdc-icon-button-disabled-icon-opacity: 0.38
-    .mdc-button, .mat-mdc-button, .mat-unthemed, .mat-mdc-button-base
-        min-width: 24px
-        height: 24px !important
+.mat-mdc-icon-button .mat-mdc-button-persistent-ripple
+    border-radius: 0%
+
+.mat-mdc-icon-button
+    padding: 0px !important
+    border-radius: 0px !important
+
+.mat-mdc-icon-button .mat-mdc-button-touch-target
+    height: 24px
+    width: 24px
+
+.mat-mdc-icon-button .mat-mdc-button-persistent-ripple
+    border-radius: 0% !important
+
+.mat-mdc-icon-button
+    padding: 0px !important
+    border-radius: 4px !important
+.mat-mdc-icon-button
+    --mdc-icon-button-state-layer-size: 24px !important
+    --mdc-icon-button-icon-size: 24px !important
+    --mdc-icon-button-disabled-icon-color: black
+    --mdc-icon-button-disabled-icon-opacity: 0.38
+.mdc-button, .mat-mdc-button, .mat-unthemed, .mat-mdc-button-base
+    min-width: 24px
+    height: 24px !important
     &:hover
         background-color: $hover-effect-color
         border-radius: 4px
 
 .mat-mdc-icon-button .mat-mdc-button-touch-target
+    position: absolute
+    top: 50%
     height: 24px !important
+    left: 50%
     width: 24px !important
-    padding: 6px
+    transform: translate(-50%, -50%)
 
 button
     cursor: pointer

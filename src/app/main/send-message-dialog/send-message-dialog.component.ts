@@ -1,26 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ChannelsService } from 'src/app/services/channels.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Channel } from 'src/models/channel.class';
-import { Message } from 'src/models/channel.class';
+import { Channel, Message } from 'src/models/channel.class'; // Adjust if necessary
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { DatePipe } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
-import 'firebase/compat/firestore';
 import { User } from 'firebase/auth';
-
-
 
 @Component({
   selector: 'app-send-message-dialog',
   templateUrl: './send-message-dialog.component.html',
   styleUrls: ['./send-message-dialog.component.sass']
 })
-export class SendMessageDialogComponent {
+export class SendMessageDialogComponent implements OnInit, OnDestroy {
   constructor(
-    private datePipe: DatePipe,
     private route: ActivatedRoute,
     public channelsService: ChannelsService,
     private firestore: AngularFirestore,
@@ -29,11 +23,9 @@ export class SendMessageDialogComponent {
 
 
   textareaFocused = false;
-  placeholderText: string;
+  placeholderText = "Type your message here..."; // Initial value
   newMessage: Message = new Message();
   messageTextInput: string;
-  myDate: any = new Date();
-  myTime: any = new Date();
   channelId = '';
   channel: Channel = new Channel();
   private userSubscription?: Subscription;
@@ -41,7 +33,6 @@ export class SendMessageDialogComponent {
 
 
   ngOnInit() {
-
     this.afAuth.authState.subscribe(user => {
       this.currentUser = user;
     });
@@ -58,33 +49,36 @@ export class SendMessageDialogComponent {
     this.channelsService.unsubscribeAll();
   }
 
-  addMessage(userData) {
-    let date = this.getData();
-    const messageId = this.firestore.createId(); // Generate a unique ID
-  
-    this.newMessage = new Message({
-      messageId: messageId,
-      text: this.messageTextInput,
-      time: date,
-      username: userData.displayName,
-      userId: userData.uid,
-      userEmail: userData.email,
-    });
-  
-    // Convert the Message instance to a plain object
-    const newMessageData = this.newMessage.toJSON();
-  
-    // Add new message to the 'messages' subcollection in Firestore
-    this.firestore.collection('channels').doc(this.channelId).collection('messages').add(newMessageData)
-      .then(() => {
-        console.log('Message added to Firestore successfully!');
-      })
-      .catch(error => {
-        console.error('Error adding message to Firestore: ', error);
+  addMessage(currentUser) {
+    if (currentUser) {
+      let date = this.getData();
+      const messageId = this.firestore.createId(); // Generate a unique ID
+    
+      this.newMessage = new Message({
+        messageId: messageId,
+        text: this.messageTextInput,
+        time: date,
+        username: currentUser.displayName,
+        userId: currentUser.uid,
+        userEmail: currentUser.email,
       });
+    
+      // Convert the Message instance to a plain object
+      const newMessageData = this.newMessage.toJSON();
+    
+      // Add new message to the 'messages' subcollection in Firestore
+      this.firestore.collection('channels').doc(this.channelId).collection('messages').add(newMessageData)
+        .then(() => {
+          console.log('Message added to Firestore successfully!');
+        })
+        .catch(error => {
+          console.error('Error adding message to Firestore: ', error);
+        });
+    } else {
+      console.error('No user signed in.');
+    }
   }
   
-
 
   getData() {
     return new Date().toISOString();

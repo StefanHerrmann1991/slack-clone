@@ -42,6 +42,7 @@ export class ChannelComponent {
   messageId = '';
 
   ngOnInit() {
+  
     this.route.paramMap.pipe(
       switchMap((paramMap: ParamMap) => {
         const channelId = paramMap.get('channelId');
@@ -64,6 +65,7 @@ export class ChannelComponent {
         console.error('Error fetching channel:', error);
       }
     );
+ 
 
     this.userId = this.route.parent.snapshot.paramMap.get('id');
   }
@@ -87,9 +89,9 @@ export class ChannelComponent {
     );
   }
 
-
-
-  navigateToThreads() { }
+  deleteMessage(messageId) {
+    this.channelsService.deleteMessage(this.channelId, messageId);
+  }
 
   openDialog() {
     this.dialog.open(EditChannelDialogComponent, {
@@ -99,6 +101,7 @@ export class ChannelComponent {
       hasBackdrop: true
     });
   }
+
 
   getChannel(): void {
     this.channelsService.getChannel(this.channelId)
@@ -130,6 +133,7 @@ export class ChannelComponent {
       });
   }
   
+
   groupMessagesByDate(messages): any[] {
     const groupedMessages = [];
     let currentDate = '';
@@ -150,7 +154,6 @@ export class ChannelComponent {
     return groupedMessages;
   }
   
-
 
   topEdgeInViewport(element) {
     const rect = element.getBoundingClientRect();

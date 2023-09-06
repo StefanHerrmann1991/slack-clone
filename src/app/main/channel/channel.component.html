@@ -15,8 +15,12 @@
     </div>
     <div *ngFor="let message of group.messages" class="message-content"> <!-- Corrected here -->
 
-        <button mat-tooltip="reply" mat-icon-button (click)="openThreadToReply(message.messageId)">
+        <button mat-tooltip="reply to message" mat-icon-button (click)="openThreadToReply(message.messageId)">
             <mat-icon>chat</mat-icon>
+        </button>
+        <button mat-tooltip="delete this message" mat-icon-button
+            (click)="deleteMessage(message.messageId)">
+            <mat-icon>delete</mat-icon>
         </button>
 
         <div class="name-and-time" dark-light-theming>

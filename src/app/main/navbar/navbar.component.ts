@@ -13,10 +13,10 @@ export class NavbarComponent {
   changeText: boolean;
   hovering: boolean = false;
   /* Only shows the channels names but not the corresponding data. */
-  ngOnInit() {   
-
+  ngOnInit() {  
     this.channelsService.renderTree();
   }
+
   constructor(public dialog: MatDialog, public channelsService: ChannelsService) {
     this.changeText = false;
   }
@@ -26,9 +26,7 @@ export class NavbarComponent {
     this.channelsService.treeControl.toggle(node);
   }
 
-  ngOnDestroy() {
-    this.channelsService.unsubscribeAll();
-  }
+
   
   iconBackground: string = '';
   changeBackground(color: string) {

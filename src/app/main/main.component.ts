@@ -40,7 +40,8 @@ export class MainComponent {
 
   ngOnInit() {    
       this.route.paramMap.subscribe(paramMap => {
-      this.userId = paramMap.get('id');     
+      this.userId = paramMap.get('id');
+      this.userService.setUserId(this.userId);
       this.getUser();
     })
     

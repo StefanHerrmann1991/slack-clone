@@ -2,16 +2,16 @@ import { FlatTreeControl } from '@angular/cdk/tree';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, lastValueFrom, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Channel, Message } from 'src/models/channel.class';
+import { Channel, Message, Reply } from 'src/models/channel.class';
 import { UserService } from './user.service';
 import { ErrorMessagesService } from './error-messages.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { catchError } from 'rxjs/operators';
 import 'firebase/compat/firestore';
-import { Subscription } from 'rxjs';
+
 
 
 let themes;
@@ -51,14 +51,8 @@ export class ChannelsService {
     private router: Router,
     private dialog: MatDialog) { }
 
-  getAllChannels() {
-    const sub = this.firestore
-      .collection('channels')
-      .valueChanges()
-      .subscribe((changes: any) => {
-        this.allChannels = changes;
-      });
-    this.subscriptions.push(sub);
+  getAllChannels(): Observable<any> {
+    return this.firestore.collection('channels').valueChanges();
   }
 
   getChannel(channelId: string): Observable<Channel> {
@@ -100,6 +94,7 @@ export class ChannelsService {
       .valueChanges()
       .pipe(
         map(data => new Channel(data)),
+
         catchError(error => {
           console.error('Error fetching channel:', error);
           throw new Error('Failed to fetch channel.');
@@ -124,10 +119,82 @@ export class ChannelsService {
   }
 
   addMessageToChannel(channel: Channel, message: Message): Channel {
-
-
     return channel;
   }
+
+  updateMessage(channelId: string, messageId: string, newText: string): Promise<void> {
+    return this.firestore
+      .collection('channels')
+      .doc(channelId)
+      .collection('messages')
+      .doc(messageId)
+      .update({ text: newText });
+  }
+
+  deleteMessage(channelId: string, messageId: string): Promise<void> {
+    return this.firestore
+      .collection('channels')
+      .doc(channelId)
+      .collection('messages')
+      .doc(messageId)
+      .delete();
+  }
+
+
+  updateReply(channelId: string, messageId: string, replyIndex: number, newReply: Reply): Promise<void> {
+    const observable = this.firestore
+      .collection('channels')
+      .doc(channelId)
+      .collection('messages')
+      .doc(messageId)
+      .get();
+
+    return lastValueFrom(observable)
+      .then(doc => {
+        if (doc.exists) {
+          const message = doc.data();
+          if (message && message['replies']) {
+            message['replies'][replyIndex] = newReply.toJSON();
+            return doc.ref.update({ replies: message['replies'] });
+          } else {
+            console.error('Replies not found!');
+            return Promise.reject('Replies not found!');
+          }
+        } else {
+          console.error('No such document!');
+          return Promise.reject('No such document!');
+        }
+      });
+  }
+
+
+  deleteReply(channelId: string, messageId: string, replyIndex: number): Promise<void> {
+    const observable = this.firestore
+      .collection('channels')
+      .doc(channelId)
+      .collection('messages')
+      .doc(messageId)
+      .get();
+
+    return lastValueFrom(observable)
+      .then(doc => {
+        if (doc.exists) {
+          const message = doc.data();
+          if (message && message['replies']) {
+            message['replies'].splice(replyIndex, 1);
+            return doc.ref.update({ replies: message['replies'] });
+          } else {
+            console.error('Replies not found!');
+            return Promise.reject('Replies not found!');
+          }
+        } else {
+          console.error('No such document!');
+          return Promise.reject('No such document!');
+        }
+      });
+  }
+
+
 
   private _transformer = (node: ChannelsNode, level: number) => {
     return {
@@ -225,8 +292,6 @@ export class ChannelsService {
         console.error("Error removing channel: ", error);
       });
     }
-
-
   }
 
   archiveChannel(channelId: string): void {
@@ -239,9 +304,6 @@ export class ChannelsService {
     }
     this.renderTree();
   }
-
-
-
 }
 
 
