@@ -39,11 +39,11 @@ export class ChannelComponent {
   stickyDate = '';
   dateContainerPositions: { date: string; position: number }[] = [];
   userId = '';
-
+  messageId = '';
 
   ngOnInit() {
     this.route.paramMap.pipe(
-      switchMap(paramMap => {
+      switchMap((paramMap: ParamMap) => {
         const channelId = paramMap.get('channelId');
         if (channelId) {
           this.channelId = channelId;
@@ -58,6 +58,7 @@ export class ChannelComponent {
         // Handle the channel data here, for example:
         this.channel = channel;
         this.getChannel();
+        this.getAllMessages(); // Fetch messages once the channel data is available
       },
       error => {
         console.error('Error fetching channel:', error);
@@ -104,16 +105,31 @@ export class ChannelComponent {
       .subscribe({
         next: (channel) => {
           this.channel = channel;
-          this.messages = this.groupMessagesByDate(this.channel.messages);
         },
         error: (error) => {
           console.error('Error fetching channel:', error);
         }
       });
-
   }
 
 
+  getAllMessages(): void {
+    this.channelsService.getMessages(this.channelId)
+      .subscribe({
+        next: (messages) => {
+          if (messages && Array.isArray(messages)) {
+            this.messages = this.groupMessagesByDate(messages);
+            console.log(this.messages);
+          } else {
+            console.error('Messages retrieval failed or returned non-array response');
+          }
+        },
+        error: (error) => {
+          console.error('Error fetching messages:', error);
+        }
+      });
+  }
+  
   groupMessagesByDate(messages): any[] {
     const groupedMessages = [];
     let currentDate = '';
@@ -133,18 +149,8 @@ export class ChannelComponent {
     }
     return groupedMessages;
   }
+  
 
-  @HostListener('window:scroll')
-  onWindowScroll() {
-    for (let i = 0; i < this.messages.length; i++) {
-      const dateContainer = document.getElementById('date-' + i);
-
-      if (dateContainer && this.topEdgeInViewport(dateContainer)) {
-        this.stickyDate = this.messages[i].date;
-        break;
-      }
-    }
-  }
 
   topEdgeInViewport(element) {
     const rect = element.getBoundingClientRect();

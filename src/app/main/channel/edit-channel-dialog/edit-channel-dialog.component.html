@@ -18,7 +18,7 @@
   </mat-tab>
 
   <!-- Members Tab -->
-  <mat-tab label="Members {{channel?.numberOfMembers}}">
+  <mat-tab label="Members {{channel?.usersData.length}}">
     <ul>
       <li *ngFor="let member of channel.usersData || []">{{ member?.username }}</li>
     </ul>

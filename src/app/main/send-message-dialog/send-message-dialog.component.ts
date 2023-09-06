@@ -61,21 +61,29 @@ export class SendMessageDialogComponent {
   addMessage(userData) {
     let date = this.getData();
     const messageId = this.firestore.createId(); // Generate a unique ID
+  
     this.newMessage = new Message({
-      obj: {
-        messageId: messageId,
-        text: this.messageTextInput,
-        time: date,
-        username: userData.displayName,
-        userId: userData.uid,
-        userEmail: userData.email
-      }
+      messageId: messageId,
+      text: this.messageTextInput,
+      time: date,
+      username: userData.displayName,
+      userId: userData.uid,
+      userEmail: userData.email,
     });
-
-    // update channel with new message
-    this.channel = this.channelsService.addMessageToChannel(this.channel, this.newMessage);
-    this.channelsService.updateChannel(this.channelId, this.channel);
+  
+    // Convert the Message instance to a plain object
+    const newMessageData = this.newMessage.toJSON();
+  
+    // Add new message to the 'messages' subcollection in Firestore
+    this.firestore.collection('channels').doc(this.channelId).collection('messages').add(newMessageData)
+      .then(() => {
+        console.log('Message added to Firestore successfully!');
+      })
+      .catch(error => {
+        console.error('Error adding message to Firestore: ', error);
+      });
   }
+  
 
 
   getData() {

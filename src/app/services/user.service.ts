@@ -23,8 +23,8 @@ export class UserService {
     localStorage.setItem('lastUrl', url);
   }
 
-  getLastUrl(): string | null {
+  getLastUrl(newUserId): any {
+    if (this.userId === newUserId)
     return localStorage.getItem('lastUrl');
   }
-
 }

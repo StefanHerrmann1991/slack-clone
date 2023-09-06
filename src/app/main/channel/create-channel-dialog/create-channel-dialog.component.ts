@@ -90,12 +90,20 @@ export class CreateChannelDialogComponent {
       numberOfMembers: this.users.length,
       channelTopic: this.topic,
       archived: this.archived,
-      messages: []
+
     });
   }
 
   addChannelToFirestore() {
-    this.firestore.collection('channels').add(this.newChannel.toJSON());
+    this.firestore.collection('channels').add(this.newChannel.toJSON()).then(docRef => {
+      // Use docRef to add a 'messages' subcollection to the new channel document
+      docRef.collection('messages').add({
+        text: "Initial message",
+        timestamp: this.timestamp,
+        userId: this.currentUser.uid,
+        userName: this.currentUser.displayName
+      });
+    });
   }
 
   resetChannelServiceTree() {

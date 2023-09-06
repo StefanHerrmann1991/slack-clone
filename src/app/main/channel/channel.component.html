@@ -13,24 +13,20 @@
         <div class="message-date" id="date-{{i}}">{{ group.date }}</div>
         <div class="dividing-line"></div>
     </div>
-    <div *ngFor="let message of group.messages">
+    <div *ngFor="let message of group.messages" class="message-content"> <!-- Corrected here -->
 
-        <button mat-tooltip="reply" mat-icon-button (click)="openThreadToReply(message.messageId)"><mat-icon>chat</mat-icon></button>
+        <button mat-tooltip="reply" mat-icon-button (click)="openThreadToReply(message.messageId)">
+            <mat-icon>chat</mat-icon>
+        </button>
 
         <div class="name-and-time" dark-light-theming>
             <div class="user-name">{{message.username}}</div>
-            <div class="message-time">{{ message.time }}</div>
+            <div class="message-time">{{ message.time }}</div> <!-- removed date pipe here -->
         </div>
         <div (click)="openThreadToReply(message.messageId)">{{ message.text }}</div>
+
     </div>
 </div>
 <div class="add-message-dialog">
     <app-send-message-dialog></app-send-message-dialog>
 </div>
-
-
-    <!--  <div class="line-with-date sticky" id="stickyLine" *ngIf="showStickyLine">
-                <div class="dividing-line"></div>
-                <div class="sticky-date-container message-date">{{ group.date }}</div>
-                <div class="dividing-line"></div>
-            </div> -->

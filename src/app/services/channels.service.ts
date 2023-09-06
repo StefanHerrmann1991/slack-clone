@@ -41,7 +41,7 @@ export class ChannelsService {
   allChannels;
   themes: any;
   channelId: string;
-   public subscriptions: Subscription[] = [];
+  public subscriptions: Subscription[] = [];
 
 
   constructor(
@@ -76,6 +76,23 @@ export class ChannelsService {
   }
 
 
+  getMessages(channelId: string): Observable<Message[]> {
+    return this.firestore
+      .collection('channels')
+      .doc(channelId)
+      .collection('messages')
+      .valueChanges({ idField: 'messageId' })  // adding idField to include the document ID in the result
+      .pipe(
+        map(data => data.map(messageData => new Message(messageData))),
+        catchError(error => {
+          console.error('Error fetching messages:', error);
+          throw new Error('Failed to fetch messages.');
+        })
+      );
+  }
+
+
+
   getChannelByRouteId(id: string): Observable<Channel> {
     return this.firestore
       .collection('channels')
@@ -108,7 +125,7 @@ export class ChannelsService {
 
   addMessageToChannel(channel: Channel, message: Message): Channel {
 
-    channel.messages.push(message);
+
     return channel;
   }
 
@@ -168,6 +185,8 @@ export class ChannelsService {
     this.firestore.collection(collectionName).doc(id).update({ [field]: newValue });
   }
 
+  /* #allgemeinId */
+
   leaveChannel(userId: string, channelId: string, channel: Channel): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       if (channel && channel.usersData && channel.channelName !== 'allgemein') {
@@ -175,7 +194,7 @@ export class ChannelsService {
         this.firestore.collection('channels').doc(channelId).update({ usersData: updatedUsersData })
           .then(() => {
             resolve();
-            this.router.navigate(['/main', userId, { outlets: { mainOutlet: ['channel', 'iLOTSv8LDiFhfw5cAnq8'] } }]);
+            this.router.navigate(['/main', userId, { outlets: { mainOutlet: ['channel', 'SMx1f972ehFAmbt1zERC'] } }]);
             this.renderTree();
           })
           .catch(err => {
@@ -192,13 +211,13 @@ export class ChannelsService {
     });
   }
 
-
+  /* #allgemeinId */
   deleteChannel(channelId: string) {
 
     if (confirm("Are you sure you want to delete this channel? This action cannot be undone.") && this.channel.channelName !== 'allgemein') {
       let userId = this.userService.getUserId();
       this.dialog.closeAll();
-      this.router.navigate(['/main', userId, { outlets: { mainOutlet: ['channel', 'iLOTSv8LDiFhfw5cAnq8'] } }]);
+      this.router.navigate(['/main', userId, { outlets: { mainOutlet: ['channel', 'SMx1f972ehFAmbt1zERC'] } }]);
       this.firestore.collection('channels').doc(channelId).delete().then(() => {
         console.log("Channel successfully deleted!");
         this.renderTree();

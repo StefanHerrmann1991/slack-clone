@@ -26,7 +26,7 @@ export class AuthService {
     public router: Router,
     public ngZone: NgZone, // NgZone service to remove outside scope warning    
     private userService: UserService
-    ) {
+  ) {
     /* Saving user data in localstorage when 
     logged in and setting up null when logged out */
     this.afAuth.authState.subscribe((user) => {
@@ -54,7 +54,7 @@ export class AuthService {
   }
 
   private updateOnUserSignedIn() {
-    
+
     const userId = this.userData.uid;
     const database = getDatabase();
     const userStatusDatabaseRef = ref(database, '/status/' + userId);
@@ -70,17 +70,20 @@ export class AuthService {
     });
   }
 
+  /*
+  Sign in with email/password
+  #allgemeinId  */
 
-  // Sign in with email/password
   async SignIn(email: string, password: string) {
     return await this.afAuth
       .signInWithEmailAndPassword(email, password)
       .then((result) => {
         const userId = result.user.uid
-        const lastUrl = this.userService.getLastUrl();
-        if(lastUrl) this.router.navigateByUrl(lastUrl);
-        else this.router.navigate(['/main', userId, { outlets: { mainOutlet: ['channel', 'iLOTSv8LDiFhfw5cAnq8'] }}]);
+        const lastUrl = this.userService.getLastUrl(userId);
+        if (lastUrl) this.router.navigateByUrl(lastUrl);
+        else this.router.navigate(['/main', userId, { outlets: { mainOutlet: ['channel', 'SMx1f972ehFAmbt1zERC'] } }]);
         this.currentUserId = userId;
+        this.userService.setUserId(userId);
         this.userData = result.user;
         this.updateOnUserSignedIn();
       })
@@ -137,7 +140,7 @@ export class AuthService {
       // Save the user data in Firestore collection
       this.saveUser(displayName, userId, userEmail);
       this.router.navigate([`/login`]);
-    
+
     } catch (error) {
       console.error('Error signing up:', error);
       window.alert(error.message);

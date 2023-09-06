@@ -10,7 +10,6 @@ export class Channel {
     isClosedArea: boolean;
     archived: boolean;
     usersData: { email: string, userId: string, username: string }[];
-    messages: Message[];
 
     constructor(obj?: any) {
         this.channelName = obj ? obj.channelName : '';
@@ -23,7 +22,7 @@ export class Channel {
         this.numberOfMembers = obj ? obj.numberOfMembers : '';
         this.channelTopic = obj ? obj.channelTopic : '';
         this.channelCreator = obj ? obj.channelCreator : '';
-        this.messages = obj && obj.messages ? obj.messages.map(msg => new Message({ obj: msg })) : [];
+        // The messages array is removed because messages will be handled as a subcollection in Firestore
     }
 
     public toJSON() {
@@ -37,8 +36,8 @@ export class Channel {
             numberOfMembers: this.numberOfMembers,
             channelTopic: this.channelTopic,
             channelCreator: this.channelCreator,
-            archived: this.archived,
-            messages: this.messages.map(message => message.toJSON())
+            archived: this.archived
+            // No need to include messages here as it will be a subcollection in Firestore
         }
     }
 }
@@ -50,9 +49,9 @@ export class Message {
     username: string;
     userEmail: string;
     messageId: string;
-    replies: Reply[]; 
+    replies: Reply[];
 
-    constructor({ obj }: { obj?: any; } = {}) {
+    constructor(obj?: any) {
         this.text = obj ? obj.text : '';
         this.time = obj ? obj.time : '';
         this.userId = obj ? obj.userId : '';
@@ -70,11 +69,10 @@ export class Message {
             username: this.username,
             userEmail: this.userEmail,
             messageId: this.messageId,
-            replies: this.replies.map(reply => reply.toJSON()) 
+            replies: this.replies.map(reply => reply.toJSON())
         };
     }
 }
-
 
 export class Reply {
     text: string;
