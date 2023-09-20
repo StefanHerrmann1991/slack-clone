@@ -13,22 +13,27 @@
         <div class="message-date" id="date-{{i}}">{{ group.date }}</div>
         <div class="dividing-line"></div>
     </div>
-    <div *ngFor="let message of group.messages" class="message-content"> <!-- Corrected here -->
+    <div *ngFor="let message of group.messages;" class="message-content">
+
 
         <button mat-tooltip="reply to message" mat-icon-button (click)="openThreadToReply(message.messageId)">
             <mat-icon>chat</mat-icon>
         </button>
-        <button mat-tooltip="delete this message" mat-icon-button
-            (click)="deleteMessage(message.messageId)">
+        <button mat-tooltip="delete this message" mat-icon-button (click)="deleteMessage(message.messageId)">
             <mat-icon>delete</mat-icon>
         </button>
 
+
         <div class="name-and-time" dark-light-theming>
             <div class="user-name">{{message.username}}</div>
-            <div class="message-time">{{ message.time }}</div> <!-- removed date pipe here -->
+            <div class="message-time">{{ message.time }}</div>
         </div>
         <div (click)="openThreadToReply(message.messageId)">{{ message.text }}</div>
-
+        <mat-form-field>
+            <input matInput [(ngModel)]="editingMessageText">
+        </mat-form-field>
+        <button mat-button (click)="saveMessage()">Save</button>
+        <button mat-button (click)="cancelEditMessage()">Cancel</button>
     </div>
 </div>
 <div class="add-message-dialog">

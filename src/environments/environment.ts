@@ -6,7 +6,6 @@ export const environment = {
     apiKey: 'AIzaSyAJa-BhxYTMf22uISwPymEX-fJp7bXfxSQ',
     authDomain: 'slack-clone-f581f.firebaseapp.com',
     messagingSenderId: '545470931164',
-    guestEmail: 'sth1812@posteo.de',
-    guestPassword: '111222',
+
   },
 };

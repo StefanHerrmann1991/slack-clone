@@ -18,7 +18,7 @@ import { Observable, throwError } from 'rxjs';
 })
 
 
-export class ChannelComponent {
+export class ChannelComponent implements OnInit {
   channel$: Observable<Channel>;
 
   constructor(
@@ -40,9 +40,12 @@ export class ChannelComponent {
   dateContainerPositions: { date: string; position: number }[] = [];
   userId = '';
   messageId = '';
+  editingMessageId: string | null = null;
+  editingMessageText: string | null = null;
+  editingMessageIndex: number | null = null;
 
   ngOnInit() {
-  
+
     this.route.paramMap.pipe(
       switchMap((paramMap: ParamMap) => {
         const channelId = paramMap.get('channelId');
@@ -65,7 +68,7 @@ export class ChannelComponent {
         console.error('Error fetching channel:', error);
       }
     );
- 
+
 
     this.userId = this.route.parent.snapshot.paramMap.get('id');
   }
@@ -92,6 +95,10 @@ export class ChannelComponent {
   deleteMessage(messageId) {
     this.channelsService.deleteMessage(this.channelId, messageId);
   }
+
+  saveMessage() { }
+  cancelEditMessage() { }
+
 
   openDialog() {
     this.dialog.open(EditChannelDialogComponent, {
@@ -132,7 +139,7 @@ export class ChannelComponent {
         }
       });
   }
-  
+
 
   groupMessagesByDate(messages): any[] {
     const groupedMessages = [];
@@ -153,7 +160,7 @@ export class ChannelComponent {
     }
     return groupedMessages;
   }
-  
+
 
   topEdgeInViewport(element) {
     const rect = element.getBoundingClientRect();

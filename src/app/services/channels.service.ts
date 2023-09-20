@@ -122,7 +122,7 @@ export class ChannelsService {
     return channel;
   }
 
-  updateMessage(channelId: string, messageId: string, newText: string): Promise<void> {
+  editMessage(channelId: string, messageId: string, newText: string): Promise<void> {
     return this.firestore
       .collection('channels')
       .doc(channelId)
